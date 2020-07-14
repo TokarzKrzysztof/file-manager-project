@@ -1,0 +1,21 @@
+.mat-card{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 80%;
+    min-height: 200px;
+   @media(min-width: 1366px){
+       min-width: 60%;
+   }
+   @media(min-width: 1100px){
+       min-width: 40%;
+   }
+}
+.mat-form-field{
+    width: 90%;
+    margin: 10px auto;
+}
+.mat-raised-button{
+    margin-right: 10px;
+}
