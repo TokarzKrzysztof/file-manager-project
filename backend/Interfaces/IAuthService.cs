@@ -10,7 +10,8 @@ namespace backend.Interfaces
     {
         Task<bool> Register(UserViewModel userData);
 
-        Task<bool> Login(string email, string password);
-    
+        Task<Guid> Login(string email, string password);
+        Task<bool> Logout(Guid token);
+        Task<UserViewModel> GetCurrentUser(Guid token);
     }
 }

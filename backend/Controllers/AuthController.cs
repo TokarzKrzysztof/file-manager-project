@@ -20,15 +20,43 @@ namespace backend.Controllers
 
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(string email, string password)
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentUser([FromQuery] Guid token)
         {
             try
             {
-                await _authService.Login(email, password);
-                return Ok();
+                UserViewModel user = await _authService.GetCurrentUser(token);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
+        {
+            try
+            {
+                Guid userToken = await _authService.Login(email, password);
+                return Ok(userToken);
             }
             catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("logout")]
+        public async Task<IActionResult> Logout([FromQuery] Guid token)
+        {
+            try
+            {
+                await _authService.Logout(token);
+                return Ok();
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }

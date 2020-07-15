@@ -1,6 +1,9 @@
-<nav mat-tab-nav-bar>
-    <a mat-tab-link active routerLink='files'> Lista plików </a>
-    <a mat-tab-link routerLink='history'> Historia </a>
+<nav mat-tab-nav-bar class="file-manager-main-tabs">
+    <div>
+        <a mat-tab-link active routerLink='files'> Lista plików </a>
+        <a mat-tab-link routerLink='history'> Historia </a>
+    </div>
+    <a mat-tab-link (click)='logout()'> Wyloguj </a>
 </nav>
 
 <router-outlet></router-outlet>

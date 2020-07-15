@@ -39,19 +39,22 @@ namespace backend.Services
             return true;
         }
 
-        public async Task<FileResult> DownloadFile(ControllerBase controller, int id)
+        public async Task<FileStream> DownloadFile(ControllerBase controller, int id)
         {
-            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
-            var net = new System.Net.WebClient();
-            byte[] fileBytes = File.ReadAllBytes(file.FilePath);
-            
-            return controller.PhysicalFile(file.FilePath, file.ContentType, file.FileName);
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);          
+            return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
+        }
+
+        public async Task<string> GetFilePath(int fileId)
+        {
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
+            return file.FilePath;
         }
 
         public async Task<List<FileViewModel>> GetFiles()
         {
             List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).ToListAsync();
-            return FileConverter.ConvertFileModelListToFileViewModelList(dbFiles);
+            return FileConverter.ConvertDbListToViewModelList(dbFiles);
         }
 
         public async Task<bool> UploadFiles(IFormFileCollection files)

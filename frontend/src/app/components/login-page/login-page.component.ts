@@ -31,8 +31,10 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
-    await this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value);
+    const userToken: string = await this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value);
+    window.localStorage.setItem('currentUserToken', userToken);
     this.router.navigateByUrl('/file-manager');
   }
 
+ 
 }

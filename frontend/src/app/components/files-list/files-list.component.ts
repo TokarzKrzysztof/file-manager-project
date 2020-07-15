@@ -40,6 +40,7 @@ export class FilesListComponent implements OnInit {
 
   async loadFiles() {
     this.dataSource.data = await this.filesService.getFiles();
+    this.selection.clear();
   }
 
   isAllSelected() {
@@ -89,16 +90,17 @@ export class FilesListComponent implements OnInit {
     }
 
     const filesToDownloadIds = selectedFiles.map(x => x.id);
+    const anchorTag: HTMLAnchorElement = this.renderer.createElement('a');
+
     for (const id of filesToDownloadIds) {
-      const fileBlob = new Blob([await this.filesService.downloadFile(id) as BlobPart], {type: 'image/png'})
-      const fileUrl = URL.createObjectURL(fileBlob);
-      const anchorTag: HTMLAnchorElement = this.renderer.createElement('a');
-      console.log(fileUrl)
+      const file: Blob = await this.filesService.downloadFile(id);
+      const fileUrl = URL.createObjectURL(file);
       anchorTag.href = fileUrl;
-      anchorTag.download = 'plan1.png';
-      // anchorTag.click();
-      anchorTag.remove();
+      anchorTag.download = selectedFiles.find(x => x.id === id).fileName;
+      anchorTag.click();
     }
+
+    anchorTag.remove();
   }
 
 }

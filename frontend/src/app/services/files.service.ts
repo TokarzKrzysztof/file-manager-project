@@ -56,11 +56,10 @@ export class FilesService {
     ).toPromise();
   }
 
-  downloadFile(id: number): Promise<any> {
+  downloadFile(id: number): Promise<Blob> {
     const params = new HttpParams().append('fileId', id.toString());
 
-    return this.http.get<any>(`${environment.apiUrl}/api/File/download`, { params, responseType: 'blob' as 'json'}).pipe(
-      tap((res) => console.log(res)),
+    return this.http.get<Blob>(`${environment.apiUrl}/api/File/download`, { params, responseType: 'blob' as 'json'}).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

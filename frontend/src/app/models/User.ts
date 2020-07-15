@@ -1,8 +1,10 @@
 export interface UserModel {
-    id: number;
     email: string;
+    id: number;
+    isLoggedIn: boolean;
     name: string;
-    surname: string;
     password: string;
     passwordRepeat?: string;
+    surname: string;
+    token: string;
 }

@@ -9,7 +9,7 @@ namespace backend.Helpers
 {
     public class UserConverter
     {
-        public static UserModel ConvertUserViewModelToUserModel(UserViewModel userViewModel)
+        public static UserModel ConvertViewModelToDbModel(UserViewModel userViewModel)
         {
             UserModel userDbModel = new UserModel();
             userDbModel.Id = userViewModel.id;
@@ -19,6 +19,20 @@ namespace backend.Helpers
             userDbModel.Password = userViewModel.password;
 
             return userDbModel;
+        }
+
+        public static UserViewModel ConvertDbModelToViewModel(UserModel userModel)
+        {
+            UserViewModel userViewModel = new UserViewModel();
+            userViewModel.id = userModel.Id;
+            userViewModel.email = userModel.Email;
+            userViewModel.name = userModel.Name;
+            userViewModel.surname = userModel.Surname;
+            userViewModel.password = userModel.Password;
+            userViewModel.isLoggedIn = userModel.IsLoggedIn;
+            userViewModel.token = userModel.Token;
+
+            return userViewModel;
         }
     }
 }

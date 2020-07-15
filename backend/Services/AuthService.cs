@@ -19,13 +19,31 @@ namespace backend.Services
         }
 
 
-        public async Task<bool> Login(string email, string password)
+        public async Task<UserViewModel> GetCurrentUser(Guid token)
         {
-            bool isEmailAndPasswordCorrect = await _context.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
-            if (isEmailAndPasswordCorrect)
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Token == token);
+            if (user != null)
             {
-                return true;
-            } 
+                return UserConverter.ConvertDbModelToViewModel(user);
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+
+        }
+
+
+        public async Task<Guid> Login(string email, string password)
+        {
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
+            if (user != null)
+            {
+                user.IsLoggedIn = true;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                return user.Token;
+            }
             else
             {
                 throw new InvalidOperationException("Dane logowania są nieprawidłowe");
@@ -45,13 +63,32 @@ namespace backend.Services
                 throw new InvalidOperationException("Hasła nie są zgodne");
             }
 
-            UserModel user = UserConverter.ConvertUserViewModelToUserModel(userData);
+            UserModel user = UserConverter.ConvertViewModelToDbModel(userData);
             user.IsActive = true;
+            user.IsLoggedIn = false;
             user.CreationDate = DateTime.Now;
+            user.Token = Guid.NewGuid();
 
-             _context.Add(user);
+            _context.Add(user);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> Logout(Guid token)
+        {
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Token == token);
+            if (user != null)
+            {
+                user.IsLoggedIn = false;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+
         }
     }
 }

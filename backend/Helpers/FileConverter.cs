@@ -9,7 +9,7 @@ namespace backend.Helpers
 {
     public class FileConverter
     {
-        public static List<FileViewModel> ConvertFileModelListToFileViewModelList(List<FileModel> files)
+        public static List<FileViewModel> ConvertDbListToViewModelList(List<FileModel> files)
         {
             List<FileViewModel> viewFiles = files.Select(x => {
                 return new FileViewModel() {
