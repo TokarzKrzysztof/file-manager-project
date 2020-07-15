@@ -1,5 +1,6 @@
 ﻿using backend.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace backend.Interfaces
     {
         Task<List<FileViewModel>> GetFiles();
         Task<bool> UploadFiles(IFormFileCollection files);
-        Task<object> DownloadFile(int id);
+        Task<FileResult> DownloadFile(ControllerBase controller, int id);
         Task<bool> DeleteFiles(int[] ids);
 
     }

@@ -10,6 +10,7 @@ using backend.Models;
 using backend.ViewModels;
 using backend.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
@@ -38,14 +39,18 @@ namespace backend.Services
             return true;
         }
 
-        public async Task<object> DownloadFile(int id)
+        public async Task<FileResult> DownloadFile(ControllerBase controller, int id)
         {
-            throw new NotImplementedException();
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
+            var net = new System.Net.WebClient();
+            byte[] fileBytes = File.ReadAllBytes(file.FilePath);
+            
+            return controller.PhysicalFile(file.FilePath, file.ContentType, file.FileName);
         }
 
         public async Task<List<FileViewModel>> GetFiles()
         {
-            List<FileModel> dbFiles = _context.Files.Where(x => x.IsActive).ToList();
+            List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).ToListAsync();
             return FileConverter.ConvertFileModelListToFileViewModelList(dbFiles);
         }
 
@@ -88,5 +93,6 @@ namespace backend.Services
 
             return true;
         }
+
     }
 }

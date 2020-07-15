@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { FilesService } from '../../services/files.service';
 import { ToastrService } from 'ngx-toastr';
 import { FileModel } from 'src/app/models/File';
+import { DomSanitizer } from '@angular/platform-browser';
 
+interface FileResponse {
+  contentType: string;
+  enableRangeProcessing: boolean;
+  entityTag: any;
+  fileContents: string;
+  fileDownloadName: string;
+  lastModified: Date
+}
 
 @Component({
   selector: 'app-files-list',
@@ -20,7 +29,9 @@ export class FilesListComponent implements OnInit {
 
   constructor(
     private filesService: FilesService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private renderer: Renderer2,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -69,6 +80,25 @@ export class FilesListComponent implements OnInit {
     const filesToDeleteIds = selectedFiles.map(x => x.id);
     await this.filesService.deleteFiles(filesToDeleteIds);
     this.loadFiles();
+  }
+
+  async onDownloadFiles() {
+    const selectedFiles: FileModel[] = this.selection.selected;
+    if (selectedFiles.length === 0) {
+      return;
+    }
+
+    const filesToDownloadIds = selectedFiles.map(x => x.id);
+    for (const id of filesToDownloadIds) {
+      const fileBlob = new Blob([await this.filesService.downloadFile(id) as BlobPart], {type: 'image/png'})
+      const fileUrl = URL.createObjectURL(fileBlob);
+      const anchorTag: HTMLAnchorElement = this.renderer.createElement('a');
+      console.log(fileUrl)
+      anchorTag.href = fileUrl;
+      anchorTag.download = 'plan1.png';
+      // anchorTag.click();
+      anchorTag.remove();
+    }
   }
 
 }

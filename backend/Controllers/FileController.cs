@@ -65,5 +65,20 @@ namespace backend.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpPost("download")]
+        public async Task<IActionResult> DownloadFile([FromQuery] int fileId)
+        {
+            try
+            {
+                FileResult file = await _fileService.DownloadFile(this, fileId);
+                return Ok(file);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }
