@@ -8,6 +8,7 @@ import { DeletedFilesComponent } from './components/deleted-files/deleted-files.
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
+  { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'file-manager', component: FileManagerComponent },
   { path: 'deleted-files', component: DeletedFilesComponent }

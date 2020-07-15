@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from 'src/app/models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -9,20 +12,33 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginPageComponent implements OnInit {
   formGroup = new FormGroup({
-    login: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
   })
 
-  constructor(private toast: ToastrService) { }
+  constructor(
+    private toast: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
-  login() {
+  async login() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!')
+      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      return;
     }
 
+    try {
+      await this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value);
+      this.toast.success('Zalogowano pomyślnie');
+      this.router.navigateByUrl('/file-manager');
+    }
+    catch (ex) {
+      this.toast.error(ex.error.Message);
+    }
   }
 
 }

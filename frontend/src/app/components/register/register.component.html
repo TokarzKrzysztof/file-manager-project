@@ -1,1 +1,31 @@
-<p>register works!</p>
+<mat-card class="login-panel-card">
+    <form class="login-panel-form" [formGroup]='formGroup' (ngSubmit)='register()'>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">E-mail:</mat-label>
+            <input class="login-panel-input" matInput formControlName='email'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">Imię:</mat-label>
+            <input class="login-panel-input" matInput formControlName='name'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">Nazwisko:</mat-label>
+            <input class="login-panel-input" matInput formControlName='surname'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">Hasło:</mat-label>
+            <input class="login-panel-input" type='password' matInput formControlName='password'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">Powtórz hasło:</mat-label>
+            <input class="login-panel-input" type='password' matInput formControlName='passwordRepeat'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+        </mat-form-field>
+
+        <button class="login-panel-button" mat-raised-button color='primary' type="submit">Zarejestruj się</button>
+    </form>
+</mat-card>

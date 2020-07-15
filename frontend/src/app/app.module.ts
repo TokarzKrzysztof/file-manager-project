@@ -10,6 +10,7 @@ import { DeletedFilesComponent } from './components/deleted-files/deleted-files.
 import { RegisterComponent } from './components/register/register.component';
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -28,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     MaterialModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-middle-top',

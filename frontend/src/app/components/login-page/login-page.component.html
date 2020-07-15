@@ -1,16 +1,17 @@
-<mat-card>
-    <form [formGroup]='formGroup' (ngSubmit)='login()'>
-        <mat-form-field>
-            <mat-label>Login:</mat-label>
-            <input matInput formControlName='login'>
-            <mat-error>Pole jest wymagane</mat-error>
+<mat-card class="login-panel-card">
+    <form class="login-panel-form" [formGroup]='formGroup' (ngSubmit)='login()'>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">E-mail:</mat-label>
+            <input class="login-panel-input" matInput formControlName='email'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>hasło:</mat-label>
-            <input type='password' matInput formControlName='password'>
-            <mat-error>Pole jest wymagane</mat-error>
+        <mat-form-field class="login-panel-field">
+            <mat-label class="login-panel-label">hasło:</mat-label>
+            <input class="login-panel-input" type='password' matInput formControlName='password'>
+            <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
         </mat-form-field>
-        <button mat-raised-button color='primary' type="submit">Zaloguj</button>
-        <button mat-raised-button color='primary' type="button" routerLink='register'>Zarejestruj się</button>
+
+        <button class="login-panel-button" mat-raised-button color='primary' type="submit">Zaloguj</button>
+        <button class="login-panel-button" mat-raised-button color='primary' type="button" routerLink='/register'>Zarejestruj się</button>
     </form>
 </mat-card>
