@@ -49,7 +49,7 @@ namespace backend.Services
             user.IsActive = true;
             user.CreationDate = DateTime.Now;
 
-            await _context.AddAsync(user);
+             _context.Add(user);
             await _context.SaveChangesAsync();
             return true;
         }

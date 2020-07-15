@@ -31,14 +31,8 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
-    try {
-      await this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value);
-      this.toast.success('Zalogowano pomyślnie');
-      this.router.navigateByUrl('/file-manager');
-    }
-    catch (ex) {
-      this.toast.error(ex.error.Message);
-    }
+    await this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value);
+    this.router.navigateByUrl('/file-manager');
   }
 
 }

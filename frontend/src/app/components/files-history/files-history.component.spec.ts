@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeletedFilesComponent } from './deleted-files.component';
+import { FilesHistoryComponent } from './files-history.component';
 
-describe('DeletedFilesComponent', () => {
-  let component: DeletedFilesComponent;
-  let fixture: ComponentFixture<DeletedFilesComponent>;
+describe('FilesHistoryComponent', () => {
+  let component: FilesHistoryComponent;
+  let fixture: ComponentFixture<FilesHistoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeletedFilesComponent ]
+      declarations: [ FilesHistoryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeletedFilesComponent);
+    fixture = TestBed.createComponent(FilesHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

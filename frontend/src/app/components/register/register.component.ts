@@ -33,17 +33,12 @@ export class RegisterComponent implements OnInit {
       this.toast.error('Wypełnij poprawnie wszystkie pola!');
       return;
     }
-
+    
     const userData: UserModel = {...this.formGroup.getRawValue()};
     userData.id = 0;
-    try {
-      await this.authService.register(userData);
-      this.toast.success('Pomyślnie zarejestrowano w systemie');
-      this.router.navigateByUrl('/login');
-    }
-    catch (ex) {
-      this.toast.error(ex.error.Message);
-    }
 
+    await this.authService.register(userData);
+    this.router.navigateByUrl('/login');
   }
+  
 }
