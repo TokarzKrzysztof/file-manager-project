@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { FileModel } from 'src/app/models/File';
 import { UserModel } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -25,7 +27,8 @@ export class FilesListComponent implements OnInit {
     private filesService: FilesService,
     private toast: ToastrService,
     private renderer: Renderer2,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
@@ -69,10 +72,22 @@ export class FilesListComponent implements OnInit {
       return;
     }
 
-    const filesToDeleteIds = selectedFiles.map(x => x.id);
-    const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
-    await this.filesService.deleteFiles(filesToDeleteIds, userData);
-    this.loadFiles();
+    const dialogData: ConfirmationDialogData = {
+      title: 'Czy na pewno chcesz usunąć wskazane pliki? Operacja jest nieodwracalna!'
+    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (!result) {
+        return;
+      }
+      const filesToDeleteIds = selectedFiles.map(x => x.id);
+      const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
+      await this.filesService.deleteFiles(filesToDeleteIds, userData);
+      this.loadFiles();
+    });
   }
 
   async onDownloadFiles() {

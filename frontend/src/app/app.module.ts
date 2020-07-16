@@ -16,6 +16,7 @@ import { FilesHistoryComponent } from './components/files-history/files-history.
 import { FilesListComponent } from './components/files-list/files-list.component';
 import '@angular/common/locales/global/PL';
 import { ConvertSizePipe } from './pipes/convert-size.pipe';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ConvertSizePipe } from './pipes/convert-size.pipe';
     RegisterComponent,
     FilesHistoryComponent,
     FilesListComponent,
-    ConvertSizePipe
+    ConvertSizePipe,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

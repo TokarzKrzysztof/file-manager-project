@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -30,7 +31,8 @@ const materialModules = [
   MatTooltipModule,
   MatMenuModule,
   MatPaginatorModule,
-  MatChipsModule
+  MatChipsModule,
+  MatDialogModule
 ]
 
 @NgModule({
