@@ -94,7 +94,8 @@ namespace backend.Services
                         UploadTime = DateTime.Now,
                         ContentType = file.ContentType,
                         Size = file.Length,
-                        IsActive = true
+                        IsActive = true,
+                        CreatedBy = userData
                     };
 
                     HistoryModel historyRow = new HistoryModel()

@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FilesListComponent implements OnInit {
   currentUser: UserModel;
-  displayedColumns: string[] = ['select', 'fileName', 'uploadTime', 'size'];
+  displayedColumns: string[] = ['select', 'fileName', 'uploadTime', 'createdBy', 'size'];
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
 
@@ -31,7 +31,6 @@ export class FilesListComponent implements OnInit {
   async ngOnInit() {
     this.loadFiles();
     this.currentUser = await this.authService.getCurrentUserValue();
-    console.log(this.currentUser)
   }
 
   async loadFiles() {
@@ -57,17 +56,11 @@ export class FilesListComponent implements OnInit {
   }
 
   async onFilesSend() {
-    try {
-      const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
-      await this.filesService.uploadFiles(this.preparedFiles, userData);
-      this.toast.success('Pomyślnie dodano pliki');
-      this.preparedFiles = [];
-      this.loadFiles();
-    }
-    catch (ex) {
-      console.error(ex);
-      this.toast.error('Podczas wysyłania plików wystąpił błąd');
-    }
+    const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
+    await this.filesService.uploadFiles(this.preparedFiles, userData);
+    this.toast.success('Pomyślnie dodano pliki');
+    this.preparedFiles = [];
+    this.loadFiles();
   }
 
   async onDeleteFiles() {
