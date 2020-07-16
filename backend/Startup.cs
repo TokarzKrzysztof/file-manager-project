@@ -33,6 +33,7 @@ namespace backend
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IHistoryService, HistoryService>();
 
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

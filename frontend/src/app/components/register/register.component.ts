@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  hidePassword = true;
+  hidePasswordRepeat = true;
+
   formGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     name: new FormControl('', [Validators.required]),

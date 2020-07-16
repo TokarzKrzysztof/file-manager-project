@@ -16,10 +16,6 @@ export class AppComponent implements OnInit {
     private router: Router
   ) { }
 
-  getCurrentUser() {
-    return this.currentUser;
-  }
-
   async ngOnInit() {
     const currentUserToken: string = window.localStorage.getItem('currentUserToken');
     if (currentUserToken) {

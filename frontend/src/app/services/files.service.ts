@@ -24,13 +24,14 @@ export class FilesService {
     ).toPromise();
   }
 
-  uploadFiles(files: File[]): Promise<void> {
+  uploadFiles(files: File[], userData: string): Promise<void> {
     const formData = new FormData();
     files.forEach((file: File) => {
       formData.append('files', file, file.name);
     });
+    const params = new HttpParams().append('userData', userData);
 
-    return this.http.post<void>(`${environment.apiUrl}/api/File`, formData).pipe(
+    return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, {params}).pipe(
       tap(() => this.toast.success('Pomyślnie dodano pliki')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -40,11 +41,12 @@ export class FilesService {
     ).toPromise();
   }
 
-  deleteFiles(filesToDeleteIds: number[]): Promise<void> {
+  deleteFiles(filesToDeleteIds: number[], userData: string): Promise<void> {
     let params = new HttpParams();
     filesToDeleteIds.forEach((x: number) => {
       params = params.append('fileIds', x.toString());
     });
+    params = params.append('userData', userData);
 
     return this.http.delete<void>(`${environment.apiUrl}/api/File`, { params }).pipe(
       tap(() => this.toast.success('Pomyślnie usunięto pliki')),

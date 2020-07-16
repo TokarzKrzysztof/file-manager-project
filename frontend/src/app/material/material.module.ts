@@ -10,6 +10,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 
@@ -26,7 +28,8 @@ const materialModules = [
   MatTableModule,
   MatCheckboxModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatMenuModule
 ]
 
 @NgModule({

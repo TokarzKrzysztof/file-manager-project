@@ -22,15 +22,24 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task<bool> DeleteFiles(int[] ids)
+        public async Task<bool> DeleteFiles(int[] ids, string userData)
         {
-            foreach(int fileId in ids)
+            foreach (int fileId in ids)
             {
 
                 FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
                 if (file != null)
                 {
                     File.Delete(file.FilePath);
+
+                    HistoryModel historyRow = new HistoryModel()
+                    {
+                        ActionDate = DateTime.Now,
+                        Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
+                        UserData = userData
+                    };
+
+                    _context.History.Add(historyRow);
                     _context.Files.Remove(file);
                 }
             }
@@ -41,7 +50,7 @@ namespace backend.Services
 
         public async Task<FileStream> DownloadFile(ControllerBase controller, int id)
         {
-            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);          
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
         }
 
@@ -57,7 +66,7 @@ namespace backend.Services
             return FileConverter.ConvertDbListToViewModelList(dbFiles);
         }
 
-        public async Task<bool> UploadFiles(IFormFileCollection files)
+        public async Task<bool> UploadFiles(IFormFileCollection files, string userData)
         {
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
 
@@ -88,10 +97,18 @@ namespace backend.Services
                         IsActive = true
                     };
 
-                     _context.Files.Add(fileToSave);
+                    HistoryModel historyRow = new HistoryModel()
+                    {
+                        ActionDate = DateTime.Now,
+                        Description = "Użytkownik dodał plik o nazwie: " + fileName,
+                        UserData = userData
+                    };
+
+                    _context.History.Add(historyRow);
+                    _context.Files.Add(fileToSave);
                 }
 
-                  await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
 
             return true;

@@ -17,12 +17,18 @@
         </mat-form-field>
         <mat-form-field class="login-panel-field">
             <mat-label class="login-panel-label">Hasło:</mat-label>
-            <input class="login-panel-input" type='password' matInput formControlName='password'>
+            <input class="login-panel-input" [type]="hidePassword ? 'password' : 'text'" matInput formControlName='password'>
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
         </mat-form-field>
         <mat-form-field class="login-panel-field">
             <mat-label class="login-panel-label">Powtórz hasło:</mat-label>
-            <input class="login-panel-input" type='password' matInput formControlName='passwordRepeat'>
+            <input class="login-panel-input" [type]="hidePasswordRepeat ? 'password' : 'text'" matInput formControlName='passwordRepeat'>
+            <button mat-icon-button matSuffix (click)="hidePasswordRepeat = !hidePasswordRepeat">
+                <mat-icon>{{hidePasswordRepeat ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
         </mat-form-field>
 

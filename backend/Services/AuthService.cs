@@ -40,7 +40,17 @@ namespace backend.Services
             if (user != null)
             {
                 user.IsLoggedIn = true;
+
+                HistoryModel historyRow = new HistoryModel()
+                {
+                    ActionDate = DateTime.Now,
+                    Description = "Użytkownik zalogował się do systemu",
+                    UserData = user.Name + " " + user.Surname
+                };
+
                 _context.Users.Update(user);
+                _context.History.Add(historyRow);
+
                 await _context.SaveChangesAsync();
                 return user.Token;
             }
@@ -69,7 +79,16 @@ namespace backend.Services
             user.CreationDate = DateTime.Now;
             user.Token = Guid.NewGuid();
 
-            _context.Add(user);
+            HistoryModel historyRow = new HistoryModel()
+            {
+                ActionDate = DateTime.Now,
+                Description = "Użytkownik zarejestrował się w systemie",
+                UserData = user.Name + " " + user.Surname
+            };
+
+            _context.Users.Add(user);
+            _context.History.Add(historyRow);
+
             await _context.SaveChangesAsync();
             return true;
         }
@@ -80,7 +99,16 @@ namespace backend.Services
             if (user != null)
             {
                 user.IsLoggedIn = false;
-                _context.Update(user);
+
+                HistoryModel historyRow = new HistoryModel()
+                {
+                    ActionDate = DateTime.Now,
+                    Description = "Użytkownik wylogował się z systemu",
+                    UserData = user.Name + " " + user.Surname
+                };
+
+                _context.Users.Update(user);
+                _context.History.Add(historyRow);
                 await _context.SaveChangesAsync();
                 return true;
             }

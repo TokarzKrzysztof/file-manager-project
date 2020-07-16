@@ -3,19 +3,41 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../models/User';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, find } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private currentUserValue: UserModel = null;
+
   constructor(
     private http: HttpClient,
     private toast: ToastrService
   ) { }
 
+  clearCurrentUserValue() {
+    this.currentUserValue = null;
+  }
 
+  getCurrentUserValue(): Promise<UserModel> {
+    return new Promise((resolve) => {
+      if (this.currentUserValue !== null) {
+        resolve(this.currentUserValue);
+        return;
+      }
+
+      const currentUserToken: string = window.localStorage.getItem('currentUserToken');
+      if (currentUserToken) {
+        resolve(this.getCurrentUser(currentUserToken));
+        return;
+      }
+
+      throw new Error('can`t get cached user data');
+    });
+  }
 
   login(email: string, password: string): Promise<string> {
     let params = new HttpParams();
@@ -46,8 +68,10 @@ export class AuthService {
   logout(userToken: string): Promise<any> {
     const params = new HttpParams().append('token', userToken);
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/logout`, {}, {params}).pipe(
-      tap(() => this.toast.success('Wylogowano pomyślnie')),
+    return this.http.put(`${environment.apiUrl}/api/Auth/logout`, {}, { params }).pipe(
+      tap(() => {
+        return this.toast.success('Wylogowano pomyślnie');
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -56,10 +80,11 @@ export class AuthService {
     ).toPromise();
   }
 
-  getCurrentUser(currentUserToken: string): any {
+  getCurrentUser(currentUserToken: string): Promise<UserModel> {
     const params = new HttpParams().append('token', currentUserToken);
 
-    return this.http.get(`${environment.apiUrl}/api/Auth`, {params}).pipe(
+    return this.http.get<UserModel>(`${environment.apiUrl}/api/Auth`, { params }).pipe(
+      tap((res: UserModel) => this.currentUserValue = res),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

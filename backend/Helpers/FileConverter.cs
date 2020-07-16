@@ -16,7 +16,8 @@ namespace backend.Helpers
                     id = x.Id,
                     fileName = x.FileName,
                     size = x.Size,
-                    uploadTime = x.UploadTime
+                    uploadTime = x.UploadTime,
+                    createdBy = x.CreatedBy
                 };
            }).ToList();
 

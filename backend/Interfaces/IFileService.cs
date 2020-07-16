@@ -12,10 +12,10 @@ namespace backend.Interfaces
     public interface IFileService
     {
         Task<List<FileViewModel>> GetFiles();
-        Task<bool> UploadFiles(IFormFileCollection files);
+        Task<bool> UploadFiles(IFormFileCollection files, string userData);
         Task<FileStream> DownloadFile(ControllerBase controller, int id);
         Task<string> GetFilePath(int fileId);
-        Task<bool> DeleteFiles(int[] ids);
+        Task<bool> DeleteFiles(int[] ids, string userData);
 
     }
 }

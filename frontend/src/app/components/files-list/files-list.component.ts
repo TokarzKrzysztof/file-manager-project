@@ -4,16 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FilesService } from '../../services/files.service';
 import { ToastrService } from 'ngx-toastr';
 import { FileModel } from 'src/app/models/File';
-import { DomSanitizer } from '@angular/platform-browser';
+import { UserModel } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 
-interface FileResponse {
-  contentType: string;
-  enableRangeProcessing: boolean;
-  entityTag: any;
-  fileContents: string;
-  fileDownloadName: string;
-  lastModified: Date
-}
 
 @Component({
   selector: 'app-files-list',
@@ -21,6 +14,7 @@ interface FileResponse {
   styleUrls: ['./files-list.component.scss']
 })
 export class FilesListComponent implements OnInit {
+  currentUser: UserModel;
   displayedColumns: string[] = ['select', 'fileName', 'uploadTime', 'size'];
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
@@ -31,11 +25,13 @@ export class FilesListComponent implements OnInit {
     private filesService: FilesService,
     private toast: ToastrService,
     private renderer: Renderer2,
-    private sanitizer: DomSanitizer
+    private authService: AuthService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadFiles();
+    this.currentUser = await this.authService.getCurrentUserValue();
+    console.log(this.currentUser)
   }
 
   async loadFiles() {
@@ -61,7 +57,8 @@ export class FilesListComponent implements OnInit {
 
   async onFilesSend() {
     try {
-      await this.filesService.uploadFiles(this.preparedFiles);
+      const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
+      await this.filesService.uploadFiles(this.preparedFiles, userData);
       this.toast.success('Pomyślnie dodano pliki');
       this.preparedFiles = [];
       this.loadFiles();
@@ -79,7 +76,8 @@ export class FilesListComponent implements OnInit {
     }
 
     const filesToDeleteIds = selectedFiles.map(x => x.id);
-    await this.filesService.deleteFiles(filesToDeleteIds);
+    const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
+    await this.filesService.deleteFiles(filesToDeleteIds, userData);
     this.loadFiles();
   }
 

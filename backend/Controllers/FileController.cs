@@ -37,11 +37,11 @@ namespace backend.Controllers
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files)
+        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData)
         {
             try
             {
-                await _fileService.UploadFiles(files);             
+                await _fileService.UploadFiles(files, userData);             
                 return Ok();
             }
 
@@ -52,11 +52,11 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteFiles([FromQuery] int[] fileIds)
+        public async Task<IActionResult> DeleteFiles([FromQuery] int[] fileIds, [FromQuery] string userData)
         {
             try
             {
-                await _fileService.DeleteFiles(fileIds);
+                await _fileService.DeleteFiles(fileIds, userData);
                 return Ok();
             }
 

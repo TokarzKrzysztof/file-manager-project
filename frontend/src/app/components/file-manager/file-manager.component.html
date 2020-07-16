@@ -3,7 +3,21 @@
         <a mat-tab-link active routerLink='files'> Lista plików </a>
         <a mat-tab-link routerLink='history'> Historia </a>
     </div>
-    <a mat-tab-link (click)='logout()'> Wyloguj </a>
+    <div class="user-control-panel">
+        <p class="user-credentials">
+            <span class="login-as-label">Zalogowany jako:</span>
+            <span class="user-data">{{currentUser?.name}} {{currentUser?.surname}}</span>
+        </p>
+        <a mat-tab-link [matMenuTriggerFor]="menu">Menu</a>
+        <mat-menu #menu="matMenu">
+            <a mat-menu-item (click)='logout()'>
+                Wyloguj
+            </a>
+            
+            <!-- <button mat-menu-item>Item 2</button> -->
+        </mat-menu>
+        <!-- <a mat-tab-link (click)='logout()'> Wyloguj </a> -->
+    </div>
 </nav>
 
 <router-outlet></router-outlet>

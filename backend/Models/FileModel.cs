@@ -21,5 +21,9 @@ namespace backend.Models
         public long Size { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string CreatedBy { get; set; }
+#nullable enable
+        public string? DeletedBy { get; set; }
     }
 }
