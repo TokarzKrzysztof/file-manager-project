@@ -35,9 +35,15 @@ namespace backend
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IHistoryService, HistoryService>();
 
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.MaxRequestBodySize = 1073741824;
+            });
+
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
             services.AddCors(o => o.AddPolicy("FileManagerPolicy", builder =>
             {
                 builder.AllowAnyOrigin()

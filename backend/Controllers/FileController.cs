@@ -36,7 +36,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost]
         public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData)
         {
             try
