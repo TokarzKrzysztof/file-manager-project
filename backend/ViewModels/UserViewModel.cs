@@ -13,11 +13,12 @@ namespace backend.ViewModels
         public string surname { get; set; }
 
         public string password { get; set; }
-        public string passwordRepeat { get; set; }
 
         public bool isLoggedIn { get; set; }
 
         public Guid token { get; set; }
+#nullable enable
+        public string? passwordRepeat { get; set; }
 
     }
 }

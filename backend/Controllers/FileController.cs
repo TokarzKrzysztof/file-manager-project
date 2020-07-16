@@ -81,6 +81,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateFile([FromBody] FileViewModel file)
+        {
+            try
+            {
+                await _fileService.UpdateFile(file);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("path")]
         public async Task<IActionResult> GetFilePath([FromQuery] int fileId)
         {

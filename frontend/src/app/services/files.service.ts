@@ -74,4 +74,13 @@ export class FilesService {
     ).toPromise();
   }
 
+  UpdateFile(element: FileModel): Promise<void> {
+    return this.http.put<void>(`${environment.apiUrl}/api/File/update`, element).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
 }

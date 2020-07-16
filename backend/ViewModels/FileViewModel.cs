@@ -16,6 +16,9 @@ namespace backend.ViewModels
         public long size { get; set; }
 
         public string createdBy { get; set; }
-        public string deletedBy { get; set; }
+#nullable enable
+        public string? deletedBy { get; set; }
+        public int? order { get; set; }
+        public string? title { get; set; }
     }
 }

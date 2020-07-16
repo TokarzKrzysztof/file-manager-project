@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-using System.Net.Http.Headers;
 using backend.Models;
 using backend.ViewModels;
 using backend.Helpers;
@@ -64,6 +63,14 @@ namespace backend.Services
         {
             List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).ToListAsync();
             return FileConverter.ConvertDbListToViewModelList(dbFiles);
+        }
+
+        public async Task UpdateFile(FileViewModel file)
+        {
+            FileModel dbFile = await _context.Files.FirstOrDefaultAsync(x => x.Id == file.id);
+            dbFile = FileConverter.UpdateDbFileWithViewFileData(dbFile, file);
+            _context.Files.Update(dbFile);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> UploadFiles(IFormFileCollection files, string userData)

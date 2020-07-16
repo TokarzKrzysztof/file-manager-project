@@ -17,11 +17,21 @@ namespace backend.Helpers
                     fileName = x.FileName,
                     size = x.Size,
                     uploadTime = x.UploadTime,
-                    createdBy = x.CreatedBy
+                    createdBy = x.CreatedBy,
+                    title = x.Title,
+                    order = x.Order
                 };
            }).ToList();
 
             return viewFiles;
+        }
+
+        public static FileModel UpdateDbFileWithViewFileData(FileModel dbFile, FileViewModel viewFile)
+        {
+            dbFile.Order = viewFile.order;
+            dbFile.Title = viewFile.title;
+
+            return dbFile;
         }
     }
 }

@@ -221,3 +221,4 @@ C:\Users\Krzysiek-komputer\Desktop\file-manager-project\backend\bin\Debug\netcor
 C:\Users\Krzysiek-komputer\Desktop\file-manager-project\backend\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\Krzysiek-komputer\Desktop\file-manager-project\backend\obj\Debug\netcoreapp3.1\backend.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Krzysiek-komputer\Desktop\file-manager-project\backend\bin\Debug\netcoreapp3.1\web.config
+C:\Users\Krzysiek-komputer\Desktop\file-manager-project\backend\bin\Debug\netcoreapp3.1\Files\application_json.json

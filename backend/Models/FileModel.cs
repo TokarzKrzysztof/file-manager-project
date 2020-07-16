@@ -25,5 +25,8 @@ namespace backend.Models
         public string CreatedBy { get; set; }
 #nullable enable
         public string? DeletedBy { get; set; }
+
+        public int? Order { get; set; }
+        public string? Title { get; set; }
     }
 }
