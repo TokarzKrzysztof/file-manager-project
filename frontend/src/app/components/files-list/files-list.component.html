@@ -1,6 +1,6 @@
 <mat-toolbar class="files-list-toolbar">
     <mat-toolbar-row>
-        <button mat-stroked-button (click)='fileInput.click()'>Dodaj pliki</button>
+        <button mat-stroked-button (click)='fileInput.click()' matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi 1GB'>Dodaj pliki</button>
         <input type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
         <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
         
