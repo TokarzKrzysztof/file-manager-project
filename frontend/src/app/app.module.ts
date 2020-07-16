@@ -14,10 +14,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { FilesHistoryComponent } from './components/files-history/files-history.component';
 import { FilesListComponent } from './components/files-list/files-list.component';
-import '@angular/common/locales/global/PL';
 import { ConvertSizePipe } from './pipes/convert-size.pipe';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { DisableOnActionDirective } from './directives/disable-on-action.directive';
+import { NumberInputDirective } from './directives/number-input-validation.directive';
+import '@angular/common/locales/global/PL';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DisableOnActionDirective } from './directives/disable-on-action.directi
     FilesListComponent,
     ConvertSizePipe,
     ConfirmationDialogComponent,
-    DisableOnActionDirective
+    DisableOnActionDirective,
+    NumberInputDirective
   ],
   imports: [
     BrowserModule,
