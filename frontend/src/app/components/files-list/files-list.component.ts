@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { FilesService } from '../../services/files.service';
 import { ToastrService } from 'ngx-toastr';
 import { FileModel } from 'src/app/models/File';
@@ -23,6 +23,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<FileModel>;
   preparedFiles: File[] = [];
 
   constructor(
@@ -46,11 +47,30 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
+  sortFilesByOrder(files: FileModel[]) {
+    files.sort((a, b) => {
+      if (a.order === null) {
+        return 1;
+      }
+
+      if (b.order === null) {
+        return -1;
+      }
+      return a.order - b.order;
+    })
+
+    this.dataSource.data = files;
+  }
+
   onPropertyEdit(e: KeyboardEvent, input: HTMLInputElement, element: FileModel, propertyName: string) {
     if (e.key === 'Enter') {
       input.disabled = true;
       element[propertyName] = input.value;
       this.filesService.UpdateFile(element);
+
+      if (propertyName === 'order') {
+        this.sortFilesByOrder(this.dataSource.data);
+      }
     }
   }
 
@@ -72,6 +92,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   async loadFiles() {
     this.dataSource.data = await this.filesService.getFiles();
+    this.sortFilesByOrder(this.dataSource.data);
     this.selection.clear();
   }
 

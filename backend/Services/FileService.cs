@@ -61,7 +61,7 @@ namespace backend.Services
 
         public async Task<List<FileViewModel>> GetFiles()
         {
-            List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).OrderByDescending(x => x.Order).ToListAsync();
+            List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).ToListAsync();
             return FileConverter.ConvertDbListToViewModelList(dbFiles);
         }
 
