@@ -5,19 +5,21 @@ import { RegisterComponent } from './components/register/register.component';
 import { FileManagerComponent } from './components/file-manager/file-manager.component';
 import { FilesHistoryComponent } from './components/files-history/files-history.component';
 import { FilesListComponent } from './components/files-list/files-list.component';
+import {AuthGuard} from './guards/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LoginPageComponent },
+  { path: '', redirectTo: 'file-manager', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'file-manager', component: FileManagerComponent, children: [
+    path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'files', pathMatch: 'full' },
       { path: 'files', component: FilesListComponent },
       { path: 'history', component: FilesHistoryComponent }
     ]
-  }
+  },
+  {path: '**', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({

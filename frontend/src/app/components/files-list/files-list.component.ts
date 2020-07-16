@@ -36,6 +36,7 @@ export class FilesListComponent implements OnInit {
 
   async loadFiles() {
     this.dataSource.data = await this.filesService.getFiles();
+    console.log(this.dataSource.data)
     this.selection.clear();
   }
 
