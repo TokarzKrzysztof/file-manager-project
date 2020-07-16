@@ -8,6 +8,7 @@ namespace backend.Interfaces
 {
     public interface IHistoryService
     {
-        Task<List<HistoryModel>> GetHistory();
+        Task<List<HistoryModel>> GetHistory(int page, int pageSize);
+        Task<int> GetHistoryCount(int maxAmount);
     }
 }

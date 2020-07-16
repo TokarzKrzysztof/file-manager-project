@@ -16,9 +16,14 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task<List<HistoryModel>> GetHistory()
+        public async Task<List<HistoryModel>> GetHistory(int page, int pageSize)
         {
-            return await _context.History.OrderByDescending(x => x.ActionDate).ToListAsync();
+            return await _context.History.OrderByDescending(x => x.ActionDate).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<int> GetHistoryCount(int maxAmount)
+        {
+            return await _context.History.CountAsync();
         }
     }
 }

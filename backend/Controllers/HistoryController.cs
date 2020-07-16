@@ -18,12 +18,27 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetHistory()
+        public async Task<IActionResult> GetHistory([FromQuery] int page, [FromQuery] int pageSize)
         {
             try
             {
-                List<HistoryModel> history = await _historyService.GetHistory();
+                List<HistoryModel> history = await _historyService.GetHistory(page, pageSize);
                 return Ok(history);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("count")]
+        public async Task<IActionResult> GetHistoryCount([FromQuery] int maxAmount)
+        {
+            try
+            {
+                int historyCount = await _historyService.GetHistoryCount(maxAmount);
+                return Ok(historyCount);
             }
 
             catch (Exception ex)
