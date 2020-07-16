@@ -1,20 +1,27 @@
 <mat-toolbar class="files-list-toolbar">
-    <button mat-stroked-button (click)='fileInput.click()'>Dodaj pliki</button>
-    <input type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
-    <span *ngFor='let file of preparedFiles'>{{file.name}}</span>
-    <button (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
+    <mat-toolbar-row>
+        <button mat-stroked-button (click)='fileInput.click()'>Dodaj pliki</button>
+        <input type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
+        <button (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
+        
+        <div>
+            <button mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
+                <mat-icon>delete</mat-icon>
+            </button>
+            
+            <button mat-icon-button color='primary' matTooltip='Pobierz' (click)='onDownloadFiles()'>
+                <mat-icon>get_app</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar-row>
 
-    <div>
-        <button mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
-            <mat-icon>delete</mat-icon>
-        </button>
-
-        <button mat-icon-button color='primary' matTooltip='Pobierz' (click)='onDownloadFiles()'>
-            <mat-icon>get_app</mat-icon>
-        </button>
-    </div>
-
+    <mat-toolbar-row *ngIf='preparedFiles.length'>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip disableRipple *ngFor='let file of preparedFiles'>{{file.name}}</mat-chip>
+        </mat-chip-list>
+    </mat-toolbar-row>
 </mat-toolbar>
+
 
 <table mat-table [dataSource]='dataSource' class="mat-elevation-z8">
     <ng-container matColumnDef="select">
@@ -47,6 +54,5 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-

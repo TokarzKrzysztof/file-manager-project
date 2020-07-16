@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
+
 
 
 
@@ -27,7 +29,8 @@ const materialModules = [
   MatIconModule,
   MatTooltipModule,
   MatMenuModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatChipsModule
 ]
 
 @NgModule({
