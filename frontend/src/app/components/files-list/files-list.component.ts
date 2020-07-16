@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { FilesService } from '../../services/files.service';
@@ -8,6 +8,7 @@ import { UserModel } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -15,11 +16,12 @@ import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dia
   templateUrl: './files-list.component.html',
   styleUrls: ['./files-list.component.scss']
 })
-export class FilesListComponent implements OnInit {
+export class FilesListComponent implements OnInit, AfterViewInit {
   currentUser: UserModel;
   displayedColumns: string[] = ['select', 'fileName', 'uploadTime', 'createdBy', 'size'];
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
+  @ViewChild(MatSort) sort: MatSort;
 
   preparedFiles: File[] = [];
 
@@ -34,6 +36,10 @@ export class FilesListComponent implements OnInit {
   async ngOnInit() {
     this.loadFiles();
     this.currentUser = await this.authService.getCurrentUserValue();
+  }
+
+  ngAfterViewInit(){
+    this.dataSource.sort = this.sort;
   }
 
   async loadFiles() {
