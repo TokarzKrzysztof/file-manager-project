@@ -3,8 +3,8 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../models/User';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, tap, find } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { ActionsService } from './actions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private actionsService: ActionsService
   ) { }
 
   clearCurrentUserValue() {
@@ -44,6 +45,7 @@ export class AuthService {
     params = params.append('email', email);
     params = params.append('password', password);
 
+    this.actionsService.startAction();
     return this.http.post<string>(`${environment.apiUrl}/api/Auth/login`, {}, { params }).pipe(
       tap(() => this.toast.success('Zalogowano pomyślnie')),
       catchError((error: HttpErrorResponse) => {
@@ -51,10 +53,11 @@ export class AuthService {
         this.toast.error(error.error.Message);
         throw new Error(error.error.Message);
       })
-    ).toPromise();
+    ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   register(registerData: UserModel): Promise<any> {
+    this.actionsService.startAction();
     return this.http.post(`${environment.apiUrl}/api/Auth/register`, registerData).pipe(
       tap(() => this.toast.success('Zarejestrowano pomyślnie')),
       catchError((error: HttpErrorResponse) => {
@@ -62,7 +65,7 @@ export class AuthService {
         this.toast.error(error.error.Message);
         throw new Error(error.error.Message);
       })
-    ).toPromise();
+    ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   logout(userToken: string): Promise<any> {

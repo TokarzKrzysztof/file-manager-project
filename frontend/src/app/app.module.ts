@@ -17,6 +17,7 @@ import { FilesListComponent } from './components/files-list/files-list.component
 import '@angular/common/locales/global/PL';
 import { ConvertSizePipe } from './pipes/convert-size.pipe';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { DisableOnActionDirective } from './directives/disable-on-action.directive';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     FilesHistoryComponent,
     FilesListComponent,
     ConvertSizePipe,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DisableOnActionDirective
   ],
   imports: [
     BrowserModule,

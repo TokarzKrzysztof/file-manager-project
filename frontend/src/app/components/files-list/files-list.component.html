@@ -2,10 +2,10 @@
     <mat-toolbar-row>
         <button mat-stroked-button (click)='fileInput.click()'>Dodaj pliki</button>
         <input type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
-        <button (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
+        <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
         
         <div>
-            <button mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
+            <button appDisableOnAction mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
                 <mat-icon>delete</mat-icon>
             </button>
             

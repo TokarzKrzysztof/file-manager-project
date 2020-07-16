@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { FileModel } from '../models/File';
+import { ActionsService } from './actions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { FileModel } from '../models/File';
 export class FilesService {
   constructor(
     private http: HttpClient,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private actionsService: ActionsService
   ) { }
 
   getFiles(): Promise<FileModel[]> {
@@ -31,6 +33,7 @@ export class FilesService {
     });
     const params = new HttpParams().append('userData', userData);
 
+    this.actionsService.startAction();
     return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, {params}).pipe(
       tap(() => this.toast.success('Pomyślnie dodano pliki')),
       catchError((error: HttpErrorResponse) => {
@@ -38,7 +41,7 @@ export class FilesService {
         this.toast.error(error.error.Message);
         throw new Error(error.error.Message);
       })
-    ).toPromise();
+    ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   deleteFiles(filesToDeleteIds: number[], userData: string): Promise<void> {
@@ -48,6 +51,7 @@ export class FilesService {
     });
     params = params.append('userData', userData);
 
+    this.actionsService.startAction();
     return this.http.delete<void>(`${environment.apiUrl}/api/File`, { params }).pipe(
       tap(() => this.toast.success('Pomyślnie usunięto pliki')),
       catchError((error: HttpErrorResponse) => {
@@ -55,7 +59,7 @@ export class FilesService {
         this.toast.error(error.error.Message);
         throw new Error(error.error.Message);
       })
-    ).toPromise();
+    ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   downloadFile(id: number): Promise<Blob> {
