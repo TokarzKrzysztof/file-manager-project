@@ -106,5 +106,20 @@ namespace backend.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeData passwordChangeData, [FromQuery] Guid token)
+        {
+            try
+            {
+                await _authService.ChangePassword(token, passwordChangeData);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

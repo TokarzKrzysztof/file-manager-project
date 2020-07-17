@@ -20,6 +20,7 @@ import { DisableOnActionDirective } from './directives/disable-on-action.directi
 import { NumberInputDirective } from './directives/number-input-validation.directive';
 import '@angular/common/locales/global/PL';
 import { DeleteAccountDialogComponent } from './dialogs/delete-account-dialog/delete-account-dialog.component';
+import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { DeleteAccountDialogComponent } from './dialogs/delete-account-dialog/de
     ConfirmationDialogComponent,
     DisableOnActionDirective,
     NumberInputDirective,
-    DeleteAccountDialogComponent
+    DeleteAccountDialogComponent,
+    ChangePasswordDialogComponent
   ],
   imports: [
     BrowserModule,

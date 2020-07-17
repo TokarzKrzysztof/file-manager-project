@@ -204,5 +204,31 @@ namespace backend.Services
                 throw new Exception("Nie znaleziono użytkownika");
             }
         }
+
+        public async Task ChangePassword(Guid token, PasswordChangeData passwordChangeData)
+        {
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Token == token && x.IsActive);
+
+            if (user != null)
+            {
+                if(passwordChangeData.newPassword != passwordChangeData.newPasswordRepeat)
+                {
+                    throw new InvalidOperationException("Hasła nie są zgodne!");
+                }
+
+                if(user.Password != passwordChangeData.oldPassword)
+                {
+                    throw new InvalidOperationException("Niepoprawne hasło!");
+                }
+
+                user.Password = passwordChangeData.newPassword;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Nie znaleziono użytkownika");
+            }
+        }
     }
 }

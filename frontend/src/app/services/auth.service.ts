@@ -5,6 +5,7 @@ import { UserModel } from '../models/User';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, tap } from 'rxjs/operators';
 import { ActionsService } from './actions.service';
+import { PasswordChangeData } from '../dialogs/change-password-dialog/change-password-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -104,6 +105,20 @@ export class AuthService {
 
     return this.http.put(`${environment.apiUrl}/api/Auth/deleteAccount`, {}, { params }).pipe(
       tap(() => this.toast.info('Konto zostało usunięte')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  changePassword(token: string, passwordChangeData: PasswordChangeData) {
+    let params = new HttpParams();
+    params = params.append('token', token);
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/changePassword`, passwordChangeData, { params }).pipe(
+      tap(() => this.toast.success('Hasło zostało zmienione')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

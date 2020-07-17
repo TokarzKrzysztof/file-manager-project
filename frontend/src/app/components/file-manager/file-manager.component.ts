@@ -5,8 +5,9 @@ import { UserModel } from 'src/app/models/User';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from 'src/app/dialogs/delete-account-dialog/delete-account-dialog.component';
 import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ChangePasswordDialogComponent, PasswordChangeData } from 'src/app/dialogs/change-password-dialog/change-password-dialog.component';
 
 @Component({
   selector: 'app-file-manager',
@@ -28,13 +29,22 @@ export class FileManagerComponent implements OnInit {
   }
 
   async logout() {
-    const userToken = window.localStorage.getItem('currentUserToken');
-    if (userToken) {
-      await this.authService.logout(userToken);
+    const token = window.localStorage.getItem('currentUserToken');
+    if (token) {
+      await this.authService.logout(token);
       window.localStorage.removeItem('currentUserToken');
       this.authService.clearCurrentUserValue();
       this.router.navigateByUrl('/login');
     }
+  }
+
+  changePassword() {
+    this.dialog.open(ChangePasswordDialogComponent).afterClosed().subscribe((result: PasswordChangeData) => {
+      if (result) {
+        const token = window.localStorage.getItem('currentUserToken');
+        this.authService.changePassword(token, result);
+      }
+    })
   }
 
   async deleteAccount() {
@@ -46,11 +56,12 @@ export class FileManagerComponent implements OnInit {
           password = result;
           return this.showAccountDeleteConfirmationDialog();
         }
+        return of(false);
       })
     ).subscribe(async (result: boolean) => {
       if (result) {
-        const userToken = window.localStorage.getItem('currentUserToken');
-        await this.authService.deleteAccount(userToken, password);
+        const token = window.localStorage.getItem('currentUserToken');
+        await this.authService.deleteAccount(token, password);
         this.router.navigateByUrl('/login');
       }
     });

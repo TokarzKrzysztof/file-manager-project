@@ -15,5 +15,6 @@ namespace backend.Interfaces
         Task<UserViewModel> GetCurrentUser(Guid token);
         Task ActivateAccount(Guid token);
         Task SetAccountUnactive(Guid token, string password);
+        Task ChangePassword(Guid token, PasswordChangeData passwordChangeData);
     }
 }
