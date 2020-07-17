@@ -121,5 +121,20 @@ namespace backend.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpPut("remindPassword")]
+        public async Task<IActionResult> RemindPassword([FromQuery] string email)
+        {
+            try
+            {
+                await _authService.RemindPassword(email);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

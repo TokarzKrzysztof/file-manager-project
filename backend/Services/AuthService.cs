@@ -97,32 +97,26 @@ namespace backend.Services
 
             _context.Users.Add(user);
             _context.History.Add(historyRow);
-            SendEmail(user, emailActivationUrl);
-
             await _context.SaveChangesAsync();
+
+            string mailBody = "<h1>Witaj!</h1> " +
+                "<p>Założyłeś konto w serwisie file manager, aby móc z niego korzystać należy wcześniej aktywować konto</p> " +
+                $"<p>Aby to zrobić kliknij w link: {emailActivationUrl + user.Token} </p>";
+            SendEmail(user, "Rejestracja", mailBody);
             return true;
         }
 
-        private void SendEmail(UserModel user, string emailActivationUrl)
+        private void SendEmail(UserModel user, string subject, string mailBody)
         {
             MimeMessage message = new MimeMessage();
 
-            MailboxAddress from = new MailboxAddress("File Manager Team",
-            "filemanager321@gmail.com");
-            message.From.Add(from);
+            message.From.Add(new MailboxAddress("File Manager Team", "filemanager321@gmail.com"));
+            message.To.Add(new MailboxAddress("User", user.Email));
 
-            MailboxAddress to = new MailboxAddress("User",
-            "filemanager321@gmail.com");
-            message.To.Add(to);
-
-            message.Subject = "Rejestracja";
+            message.Subject = subject;
 
             BodyBuilder bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h1>Witamy!</h1> " +
-                "<p>Założyłeś konto w serwisie file manager, aby móc z niego korzystać należy wcześniej aktywować konto</p> " +
-                $"<p>Aby to zrobić kliknij w link: {emailActivationUrl + user.Token} </p>";
-
-
+            bodyBuilder.HtmlBody = mailBody;
             message.Body = bodyBuilder.ToMessageBody();
 
             using (var smtpClient = new SmtpClient())
@@ -228,6 +222,27 @@ namespace backend.Services
             else
             {
                 throw new Exception("Nie znaleziono użytkownika");
+            }
+        }
+
+        public async Task RemindPassword(string email)
+        {
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsActive);
+
+            if (user != null)
+            {
+                string newPassword = Guid.NewGuid().ToString().Substring(0, 8);
+                user.Password = newPassword;
+
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                string mailBody = $"<h1>Witaj!</h1><p>Twoje nowe tymczasowe hasło: {newPassword}</p>";
+                SendEmail(user, "Przypomnienie hasła", mailBody);
+            }
+            else
+            {
+                throw new Exception("Nie znaleziono użytkownika o podanym adresie email!");
             }
         }
     }

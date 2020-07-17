@@ -16,5 +16,6 @@ namespace backend.Interfaces
         Task ActivateAccount(Guid token);
         Task SetAccountUnactive(Guid token, string password);
         Task ChangePassword(Guid token, PasswordChangeData passwordChangeData);
+        Task RemindPassword(string email);
     }
 }

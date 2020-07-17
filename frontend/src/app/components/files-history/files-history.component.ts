@@ -29,7 +29,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.historyCount = await this.historyService.getHistoryCount(500);
   }
-  
+
   async ngAfterViewInit() {
     this.dataSource.data = await this.historyService.getHistory(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }

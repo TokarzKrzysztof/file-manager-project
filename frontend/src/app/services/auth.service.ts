@@ -113,7 +113,7 @@ export class AuthService {
     ).toPromise();
   }
 
-  changePassword(token: string, passwordChangeData: PasswordChangeData) {
+  changePassword(token: string, passwordChangeData: PasswordChangeData): Promise<any> {
     let params = new HttpParams();
     params = params.append('token', token);
 
@@ -125,6 +125,21 @@ export class AuthService {
         throw new Error(error.error.Message);
       })
     ).toPromise();
+  }
+
+  remindPassword(email: string): Promise<any> {
+    let params = new HttpParams();
+    params = params.append('email', email);
+
+    this.actionsService.startAction();
+    return this.http.put(`${environment.apiUrl}/api/Auth/remindPassword`, {}, { params }).pipe(
+      tap(() => this.toast.success('Twoje nowe hasło zostało wysłane na podanego maila')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   getCurrentUser(token: string): Promise<UserModel> {

@@ -38,16 +38,6 @@ mat-card.login-panel-card {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 80%;
-  min-height: 200px;
-
-  @media(min-width: 1366px) {
-    min-width: 60%;
-  }
-
-  @media(min-width: 1100px) {
-    min-width: 40%;
-  }
 }
 
 mat-form-field.login-panel-field {
@@ -55,5 +45,4 @@ mat-form-field.login-panel-field {
 }
 
 button.login-panel-button {
-  margin-right: 10px;
 }

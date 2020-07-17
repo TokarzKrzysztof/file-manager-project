@@ -21,6 +21,7 @@ import { NumberInputDirective } from './directives/number-input-validation.direc
 import '@angular/common/locales/global/PL';
 import { DeleteAccountDialogComponent } from './dialogs/delete-account-dialog/delete-account-dialog.component';
 import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
+import { RemindPasswordComponent } from './components/remind-password/remind-password.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/
     DisableOnActionDirective,
     NumberInputDirective,
     DeleteAccountDialogComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    RemindPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   formGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
-  })
+  });
 
   constructor(
     private toast: ToastrService,
@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
         await this.authService.activateAccount(params.token);
         this.router.navigateByUrl('/login');
       }
-    })
+    });
   }
 
   async login() {

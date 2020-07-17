@@ -39,12 +39,12 @@ export class FileManagerComponent implements OnInit {
   }
 
   changePassword() {
-    this.dialog.open(ChangePasswordDialogComponent).afterClosed().subscribe((result: PasswordChangeData) => {
+    this.dialog.open(ChangePasswordDialogComponent).afterClosed().subscribe(async (result: PasswordChangeData) => {
       if (result) {
         const token = window.localStorage.getItem('currentUserToken');
-        this.authService.changePassword(token, result);
+        await this.authService.changePassword(token, result);
       }
-    })
+    });
   }
 
   async deleteAccount() {

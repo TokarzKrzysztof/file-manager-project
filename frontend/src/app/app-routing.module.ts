@@ -6,6 +6,7 @@ import { FileManagerComponent } from './components/file-manager/file-manager.com
 import { FilesHistoryComponent } from './components/files-history/files-history.component';
 import { FilesListComponent } from './components/files-list/files-list.component';
 import {AuthGuard} from './guards/auth.guard';
+import { RemindPasswordComponent } from './components/remind-password/remind-password.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login/:token', component: LoginPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'remind-password', component: RemindPasswordComponent },
   {
     path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'files', pathMatch: 'full' },
