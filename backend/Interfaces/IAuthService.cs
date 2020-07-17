@@ -8,10 +8,12 @@ namespace backend.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> Register(UserViewModel userData);
+        Task<bool> Register(UserViewModel userData, string emailActivationUrl);
 
         Task<Guid> Login(string email, string password);
         Task<bool> Logout(Guid token);
         Task<UserViewModel> GetCurrentUser(Guid token);
+        Task ActivateAccount(Guid token);
+        Task SetAccountUnactive(Guid token, string password);
     }
 }

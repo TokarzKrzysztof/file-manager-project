@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { UserModel } from 'src/app/models/User';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -19,10 +19,17 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private toast: ToastrService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(async (params: Params) => {
+      if (params?.token) {
+        await this.authService.activateAccount(params.token);
+        this.router.navigateByUrl('/login');
+      }
+    })
   }
 
   async login() {
@@ -37,5 +44,5 @@ export class LoginPageComponent implements OnInit {
     this.router.navigateByUrl('/file-manager');
   }
 
- 
+
 }

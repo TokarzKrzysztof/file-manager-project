@@ -10,6 +10,7 @@ import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'file-manager', pathMatch: 'full' },
+  { path: 'login/:token', component: LoginPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterComponent },
   {

@@ -1,5 +1,5 @@
 <mat-card class="login-panel-card">
-    <mat-tab-group>
+    <mat-tab-group mat-stretch-tabs>
         <mat-tab label="Dane Użytkownika">
             <form class="login-panel-form" [formGroup]='formGroup' (ngSubmit)='onProceed()'>
                 <mat-form-field class="login-panel-field">
@@ -61,6 +61,7 @@
                 <mat-list-item>
                     <button appDisableOnAction class="login-panel-button" mat-raised-button color='primary' type="submit"
                         (click)='register()'>Zarejestruj się</button>
+                    <button class="login-panel-button" mat-raised-button color='primary' type="button" routerLink='/login'>Przejdź do logowania</button>
                 </mat-list-item>
             </mat-list>
 

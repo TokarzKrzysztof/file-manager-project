@@ -19,6 +19,7 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
 import { DisableOnActionDirective } from './directives/disable-on-action.directive';
 import { NumberInputDirective } from './directives/number-input-validation.directive';
 import '@angular/common/locales/global/PL';
+import { DeleteAccountDialogComponent } from './dialogs/delete-account-dialog/delete-account-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import '@angular/common/locales/global/PL';
     ConvertSizePipe,
     ConfirmationDialogComponent,
     DisableOnActionDirective,
-    NumberInputDirective
+    NumberInputDirective,
+    DeleteAccountDialogComponent
   ],
   imports: [
     BrowserModule,

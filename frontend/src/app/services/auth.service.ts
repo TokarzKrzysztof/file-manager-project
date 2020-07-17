@@ -10,7 +10,6 @@ import { ActionsService } from './actions.service';
   providedIn: 'root'
 })
 export class AuthService {
-
   private currentUserValue: UserModel = null;
 
   constructor(
@@ -56,10 +55,12 @@ export class AuthService {
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
-  register(registerData: UserModel): Promise<any> {
+  register(registerData: UserModel, emailActivationUrl: string): Promise<any> {
+    const params = new HttpParams().append('emailActivationUrl', emailActivationUrl);
+
     this.actionsService.startAction();
-    return this.http.post(`${environment.apiUrl}/api/Auth/register`, registerData).pipe(
-      tap(() => this.toast.success('Zarejestrowano pomyślnie')),
+    return this.http.post(`${environment.apiUrl}/api/Auth/register`, registerData, { params }).pipe(
+      tap(() => this.toast.success('Zarejestrowano w systemie, sprawdź swoją skrzynkę pocztową aby aktywować konto')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -68,8 +69,21 @@ export class AuthService {
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
-  logout(userToken: string): Promise<any> {
-    const params = new HttpParams().append('token', userToken);
+  activateAccount(token: string) {
+    const params = new HttpParams().append('token', token);
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/activateAccount`, {}, { params }).pipe(
+      tap(() => this.toast.success('Konto zostało aktywowane, możesz się teraz zalogować')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  logout(token: string): Promise<any> {
+    const params = new HttpParams().append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/logout`, {}, { params }).pipe(
       tap(() => {
@@ -83,8 +97,23 @@ export class AuthService {
     ).toPromise();
   }
 
-  getCurrentUser(currentUserToken: string): Promise<UserModel> {
-    const params = new HttpParams().append('token', currentUserToken);
+  deleteAccount(token: string, password: string): Promise<any> {
+    let params = new HttpParams();
+    params = params.append('token', token);
+    params = params.append('password', password);
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/deleteAccount`, {}, { params }).pipe(
+      tap(() => this.toast.info('Konto zostało usunięte')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  getCurrentUser(token: string): Promise<UserModel> {
+    const params = new HttpParams().append('token', token);
 
     return this.http.get<UserModel>(`${environment.apiUrl}/api/Auth`, { params }).pipe(
       tap((res: UserModel) => this.currentUserValue = res),

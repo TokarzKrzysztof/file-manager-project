@@ -60,9 +60,8 @@ export class RegisterComponent implements OnInit {
 
     const userData: UserModel = { ...this.formGroup.getRawValue() };
     userData.id = 0;
-
-    await this.authService.register(userData);
-    this.router.navigateByUrl('/login');
+    
+    await this.authService.register(userData, window.location.origin + '/login/');
   }
 
 }

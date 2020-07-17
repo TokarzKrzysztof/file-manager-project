@@ -24,5 +24,7 @@ namespace backend.Models
         public bool IsLoggedIn { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool SystemAccess { get; set; }
     }
 }

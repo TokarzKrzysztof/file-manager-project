@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Operacja wymaga autoryzacji</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Wpisz hasło</mat-label>
+        <input autocomplete='off' matInput type="password" [formControl]='password'>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)='onAccept()'>Usuń konto</button>
+    <button mat-raised-button (click)='onCancel()'>Anuluj</button>
+</div>

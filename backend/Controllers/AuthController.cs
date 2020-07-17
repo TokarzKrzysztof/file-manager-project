@@ -63,15 +63,45 @@ namespace backend.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserViewModel userData)
+        public async Task<IActionResult> Register([FromBody] UserViewModel userData, [FromQuery] string emailActivationUrl)
         {
             try
             {
-                await _authService.Register(userData);
+                await _authService.Register(userData, emailActivationUrl);
                 return Ok();
             }
 
             catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("activateAccount")]
+        public async Task<IActionResult> ActivateAccount([FromQuery] Guid token)
+        {
+            try
+            {
+                await _authService.ActivateAccount(token);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("deleteAccount")]
+        public async Task<IActionResult> DeleteAccount([FromQuery] Guid token, [FromQuery] string password)
+        {
+            try
+            {
+                await _authService.SetAccountUnactive(token, password);
+                return Ok();
+            }
+
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
