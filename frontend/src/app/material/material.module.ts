@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -34,7 +35,8 @@ const materialModules = [
   MatPaginatorModule,
   MatChipsModule,
   MatDialogModule,
-  MatSortModule
+  MatSortModule,
+  MatListModule
 ]
 
 @NgModule({
