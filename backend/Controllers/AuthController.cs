@@ -39,8 +39,8 @@ namespace backend.Controllers
         {
             try
             {
-                Guid userToken = await _authService.Login(email, password);
-                return Ok(userToken);
+                UserViewModel user = await _authService.Login(email, password);
+                return Ok(user);
             }
             catch(Exception ex)
             {

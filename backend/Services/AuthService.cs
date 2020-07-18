@@ -37,7 +37,7 @@ namespace backend.Services
         }
 
 
-        public async Task<Guid> Login(string email, string password)
+        public async Task<UserViewModel> Login(string email, string password)
         {
             UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.Password == password && x.IsActive);
             if (user != null)
@@ -60,7 +60,7 @@ namespace backend.Services
                 _context.History.Add(historyRow);
 
                 await _context.SaveChangesAsync();
-                return user.Token;
+                return UserConverter.ConvertDbModelToViewModel(user);
             }
             else
             {

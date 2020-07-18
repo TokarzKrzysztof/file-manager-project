@@ -40,14 +40,17 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string): Promise<string> {
+  login(email: string, password: string): Promise<UserModel> {
     let params = new HttpParams();
     params = params.append('email', email);
     params = params.append('password', password);
 
     this.actionsService.startAction();
-    return this.http.post<string>(`${environment.apiUrl}/api/Auth/login`, {}, { params }).pipe(
-      tap(() => this.toast.success('Zalogowano pomyślnie')),
+    return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/login`, {}, { params }).pipe(
+      tap((res: UserModel) => {
+        this.currentUserValue = res;
+        this.toast.success('Zalogowano pomyślnie');
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

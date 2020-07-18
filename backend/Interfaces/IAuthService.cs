@@ -10,7 +10,7 @@ namespace backend.Interfaces
     {
         Task<bool> Register(UserViewModel userData, string emailActivationUrl);
 
-        Task<Guid> Login(string email, string password);
+        Task<UserViewModel> Login(string email, string password);
         Task<bool> Logout(Guid token);
         Task<UserViewModel> GetCurrentUser(Guid token);
         Task ActivateAccount(Guid token);
