@@ -17,6 +17,7 @@ namespace backend.Helpers
             userDbModel.Name = userViewModel.name;
             userDbModel.Surname = userViewModel.surname;
             userDbModel.Password = userViewModel.password;
+            userDbModel.Role = userViewModel.role;
 
             return userDbModel;
         }
@@ -31,8 +32,16 @@ namespace backend.Helpers
             userViewModel.password = userModel.Password;
             userViewModel.isLoggedIn = userModel.IsLoggedIn;
             userViewModel.token = userModel.Token;
+            userViewModel.role = userModel.Role;
+            userViewModel.systemAccess = userModel.SystemAccess;
+            userViewModel.systemEditingEnabled = userModel.SystemEditingEnabled;
 
             return userViewModel;
+        }
+
+        public static List<UserViewModel> ConvertDbListToViewList(List<UserModel> users)
+        {
+            return users.Select(x => ConvertDbModelToViewModel(x)).ToList();
         }
     }
 }

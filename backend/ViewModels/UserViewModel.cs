@@ -17,6 +17,9 @@ namespace backend.ViewModels
         public bool isLoggedIn { get; set; }
 
         public Guid token { get; set; }
+        public string role { get; set; }
+        public bool systemAccess { get; set; }
+        public bool systemEditingEnabled { get; set; }
 #nullable enable
         public string? passwordRepeat { get; set; }
 

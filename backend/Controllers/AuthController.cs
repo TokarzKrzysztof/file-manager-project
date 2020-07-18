@@ -34,6 +34,20 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("getAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                List<UserViewModel> users = await _authService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
         {
@@ -128,6 +142,36 @@ namespace backend.Controllers
             try
             {
                 await _authService.RemindPassword(email);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("disableUsersSystemAccess")]
+        public async Task<IActionResult> disableUsersSystemAccess([FromQuery] int[] ids)
+        {
+            try
+            {
+                await _authService.disableUsersSystemAccess(ids);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("disableUsersSystemEditing")]
+        public async Task<IActionResult> disableUsersSystemEditing([FromQuery] int[] ids)
+        {
+            try
+            {
+                await _authService.disableUsersSystemEditing(ids);
                 return Ok();
             }
 

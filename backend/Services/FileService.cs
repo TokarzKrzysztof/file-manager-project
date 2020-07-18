@@ -33,7 +33,6 @@ namespace backend.Services
 
                     HistoryModel historyRow = new HistoryModel()
                     {
-                        ActionDate = DateTime.Now,
                         Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
                         UserData = userData
                     };
@@ -61,7 +60,7 @@ namespace backend.Services
 
         public async Task<List<FileViewModel>> GetFiles()
         {
-            List<FileModel> dbFiles = await _context.Files.Where(x => x.IsActive).ToListAsync();
+            List<FileModel> dbFiles = await _context.Files.ToListAsync();
             return FileConverter.ConvertDbListToViewModelList(dbFiles);
         }
 
@@ -95,19 +94,15 @@ namespace backend.Services
 
                     FileModel fileToSave = new FileModel()
                     {
-                        Id = 0,
                         FileName = fileName,
                         FilePath = filePath,
-                        UploadTime = DateTime.Now,
                         ContentType = file.ContentType,
                         Size = file.Length,
-                        IsActive = true,
                         CreatedBy = userData
                     };
 
                     HistoryModel historyRow = new HistoryModel()
                     {
-                        ActionDate = DateTime.Now,
                         Description = "Użytkownik dodał plik o nazwie: " + fileName,
                         UserData = userData
                     };

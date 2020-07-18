@@ -42,7 +42,7 @@ namespace backend.Services
             UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.Password == password && x.IsActive);
             if (user != null)
             {
-                if (user.SystemAccess == false)
+                if (user.IsAccountActivated == false)
                 {
                     throw new InvalidOperationException("Prosimy najpierw aktywować konto!");
                 }
@@ -51,7 +51,6 @@ namespace backend.Services
 
                 HistoryModel historyRow = new HistoryModel()
                 {
-                    ActionDate = DateTime.Now,
                     Description = "Użytkownik zalogował się do systemu",
                     UserData = user.Name + " " + user.Surname
                 };
@@ -82,15 +81,9 @@ namespace backend.Services
             }
 
             UserModel user = UserConverter.ConvertViewModelToDbModel(userData);
-            user.IsActive = true;
-            user.IsLoggedIn = false;
-            user.SystemAccess = false;
-            user.CreationDate = DateTime.Now;
-            user.Token = Guid.NewGuid();
 
             HistoryModel historyRow = new HistoryModel()
             {
-                ActionDate = DateTime.Now,
                 Description = "Użytkownik zarejestrował się w systemie",
                 UserData = user.Name + " " + user.Surname
             };
@@ -137,7 +130,6 @@ namespace backend.Services
 
                 HistoryModel historyRow = new HistoryModel()
                 {
-                    ActionDate = DateTime.Now,
                     Description = "Użytkownik wylogował się z systemu",
                     UserData = user.Name + " " + user.Surname
                 };
@@ -159,7 +151,7 @@ namespace backend.Services
             UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Token == token && x.IsActive);
             if (user != null)
             {
-                user.SystemAccess = true;
+                user.IsAccountActivated = true;
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
             }
@@ -184,7 +176,6 @@ namespace backend.Services
 
                 HistoryModel historyRow = new HistoryModel()
                 {
-                    ActionDate = DateTime.Now,
                     Description = "Użytkownik usunął konto",
                     UserData = user.Name + " " + user.Surname
                 };
@@ -205,12 +196,12 @@ namespace backend.Services
 
             if (user != null)
             {
-                if(passwordChangeData.newPassword != passwordChangeData.newPasswordRepeat)
+                if (passwordChangeData.newPassword != passwordChangeData.newPasswordRepeat)
                 {
                     throw new InvalidOperationException("Hasła nie są zgodne!");
                 }
 
-                if(user.Password != passwordChangeData.oldPassword)
+                if (user.Password != passwordChangeData.oldPassword)
                 {
                     throw new InvalidOperationException("Niepoprawne hasło!");
                 }
@@ -244,6 +235,50 @@ namespace backend.Services
             {
                 throw new Exception("Nie znaleziono użytkownika o podanym adresie email!");
             }
+        }
+
+        public async Task<List<UserViewModel>> GetAllUsers()
+        {
+            List<UserModel> users = await _context.Users.OrderBy(x => x.Role).Where(x => x.IsActive).ToListAsync();
+            return UserConverter.ConvertDbListToViewList(users);
+        }
+
+        public async Task disableUsersSystemAccess(int[] ids)
+        {
+            foreach (int id in ids)
+            {
+                UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
+                if (user != null)
+                {
+                    user.SystemAccess = false;
+                    _context.Users.Update(user);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task disableUsersSystemEditing(int[] ids)
+        {
+            foreach (int id in ids)
+            {
+                UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
+                if (user != null)
+                {
+                    user.SystemEditingEnabled = false;
+                    _context.Users.Update(user);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
