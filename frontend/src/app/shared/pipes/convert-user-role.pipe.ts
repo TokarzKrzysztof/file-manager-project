@@ -12,7 +12,7 @@ export class ConvertUserRolePipe implements PipeTransform {
     else if (role === 'ADMIN') {
       return 'Administrator';
     }
-    else {
+    else if (role !== '' && typeof role === 'string') {
       throw new Error('Invalid user role!');
     }
   }

@@ -17,9 +17,9 @@ namespace backend.Models
         public string Password { get; set; }
 
         public string Email { get; set; }
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; set; }
 
-        public Guid Token { get; }
+        public Guid Token { get; set; }
 
         public bool IsLoggedIn { get; set; }
 

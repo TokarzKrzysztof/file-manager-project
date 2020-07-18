@@ -12,7 +12,7 @@ namespace backend.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public DateTime ActionDate { get; }
+        public DateTime ActionDate { get; set; }
         public string Description { get; set; }
         public string UserData { get; set; }
 
