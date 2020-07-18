@@ -1,14 +1,14 @@
 import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { FilesService } from '../../services/files.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../auth-modules/auth.service';
+import { FileModel } from 'src/app/models/File';
+import { UserModel } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { MatSort } from '@angular/material/sort';
-import { UserModel } from '../../../auth-modules/model-UserModel';
-import { FileModel } from '../../model-FileModel';
-import { FilesService } from '../../files.service';
-import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -57,7 +57,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         return -1;
       }
       return a.order - b.order;
-    });
+    })
 
     this.dataSource.data = files;
   }

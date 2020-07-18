@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from 'src/app/models/User';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UserModel } from '../model-UserModel';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginPageComponent implements OnInit {
   formGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
@@ -42,4 +42,6 @@ export class LoginComponent implements OnInit {
     window.localStorage.setItem('currentUserToken', currentUser.token);
     this.router.navigateByUrl('/file-manager');
   }
+
+
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { ActionsService } from 'src/app/shared/services/actions.service';
-import { FileModel } from './model-FileModel';
-
+import { FileModel } from '../models/File';
+import { ActionsService } from './actions.service';
 
 @Injectable({
   providedIn: 'root'

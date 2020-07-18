@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserModel } from '../../models/User';
 import { Router } from '@angular/router';
 import { MatTabGroup } from '@angular/material/tabs';
-import { AuthService } from '../auth.service';
-import { UserModel } from '../model-UserModel';
 
 @Component({
   selector: 'app-register',

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { catchError, max } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { HistoryModel } from './model-HistoryModel';
+import { HistoryModel } from '../models/History';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { HistoryService } from '../../history.service';
-import { HistoryModel } from '../../model-HistoryModel';
+import { HistoryService } from '../../services/history.service';
+import { HistoryModel } from 'src/app/models/History';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
