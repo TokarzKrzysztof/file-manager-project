@@ -10,6 +10,8 @@ import { DeleteAccountDialogComponent } from '../modules/file-manager-modules/di
 import { NumberInputDirective } from './directives/number-input-validation.directive';
 import { DisableOnActionDirective } from './directives/disable-on-action.directive';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ConvertUserRolePipe } from './pipes/convert-user-role.pipe';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
 
 
 
@@ -20,7 +22,9 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     DeleteAccountDialogComponent,
     NumberInputDirective,
     DisableOnActionDirective,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ConvertUserRolePipe,
+    UserPanelComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     DeleteAccountDialogComponent,
     NumberInputDirective,
     DisableOnActionDirective,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ConvertUserRolePipe,
+    UserPanelComponent
   ]
 })
 export class SharedModule { }

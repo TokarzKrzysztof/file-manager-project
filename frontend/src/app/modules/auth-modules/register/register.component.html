@@ -19,8 +19,8 @@
                 </mat-form-field>
                 <mat-form-field class="login-panel-field">
                     <mat-label class="login-panel-label">Hasło:</mat-label>
-                    <input autocomplete='new-password' class="login-panel-input" [type]="hidePassword ? 'password' : 'text'"
-                        matInput formControlName='password'>
+                    <input autocomplete='new-password' class="login-panel-input"
+                        [type]="hidePassword ? 'password' : 'text'" matInput formControlName='password'>
                     <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
@@ -33,6 +33,14 @@
                     <button mat-icon-button matSuffix (click)="hidePasswordRepeat = !hidePasswordRepeat">
                         <mat-icon>{{hidePasswordRepeat ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+                    <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
+                </mat-form-field>
+                <mat-form-field class="login-panel-field">
+                    <mat-label class="login-panel-label">Zarejestruj jako:</mat-label>
+                    <mat-select formControlName='role'>
+                        <mat-option value='USER'>{{'USER' | convertUserRole}}</mat-option>
+                        <mat-option value='ADMIN'>{{'ADMIN' | convertUserRole}}</mat-option>
+                    </mat-select>
                     <mat-error class="login-panel-error-message">Pole jest wymagane</mat-error>
                 </mat-form-field>
 
@@ -58,10 +66,14 @@
                         {{showPasswordOnSummary ? 'Ukryj' : 'Pokaż'}}
                     </button>
                 </mat-list-item>
+                <mat-list-item role="listitem">
+                    Zarejestruj jako: {{formGroup.get('role').value | convertUserRole}}
+                </mat-list-item>
                 <mat-list-item>
-                    <button appDisableOnAction class="login-panel-button" mat-raised-button color='primary' type="submit"
-                        (click)='register()'>Zarejestruj się</button>
-                    <button class="login-panel-button" mat-raised-button color='primary' type="button" routerLink='/login'>Przejdź do logowania</button>
+                    <button appDisableOnAction class="login-panel-button" mat-raised-button color='primary'
+                        type="submit" (click)='register()'>Zarejestruj się</button>
+                    <button class="login-panel-button" mat-raised-button color='primary' type="button"
+                        routerLink='/login'>Przejdź do logowania</button>
                 </mat-list-item>
             </mat-list>
 

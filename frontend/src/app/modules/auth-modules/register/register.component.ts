@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { MatTabGroup } from '@angular/material/tabs';
 import { AuthService } from '../auth.service';
 import { UserModel } from '../model-UserModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,8 @@ export class RegisterComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
-    passwordRepeat: new FormControl('', [Validators.required])
+    passwordRepeat: new FormControl('', [Validators.required]),
+    role: new FormControl('', [Validators.required])
   });
 
   @ViewChild(MatTabGroup) tabsGroup: MatTabGroup;
@@ -62,6 +63,7 @@ export class RegisterComponent implements OnInit {
     userData.id = 0;
 
     await this.authService.register(userData, window.location.origin + '/login/');
+    this.router.navigateByUrl('/login');
   }
 
 }

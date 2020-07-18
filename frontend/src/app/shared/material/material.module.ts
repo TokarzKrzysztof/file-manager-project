@@ -16,6 +16,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 
@@ -36,7 +38,8 @@ const materialModules = [
   MatChipsModule,
   MatDialogModule,
   MatSortModule,
-  MatListModule
+  MatListModule,
+  MatSelectModule
 ]
 
 @NgModule({

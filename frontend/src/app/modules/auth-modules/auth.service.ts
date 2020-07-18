@@ -41,6 +41,16 @@ export class AuthService {
     });
   }
 
+  getAllUsers(): Promise<UserModel[]> {
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/getAllUsers`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
   login(email: string, password: string): Promise<UserModel> {
     let params = new HttpParams();
     params = params.append('email', email);

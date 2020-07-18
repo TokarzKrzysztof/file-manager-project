@@ -3,24 +3,8 @@
         <a mat-tab-link active routerLink='files'> Lista plików </a>
         <a mat-tab-link routerLink='history'> Historia </a>
     </div>
-    <div class="user-control-panel">
-        <p class="user-credentials">
-            <span class="login-as-label">Zalogowany jako:</span>
-            <span class="user-data">{{currentUser?.name}} {{currentUser?.surname}}</span>
-        </p>
-        <a mat-tab-link [matMenuTriggerFor]="menu">Menu</a>
-        <mat-menu #menu="matMenu">
-            <a mat-menu-item (click)='logout()'>
-                Wyloguj
-            </a>
-            <a mat-menu-item (click)='changePassword()'>
-                Zmień hasło
-            </a>
-            <a mat-menu-item (click)='deleteAccount()'>
-                Usuń konto
-            </a>
-        </mat-menu>
-    </div>
+
+    <app-user-panel [showAdministrationPanelLink]='true'></app-user-panel>
 </nav>
 
 <router-outlet></router-outlet>

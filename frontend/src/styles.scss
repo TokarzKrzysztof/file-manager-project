@@ -46,3 +46,17 @@ mat-form-field.login-panel-field {
 
 button.login-panel-button {
 }
+
+.file-manager-main-tabs .mat-tab-links {
+  justify-content: space-between;
+}
+
+.user-control-panel {
+  display: flex;
+  align-items: center;
+
+  .user-data{
+      margin: 0 5px;
+      font-weight: bold;
+  }
+}

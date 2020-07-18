@@ -1,0 +1,10 @@
+<mat-selection-list>
+  <mat-list-option [disabled]='user.role === "ADMIN"' color='primary' *ngFor="let user of users">
+    <p matLine>{{user.name}} {{user.surname}}</p>
+    <p matLine>{{user.role | convertUserRole}}</p>
+  </mat-list-option>
+  <mat-list-item role="listitem">
+    <button mat-raised-button color='primary'>Zablokuj dostęp do systemu</button>
+    <button mat-raised-button color='primary'>Zablokuj edycję danych w systemie</button>
+  </mat-list-item>
+</mat-selection-list>

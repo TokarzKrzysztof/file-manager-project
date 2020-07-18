@@ -27,6 +27,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/file-manager-modules/file-manager/file-manager.module').then(m => m.FileManagerModule),
   },
+  {
+    path: 'administration',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/administration-modules/administration/administration.module').then(m => m.AdministrationModule),
+  },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 

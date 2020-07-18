@@ -1,0 +1,12 @@
+<nav mat-tab-nav-bar class="file-manager-main-tabs">
+    <div>
+        <a mat-tab-link active routerLink='users-list'> Lista Użytkowników </a>
+        <a mat-tab-link routerLink='global-settings'> Ustawienia globalne </a>
+    </div>
+    
+    <app-user-panel [showFileManagerLink]='true'></app-user-panel>
+</nav>
+
+<mat-card>
+    <router-outlet></router-outlet>
+</mat-card>

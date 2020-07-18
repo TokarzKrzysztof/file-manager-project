@@ -1,0 +1,24 @@
+<div class="user-control-panel">
+    <p class="user-credentials">
+        <span class="login-as-label">Zalogowany jako:</span>
+        <span class="user-data">{{currentUser?.name}} {{currentUser?.surname}}</span>
+    </p>
+    <a mat-tab-link [matMenuTriggerFor]="menu">Menu</a>
+    <mat-menu #menu="matMenu">
+        <a mat-menu-item (click)='logout()'>
+            Wyloguj
+        </a>
+        <a mat-menu-item (click)='changePassword()'>
+            Zmień hasło
+        </a>
+        <a mat-menu-item (click)='deleteAccount()'>
+            Usuń konto
+        </a>
+        <a mat-menu-item *ngIf='showAdministrationPanelLink && currentUser?.role === "ADMIN"' (click)='showAdminPanel()'>
+            Panel administratora
+        </a>
+        <a mat-menu-item *ngIf='showFileManagerLink' (click)='showFileManager()'>
+            Menadżer plików
+        </a>
+    </mat-menu>
+</div>
