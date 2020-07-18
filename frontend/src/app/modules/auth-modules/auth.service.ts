@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { UserModel } from '../models/User';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, tap } from 'rxjs/operators';
-import { ActionsService } from './actions.service';
-import { PasswordChangeData } from '../dialogs/change-password-dialog/change-password-dialog.component';
+import { UserModel } from './model-UserModel';
+import { ActionsService } from 'src/app/shared/services/actions.service';
+import { PasswordChangeData } from '../file-manager-modules/dialogs/change-password-dialog/change-password-dialog.component';
+
 
 @Injectable({
   providedIn: 'root'

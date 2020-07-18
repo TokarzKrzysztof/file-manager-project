@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserModel } from 'src/app/models/User';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteAccountDialogComponent } from 'src/app/dialogs/delete-account-dialog/delete-account-dialog.component';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { ConfirmationDialogComponent, ConfirmationDialogData } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
-import { ChangePasswordDialogComponent, PasswordChangeData } from 'src/app/dialogs/change-password-dialog/change-password-dialog.component';
+import { UserModel } from '../../auth-modules/model-UserModel';
+import { AuthService } from '../../auth-modules/auth.service';
+import { ChangePasswordDialogComponent, PasswordChangeData } from '../dialogs/change-password-dialog/change-password-dialog.component';
+import { DeleteAccountDialogComponent } from '../dialogs/delete-account-dialog/delete-account-dialog.component';
+import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-file-manager',
