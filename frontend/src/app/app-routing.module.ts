@@ -1,28 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { RegisterComponent } from './components/register/register.component';
-import { FileManagerComponent } from './components/file-manager/file-manager.component';
-import { FilesHistoryComponent } from './components/files-history/files-history.component';
-import { FilesListComponent } from './components/files-list/files-list.component';
-import {AuthGuard} from './guards/auth.guard';
-import { RemindPasswordComponent } from './components/remind-password/remind-password.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'file-manager', pathMatch: 'full' },
-  { path: 'login/:token', component: LoginPageComponent },
-  { path: 'login', component: LoginPageComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'remind-password', component: RemindPasswordComponent },
   {
-    path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], children: [
-      { path: '', redirectTo: 'files', pathMatch: 'full' },
-      { path: 'files', component: FilesListComponent },
-      { path: 'history', component: FilesHistoryComponent }
-    ]
+    path: 'login/:token',
+    loadChildren: () => import('./modules/auth-modules/login/login.module').then(m => m.LoginModule)
   },
-  {path: '**', redirectTo: 'login', pathMatch: 'full'}
+  {
+    path: 'login',
+    loadChildren: () => import('./modules/auth-modules/login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./modules/auth-modules/register/register.module').then(m => m.RegisterModule)
+  },
+  {
+    path: 'remind-password',
+    loadChildren: () => import('./modules/auth-modules/remind-password/remind-password.module').then(m => m.RemindPasswordModule)
+  },
+  {
+    path: 'file-manager',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/file-manager-modules/file-manager/file-manager.module').then(m => m.FileManagerModule),
+  },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
