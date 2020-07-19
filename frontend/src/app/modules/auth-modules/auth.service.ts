@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './model-UserModel';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { PasswordChangeData } from '../file-manager-modules/dialogs/change-password-dialog/change-password-dialog.component';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
-    private actionsService: ActionsService
+    private actionsService: ActionsService,
+    private router: Router
   ) { }
 
   clearCurrentUserValue() {
@@ -61,6 +63,7 @@ export class AuthService {
       tap((res: UserModel) => {
         this.currentUserValue = res;
         this.toast.success('Zalogowano pomyślnie');
+        this.checkCurrentUserBlockades();
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -84,7 +87,7 @@ export class AuthService {
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
-  activateAccount(token: string) {
+  activateAccount(token: string): Promise<any> {
     const params = new HttpParams().append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/activateAccount`, {}, { params }).pipe(
@@ -97,12 +100,15 @@ export class AuthService {
     ).toPromise();
   }
 
-  logout(token: string): Promise<any> {
+  logout(token: string, dontShowToast?: boolean): Promise<any> {
     const params = new HttpParams().append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/logout`, {}, { params }).pipe(
       tap(() => {
-        return this.toast.success('Wylogowano pomyślnie');
+        if (dontShowToast) {
+          return;
+        }
+        this.toast.success('Wylogowano pomyślnie');
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -160,7 +166,10 @@ export class AuthService {
     const params = new HttpParams().append('token', token);
 
     return this.http.get<UserModel>(`${environment.apiUrl}/api/Auth`, { params }).pipe(
-      tap((res: UserModel) => this.currentUserValue = res),
+      tap((res: UserModel) => {
+        this.currentUserValue = res;
+        this.checkCurrentUserBlockades();
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -168,4 +177,64 @@ export class AuthService {
       })
     ).toPromise();
   }
+
+  disableUsersSystemEditing(selectedUsersIds: number[]): Promise<any> {
+    let params = new HttpParams();
+    selectedUsersIds.forEach((id: number) => {
+      params = params.append('ids', id.toString());
+    });
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/disableUsersSystemEditing`, {}, { params }).pipe(
+      tap(() => this.toast.success('Zablokowano możliwość edycji przez wybranych użytkowników')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  disableUsersSystemAccess(selectedUsersIds: number[]): Promise<any> {
+    let params = new HttpParams();
+    selectedUsersIds.forEach((id: number) => {
+      params = params.append('ids', id.toString());
+    });
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/disableUsersSystemAccess`, {}, { params }).pipe(
+      tap(() => this.toast.success('Zablokowano dostęp do systemu dla wybranych użytkowników')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  unlockUser(id: number): Promise<any> {
+    const params = new HttpParams().append('id', id.toString());
+
+    return this.http.put(`${environment.apiUrl}/api/Auth/unlockUser`, {}, { params }).pipe(
+      tap(() => this.toast.success('Użytkownik został odblokowany')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  private async checkCurrentUserBlockades() {
+    if (this.currentUserValue.systemEditingEnabled === false) {
+      this.toast.warning('Możliwość dodawania, edycji i usuwania plików została dla Ciebie zablokowana');
+    }
+
+    if (this.currentUserValue.systemAccess === false) {
+      await this.logout(this.currentUserValue.token, true);
+      this.toast.error('Twoje konto zostało zablokowane');
+      window.localStorage.removeItem('currentUserToken');
+      this.clearCurrentUserValue();
+      this.router.navigateByUrl('/login');
+    }
+  }
+
 }

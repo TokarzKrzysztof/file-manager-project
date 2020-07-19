@@ -18,7 +18,8 @@ namespace backend.Interfaces
         Task ChangePassword(Guid token, PasswordChangeData passwordChangeData);
         Task RemindPassword(string email);
         Task<List<UserViewModel>> GetAllUsers();
-        Task disableUsersSystemAccess(int[] ids);
-        Task disableUsersSystemEditing(int[] ids);
+        Task DisableUsersSystemAccess(int[] ids);
+        Task DisableUsersSystemEditing(int[] ids);
+        Task UnlockUser(int id);
     }
 }

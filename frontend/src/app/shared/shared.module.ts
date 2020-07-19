@@ -12,6 +12,7 @@ import { DisableOnActionDirective } from './directives/disable-on-action.directi
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ConvertUserRolePipe } from './pipes/convert-user-role.pipe';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { BooleanPipe } from './pipes/boolean.pipe';
 
 
 
@@ -24,7 +25,8 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
     DisableOnActionDirective,
     ConfirmationDialogComponent,
     ConvertUserRolePipe,
-    UserPanelComponent
+    UserPanelComponent,
+    BooleanPipe
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
     DisableOnActionDirective,
     ConfirmationDialogComponent,
     ConvertUserRolePipe,
-    UserPanelComponent
+    UserPanelComponent,
+    BooleanPipe
   ]
 })
 export class SharedModule { }

@@ -47,6 +47,11 @@ namespace backend.Services
                     throw new InvalidOperationException("Prosimy najpierw aktywować konto!");
                 }
 
+                if (user.SystemAccess == false)
+                {
+                    throw new InvalidOperationException("Twoje konto zostało zablokowane");
+                }
+
                 user.IsLoggedIn = true;
 
                 HistoryModel historyRow = new HistoryModel()
@@ -243,7 +248,7 @@ namespace backend.Services
             return UserConverter.ConvertDbListToViewList(users);
         }
 
-        public async Task disableUsersSystemAccess(int[] ids)
+        public async Task DisableUsersSystemAccess(int[] ids)
         {
             foreach (int id in ids)
             {
@@ -262,7 +267,7 @@ namespace backend.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task disableUsersSystemEditing(int[] ids)
+        public async Task DisableUsersSystemEditing(int[] ids)
         {
             foreach (int id in ids)
             {
@@ -279,6 +284,23 @@ namespace backend.Services
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UnlockUser(int id)
+        {
+            UserModel user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
+
+            if (user != null)
+            {
+                user.SystemAccess = true;
+                user.SystemEditingEnabled = true;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException($"Nie znaleziono użytkownika o podanym ID: {id}");
+            }
         }
     }
 }

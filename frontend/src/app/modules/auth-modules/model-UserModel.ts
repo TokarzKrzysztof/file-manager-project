@@ -7,5 +7,7 @@ export interface UserModel {
     passwordRepeat?: string;
     isLoggedIn: boolean;
     token: string;
+    systemAccess: boolean;
+    systemEditingEnabled: boolean;
     role: 'ADMIN' | 'USER';
 }

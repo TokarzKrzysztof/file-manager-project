@@ -1,12 +1,11 @@
 <mat-toolbar class="files-list-toolbar">
     <mat-toolbar-row>
         <div>
-            <button mat-stroked-button (click)='fileInput.click()'
+            <button mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false' (click)='fileInput.click()'
                 matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi 1GB'>Dodaj pliki</button>
             <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
-            <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary'
-                *ngIf='preparedFiles.length'>Wyślij</button>
-            <button appDisableOnAction mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
+            <button  appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
+            <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
                 <mat-icon>delete</mat-icon>
             </button>
 
@@ -55,7 +54,7 @@
             <mat-form-field floatLabel='never'>
                 <input autocomplete='off' disabled #inputTitle (keypress)='onPropertyEdit($event, inputTitle, element, "title")' [value]='element.title' matInput>
             </mat-form-field>
-            <button (click)='onEditClick(inputTitle, element.title)' mat-icon-button class="edit-icon-button">
+            <button [disabled]='currentUser?.systemEditingEnabled === false' (click)='onEditClick(inputTitle, element.title)' mat-icon-button class="edit-icon-button">
                 <mat-icon *ngIf='inputTitle.disabled' matTooltip='Edytuj'>create</mat-icon>
                 <mat-icon *ngIf='!inputTitle.disabled' matTooltip='Anuluj'>clear</mat-icon>
             </button>
@@ -88,7 +87,7 @@
             <mat-form-field floatLabel='never'>
                 <input appNumberInput autocomplete='off' disabled #inputOrder (keypress)='onPropertyEdit($event, inputOrder, element, "order")' [value]='element.order' matInput>
             </mat-form-field>
-            <button (click)='onEditClick(inputOrder, element.order)' mat-icon-button class="edit-icon-button">
+            <button [disabled]='currentUser?.systemEditingEnabled === false' (click)='onEditClick(inputOrder, element.order)' mat-icon-button class="edit-icon-button">
                 <mat-icon *ngIf='inputOrder.disabled' matTooltip='Edytuj'>create</mat-icon>
                 <mat-icon *ngIf='!inputOrder.disabled' matTooltip='Anuluj'>clear</mat-icon>
             </button>

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild(MatTabGroup) tabsGroup: MatTabGroup;
   canShowSummary: boolean;
   showPasswordOnSummary = false;
   hidePassword = true;
@@ -26,7 +27,6 @@ export class RegisterComponent implements OnInit {
     role: new FormControl('', [Validators.required])
   });
 
-  @ViewChild(MatTabGroup) tabsGroup: MatTabGroup;
 
   constructor(
     private authService: AuthService,

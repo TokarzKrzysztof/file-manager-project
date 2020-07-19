@@ -17,10 +17,10 @@ interface PageData {
   styleUrls: ['./files-history.component.scss']
 })
 export class FilesHistoryComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   historyCount = 0;
   dataSource = new MatTableDataSource<HistoryModel>();
   displayedColumns = ['actionDate', 'description', 'userData'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private historyService: HistoryService

@@ -152,11 +152,11 @@ namespace backend.Controllers
         }
 
         [HttpPut("disableUsersSystemAccess")]
-        public async Task<IActionResult> disableUsersSystemAccess([FromQuery] int[] ids)
+        public async Task<IActionResult> DisableUsersSystemAccess([FromQuery] int[] ids)
         {
             try
             {
-                await _authService.disableUsersSystemAccess(ids);
+                await _authService.DisableUsersSystemAccess(ids);
                 return Ok();
             }
 
@@ -167,11 +167,26 @@ namespace backend.Controllers
         }
 
         [HttpPut("disableUsersSystemEditing")]
-        public async Task<IActionResult> disableUsersSystemEditing([FromQuery] int[] ids)
+        public async Task<IActionResult> DisableUsersSystemEditing([FromQuery] int[] ids)
         {
             try
             {
-                await _authService.disableUsersSystemEditing(ids);
+                await _authService.DisableUsersSystemEditing(ids);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("unlockUser")]
+        public async Task<IActionResult> UnlockUser([FromQuery] int id)
+        {
+            try
+            {
+                await _authService.UnlockUser(id);
                 return Ok();
             }
 

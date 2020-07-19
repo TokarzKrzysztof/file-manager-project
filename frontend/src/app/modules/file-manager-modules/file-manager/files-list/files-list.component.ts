@@ -18,12 +18,12 @@ import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/sha
   encapsulation: ViewEncapsulation.None
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<FileModel>;
   currentUser: UserModel;
   displayedColumns: string[] = ['select', 'title', 'fileName', 'uploadTime', 'createdBy', 'size', 'order'];
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<FileModel>;
   preparedFiles: File[] = [];
 
   constructor(
