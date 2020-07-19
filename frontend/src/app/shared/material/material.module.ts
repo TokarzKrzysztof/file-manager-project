@@ -17,8 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -39,7 +39,9 @@ const materialModules = [
   MatDialogModule,
   MatSortModule,
   MatListModule,
-  MatSelectModule
+  MatSelectModule,
+  MatAutocompleteModule,
+  MatExpansionModule
 ]
 
 @NgModule({

@@ -223,6 +223,28 @@ export class AuthService {
     ).toPromise();
   }
 
+  searchForUsers(searchString: string): Promise<UserModel[]> {
+    const params = new HttpParams().append('searchString', searchString);
+
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/searchForUsers`, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  getBlockedUsers(): Promise<UserModel[]> {
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/getBlockedUsers`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
   private async checkCurrentUserBlockades() {
     if (this.currentUserValue.systemEditingEnabled === false) {
       this.toast.warning('Możliwość dodawania, edycji i usuwania plików została dla Ciebie zablokowana');

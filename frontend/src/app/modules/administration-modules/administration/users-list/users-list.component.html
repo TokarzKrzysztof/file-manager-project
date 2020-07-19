@@ -1,13 +1,18 @@
+<mat-form-field>
+  <mat-label>Wyszukaj użytkowników: </mat-label>
+  <input matInput [formControl]="usersSearch" placeholder="Imię, nazwisko, adres email...">
+</mat-form-field>
+
 <mat-selection-list disableRipple>
-  <mat-list-option [disabled]='user.role === "ADMIN"' color='primary' *ngFor="let user of usersForList" [value]='user'>
+  <mat-list-option [disabled]='user.role === "ADMIN"' color='primary' *ngFor="let user of users" [value]='user'>
     <p matLine>{{user.name}} {{user.surname}}</p>
+    <p matLine>{{user.email}}</p>
     <p matLine>{{user.role | convertUserRole}}</p>
   </mat-list-option>
-  <mat-list-item role="listitem">
-    <button mat-raised-button color='primary' (click)='onBlockAccess()'>Zablokuj dostęp do systemu</button>
-    <button mat-raised-button color='primary' (click)='onBlockEdit()'>Zablokuj edycję danych w systemie</button>
-  </mat-list-item>
 </mat-selection-list>
+
+<button mat-raised-button color='primary' (click)='onBlockAccess()'>Zablokuj dostęp do systemu</button>
+<button mat-raised-button color='primary' (click)='onBlockEdit()'>Zablokuj edycję danych w systemie</button>
 
 <h2>Zablokowani użytkownicy</h2>
 

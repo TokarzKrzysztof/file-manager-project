@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth-modules/auth.service';
 import { UserModel } from 'src/app/modules/auth-modules/model-UserModel';
 import { MatSelectionList, MatListOption } from '@angular/material/list';
+import { FormControl } from '@angular/forms';
+import { debounce, debounceTime, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users-list',
@@ -10,9 +12,9 @@ import { MatSelectionList, MatListOption } from '@angular/material/list';
 })
 export class UsersListComponent implements OnInit {
   @ViewChild(MatSelectionList) selectionList: MatSelectionList;
+  usersSearch = new FormControl('');
   currentUser: UserModel;
-  allUsers: UserModel[] = [];
-  usersForList: UserModel[] = [];
+  users: UserModel[] = [];
   blockedUsers: UserModel[] = [];
   displayedColumns = ['userData', 'blockEdit', 'blockAccess', 'actions'];
 
@@ -22,19 +24,25 @@ export class UsersListComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser = await this.authService.getCurrentUserValue();
-    this.loadUsers();
+
+    this.usersSearch.valueChanges.pipe(
+      filter((value: string) => value !== '' && value.length >= 2),
+      debounceTime(300)
+    ).subscribe(async (searchString: string) => {
+      this.users = await this.authService.searchForUsers(searchString);
+      this.users = this.users.filter(x => x.id !== this.currentUser.id);
+    });
+
+    this.getBlockedUsers();
   }
 
-  async loadUsers() {
-    this.allUsers = await this.authService.getAllUsers();
-
-    this.usersForList = this.allUsers.filter(x => x.id !== this.currentUser.id && (x.systemAccess || x.systemEditingEnabled));
-    this.blockedUsers = this.allUsers.filter(x => x.systemAccess === false || x.systemEditingEnabled === false);
+  async getBlockedUsers() {
+    this.blockedUsers = await this.authService.getBlockedUsers();
   }
 
   async unlockUser(user: UserModel) {
     await this.authService.unlockUser(user.id);
-    this.loadUsers();
+    this.getBlockedUsers();
   }
 
   async onBlockEdit() {
@@ -44,7 +52,7 @@ export class UsersListComponent implements OnInit {
       return;
     }
     await this.authService.disableUsersSystemEditing(selectedUsersIds);
-    this.loadUsers();
+    this.getBlockedUsers();
   }
 
   async onBlockAccess() {
@@ -54,7 +62,7 @@ export class UsersListComponent implements OnInit {
       return;
     }
     await this.authService.disableUsersSystemAccess(selectedUsersIds);
-    this.loadUsers();
+    this.getBlockedUsers();
   }
 
 }
