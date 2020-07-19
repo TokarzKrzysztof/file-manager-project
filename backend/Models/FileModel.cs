@@ -20,6 +20,8 @@ namespace backend.Models
 
         public long Size { get; set; }
 
+        public int CreatorId { get; set; }
+
         public string CreatedBy { get; set; }
 #nullable enable
         public string? DeletedBy { get; set; }
