@@ -8,11 +8,8 @@ import { GlobalSettingsService } from './modules/administration-modules/global-s
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    private globalSettingsService: GlobalSettingsService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.globalSettingsService.getGlobalSettings();
   }
 }

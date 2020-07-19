@@ -119,12 +119,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   checkIfFilesSizeIsCorrect(files: File[]): boolean {
     let filesSize = 0;
     files.forEach(file => filesSize += file.size);
-    return filesSize <= 1073741824;
+    const maxSizeInBytes = this.maxFilesSize * 1048576;
+    return filesSize <= maxSizeInBytes;
   }
 
   async onFilesSend() {
     if (this.checkIfFilesSizeIsCorrect(this.preparedFiles) === false) {
-      this.toast.error('Maksymalna wielkość wysyłanych plików wynosi 1GB!');
+      this.toast.error(`Maksymalna wielkość wysyłanych plików wynosi ${this.maxFilesSize}MB!`);
       return;
     }
 
