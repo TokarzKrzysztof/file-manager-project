@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalSettingsService } from './modules/administration-modules/global-settings.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private globalSettingsService: GlobalSettingsService
+  ) { }
 
   ngOnInit() {
+    this.globalSettingsService.getGlobalSettings();
   }
 }

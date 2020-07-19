@@ -5,6 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FileModel } from './model-FileModel';
+import { of } from 'rxjs';
 
 
 @Injectable({
@@ -27,17 +28,24 @@ export class FilesService {
     ).toPromise();
   }
 
-  uploadFiles(files: File[], userData: string): Promise<void> {
+  uploadFiles(files: File[], userData: string, creatorId: number): Promise<void> {
     const formData = new FormData();
     files.forEach((file: File) => {
       formData.append('files', file, file.name);
     });
-    const params = new HttpParams().append('userData', userData);
+
+    let params = new HttpParams();
+    params = params.append('userData', userData);
+    params = params.append('creatorId', creatorId.toString());
 
     this.actionsService.startAction();
-    return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, {params}).pipe(
+    return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, { params }).pipe(
       tap(() => this.toast.success('Pomyślnie dodano pliki')),
       catchError((error: HttpErrorResponse) => {
+        if (error.error.Data?.reason === 'LIMITUPLOAD') {
+          this.toast.warning(error.error.Message);
+          return of(null);
+        }
         console.error(error);
         this.toast.error(error.error.Message);
         throw new Error(error.error.Message);
@@ -66,7 +74,7 @@ export class FilesService {
   downloadFile(id: number): Promise<Blob> {
     const params = new HttpParams().append('fileId', id.toString());
 
-    return this.http.get<Blob>(`${environment.apiUrl}/api/File/download`, { params, responseType: 'blob' as 'json'}).pipe(
+    return this.http.get<Blob>(`${environment.apiUrl}/api/File/download`, { params, responseType: 'blob' as 'json' }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

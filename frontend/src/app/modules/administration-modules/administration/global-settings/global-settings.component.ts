@@ -56,7 +56,7 @@ export class GlobalSettingsComponent implements OnInit {
 
     const settings: GlobalSettingsModel = { ...this.filesSettings.getRawValue(), ...this.passwordSettings.getRawValue() };
     settings.id = this.settings.id;
-    
+
     await this.globalSettingsService.setGlobalSettings(settings);
   }
 

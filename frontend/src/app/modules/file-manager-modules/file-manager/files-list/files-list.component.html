@@ -2,7 +2,7 @@
     <mat-toolbar-row>
         <div>
             <button mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false' (click)='fileInput.click()'
-                matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi 1GB'>Dodaj pliki</button>
+                matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi {{maxFilesSize}}MB'>Dodaj pliki</button>
             <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
             <button  appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary' *ngIf='preparedFiles.length'>Wyślij</button>
             <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>

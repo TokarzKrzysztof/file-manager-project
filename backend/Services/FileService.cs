@@ -89,7 +89,9 @@ namespace backend.Services
                 if (i == amountUserCanUpload)
                 {
                     await _context.SaveChangesAsync();
-                    throw new InvalidOperationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
+                    var ex = new ApplicationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
+                    ex.Data.Add("reason", "LIMITUPLOAD");
+                    throw ex;
                 }
 
                 IFormFile file = files[i];
@@ -130,9 +132,8 @@ namespace backend.Services
         private async Task<int> CheckAmountThatUserCanUpload(int limitPerHour, int creatorId)
         {
             List<FileModel> filesAddedLastHour = await _context.Files
-                .Where(x => x.CreatorId == creatorId && x.UploadTime > DateTime.Now.AddMinutes(-5))
+                .Where(x => x.CreatorId == creatorId && x.UploadTime > DateTime.Now.AddHours(-1))
                 .OrderByDescending(x => x.UploadTime)
-                .TakeLast(limitPerHour)
                 .ToListAsync();
 
             if (limitPerHour > filesAddedLastHour.Count())

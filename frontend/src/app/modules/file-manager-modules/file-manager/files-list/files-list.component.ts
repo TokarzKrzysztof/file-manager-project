@@ -9,6 +9,7 @@ import { UserModel } from '../../../auth-modules/model-UserModel';
 import { FileModel } from '../../model-FileModel';
 import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/sha
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
+  maxFilesSize: number;
   currentUser: UserModel;
   displayedColumns: string[] = ['select', 'title', 'fileName', 'uploadTime', 'createdBy', 'size', 'order'];
   dataSource = new MatTableDataSource<FileModel>();
@@ -32,11 +34,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private authService: AuthService,
     private dialog: MatDialog,
+    private globalSettingsService: GlobalSettingsService
   ) { }
 
   async ngOnInit() {
-    this.loadFiles();
+    this.maxFilesSize = (await this.globalSettingsService.getGlobalSettings()).maxSize;
     this.currentUser = await this.authService.getCurrentUserValue();
+    this.loadFiles();
   }
 
   ngAfterViewInit() {
@@ -125,8 +129,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
 
     const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
-    await this.filesService.uploadFiles(this.preparedFiles, userData);
-    this.toast.success('Pomyślnie dodano pliki');
+    const creatorId = this.currentUser.id;
+    await this.filesService.uploadFiles(this.preparedFiles, userData, creatorId);
     this.preparedFiles = [];
     this.loadFiles();
   }

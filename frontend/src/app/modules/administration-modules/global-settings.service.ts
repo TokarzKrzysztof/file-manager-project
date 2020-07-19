@@ -10,6 +10,7 @@ import { ActionsService } from 'src/app/shared/services/actions.service';
   providedIn: 'root'
 })
 export class GlobalSettingsService {
+  private globalSettings: GlobalSettingsModel;
 
   constructor(
     private http: HttpClient,
@@ -18,7 +19,14 @@ export class GlobalSettingsService {
   ) { }
 
   getGlobalSettings(): Promise<GlobalSettingsModel> {
+    return new Promise((resolve) => {
+      resolve(this.globalSettings ? this.globalSettings : this.getGlobalSettingsFromApi());
+    });
+  }
+
+  private getGlobalSettingsFromApi(): Promise<GlobalSettingsModel> {
     return this.http.get<GlobalSettingsModel>(`${environment.apiUrl}/api/GlobalSettings`).pipe(
+      tap((res: GlobalSettingsModel) => this.globalSettings = res),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
