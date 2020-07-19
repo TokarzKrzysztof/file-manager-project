@@ -21,5 +21,7 @@ namespace backend.Interfaces
         Task DisableUsersSystemAccess(int[] ids);
         Task DisableUsersSystemEditing(int[] ids);
         Task UnlockUser(int id);
+        Task<List<UserViewModel>> SearchForUsers(string searchString);
+        Task<List<UserViewModel>> GetBlockedUsers();
     }
 }

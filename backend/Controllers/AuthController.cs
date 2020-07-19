@@ -34,6 +34,34 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("searchForUsers")]
+        public async Task<IActionResult> SearchForUsers([FromQuery] string searchString)
+        {
+            try
+            {
+                List<UserViewModel> users = await _authService.SearchForUsers(searchString);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("getBlockedUsers")]
+        public async Task<IActionResult> GetBlockedUsers()
+        {
+            try
+            {
+                List<UserViewModel> users = await _authService.GetBlockedUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -56,7 +84,7 @@ namespace backend.Controllers
                 UserViewModel user = await _authService.Login(email, password);
                 return Ok(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
@@ -85,7 +113,7 @@ namespace backend.Controllers
                 return Ok();
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }

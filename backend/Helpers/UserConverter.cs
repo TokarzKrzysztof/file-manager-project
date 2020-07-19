@@ -9,18 +9,6 @@ namespace backend.Helpers
 {
     public class UserConverter
     {
-        public static UserModel ConvertViewModelToDbModel(UserViewModel userViewModel)
-        {
-            UserModel userDbModel = new UserModel();
-            userDbModel.Id = userViewModel.id;
-            userDbModel.Email = userViewModel.email;
-            userDbModel.Name = userViewModel.name;
-            userDbModel.Surname = userViewModel.surname;
-            userDbModel.Password = userViewModel.password;
-            userDbModel.Role = userViewModel.role;
-
-            return userDbModel;
-        }
 
         public static UserViewModel ConvertDbModelToViewModel(UserModel userModel)
         {

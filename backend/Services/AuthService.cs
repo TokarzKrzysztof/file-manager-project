@@ -85,7 +85,14 @@ namespace backend.Services
                 throw new InvalidOperationException("Hasła nie są zgodne");
             }
 
-            UserModel user = UserConverter.ConvertViewModelToDbModel(userData);
+            UserModel user = new UserModel()
+            {
+                Email = userData.email,
+                Name = userData.name,
+                Surname = userData.surname,
+                Password = userData.password,
+                Role = userData.role
+            };
 
             HistoryModel historyRow = new HistoryModel()
             {
@@ -301,6 +308,22 @@ namespace backend.Services
             {
                 throw new InvalidOperationException($"Nie znaleziono użytkownika o podanym ID: {id}");
             }
+        }
+
+        public async Task<List<UserViewModel>> SearchForUsers(string searchString)
+        {
+            string searchStringNormalized = searchString.Trim().ToLower().Replace(" ", "");
+            List<UserModel> users = await _context.Users
+                .Where(x => x.IsActive && (x.Name + x.Surname + x.Email).ToLower().Contains(searchStringNormalized))
+                .ToListAsync();
+
+            return UserConverter.ConvertDbListToViewList(users);
+        }
+
+        public async Task<List<UserViewModel>> GetBlockedUsers()
+        {
+            List<UserModel> users = await _context.Users.Where(x => x.IsActive && (x.SystemAccess == false || x.SystemEditingEnabled == false)).ToListAsync();
+            return UserConverter.ConvertDbListToViewList(users);
         }
     }
 }
