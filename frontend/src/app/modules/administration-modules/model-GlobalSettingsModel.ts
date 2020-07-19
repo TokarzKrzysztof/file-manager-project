@@ -1,4 +1,5 @@
 export interface GlobalSettingsModel {
+    id: number;
     maxSize: number;
     limitPerHour: number;
     minLength: number;

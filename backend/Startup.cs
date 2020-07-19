@@ -34,6 +34,7 @@ namespace backend
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IHistoryService, HistoryService>();
+            services.AddScoped<IGlobalSettingsService, GlobalSettingsService>();
 
             services.Configure<IISServerOptions>(options =>
             {

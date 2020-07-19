@@ -10,6 +10,7 @@ import { GlobalSettingsModel } from '../../model-GlobalSettingsModel';
   styleUrls: ['./global-settings.component.scss']
 })
 export class GlobalSettingsComponent implements OnInit {
+  settings: GlobalSettingsModel;
   maxFileSizes = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
   minNumberValidator = 0;
   maxPasswordValidator = 5;
@@ -38,10 +39,10 @@ export class GlobalSettingsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const settings: GlobalSettingsModel = await this.globalSettingsService.getGlobalSettings();
+    this.settings = await this.globalSettingsService.getGlobalSettings();
 
-    this.filesSettings.patchValue(settings);
-    this.passwordSettings.patchValue(settings);
+    this.filesSettings.patchValue(this.settings);
+    this.passwordSettings.patchValue(this.settings);
   }
 
   async onSave() {
@@ -54,6 +55,8 @@ export class GlobalSettingsComponent implements OnInit {
     }
 
     const settings: GlobalSettingsModel = { ...this.filesSettings.getRawValue(), ...this.passwordSettings.getRawValue() };
+    settings.id = this.settings.id;
+    
     await this.globalSettingsService.setGlobalSettings(settings);
   }
 
