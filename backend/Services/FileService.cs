@@ -72,7 +72,7 @@ namespace backend.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UploadFiles(IFormFileCollection files, string userData)
+        public async Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId)
         {
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
 
@@ -81,40 +81,67 @@ namespace backend.Services
                 Directory.CreateDirectory(pathToSave);
             }
 
-            if (files.Count > 0)
+            int maxFilesPerHour = await _context.GlobalSettings.Select(x => x.LimitPerHour).FirstOrDefaultAsync();
+            int amountUserCanUpload = await CheckAmountThatUserCanUpload(maxFilesPerHour, creatorId);
+
+            for (int i = 0; i < files.Count; i++)
             {
-                foreach (IFormFile file in files)
+                if (i == amountUserCanUpload)
                 {
-                    string fileName = file.FileName;
-                    string filePath = Path.Combine(pathToSave, fileName);
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
-                    FileModel fileToSave = new FileModel()
-                    {
-                        FileName = fileName,
-                        FilePath = filePath,
-                        ContentType = file.ContentType,
-                        Size = file.Length,
-                        CreatedBy = userData
-                    };
-
-                    HistoryModel historyRow = new HistoryModel()
-                    {
-                        Description = "Użytkownik dodał plik o nazwie: " + fileName,
-                        UserData = userData
-                    };
-
-                    _context.History.Add(historyRow);
-                    _context.Files.Add(fileToSave);
+                    await _context.SaveChangesAsync();
+                    throw new InvalidOperationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
                 }
 
-                await _context.SaveChangesAsync();
+                IFormFile file = files[i];
+
+                string fileName = file.FileName;
+                string filePath = Path.Combine(pathToSave, fileName);
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                FileModel fileToSave = new FileModel()
+                {
+                    FileName = fileName,
+                    FilePath = filePath,
+                    ContentType = file.ContentType,
+                    Size = file.Length,
+                    CreatedBy = userData,
+                    CreatorId = creatorId
+                };
+
+                HistoryModel historyRow = new HistoryModel()
+                {
+                    Description = "Użytkownik dodał plik o nazwie: " + fileName,
+                    UserData = userData
+                };
+
+                _context.History.Add(historyRow);
+                _context.Files.Add(fileToSave);
             }
 
+            await _context.SaveChangesAsync();
+
+
             return true;
+        }
+
+        private async Task<int> CheckAmountThatUserCanUpload(int limitPerHour, int creatorId)
+        {
+            List<FileModel> filesAddedLastHour = await _context.Files
+                .Where(x => x.CreatorId == creatorId && x.UploadTime > DateTime.Now.AddMinutes(-5))
+                .OrderByDescending(x => x.UploadTime)
+                .TakeLast(limitPerHour)
+                .ToListAsync();
+
+            if (limitPerHour > filesAddedLastHour.Count())
+            {
+                int canUploadAmount = limitPerHour - filesAddedLastHour.Count();
+                return canUploadAmount;
+            }
+
+            return 0;
         }
 
     }

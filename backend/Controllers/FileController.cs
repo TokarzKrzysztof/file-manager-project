@@ -37,11 +37,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData)
+        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData, [FromQuery] int creatorId)
         {
             try
             {
-                await _fileService.UploadFiles(files, userData);             
+                await _fileService.UploadFiles(files, userData, creatorId);             
                 return Ok();
             }
 
