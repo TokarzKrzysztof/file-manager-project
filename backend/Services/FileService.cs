@@ -46,7 +46,7 @@ namespace backend.Services
             return true;
         }
 
-        public async Task<FileStream> DownloadFile(ControllerBase controller, int id)
+        public async Task<FileStream> DownloadFile(int id)
         {
             var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);

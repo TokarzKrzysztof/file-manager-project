@@ -17,7 +17,6 @@ namespace backend.Helpers
             userViewModel.email = userModel.Email;
             userViewModel.name = userModel.Name;
             userViewModel.surname = userModel.Surname;
-            userViewModel.password = userModel.Password;
             userViewModel.isLoggedIn = userModel.IsLoggedIn;
             userViewModel.token = userModel.Token;
             userViewModel.role = userModel.Role;

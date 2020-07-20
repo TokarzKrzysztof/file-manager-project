@@ -119,6 +119,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   checkIfFilesSizeIsCorrect(files: File[]): boolean {
     let filesSize = 0;
     files.forEach(file => filesSize += file.size);
+    console.log(filesSize);
     const maxSizeInBytes = this.maxFilesSize * 1048576;
     return filesSize <= maxSizeInBytes;
   }

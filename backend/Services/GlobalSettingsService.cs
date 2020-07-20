@@ -26,7 +26,7 @@ namespace backend.Services
             }
             else
             {
-                throw new InvalidOperationException("Brak globalnych ustawień!");
+                throw new NullReferenceException("Brak globalnych ustawień!");
             }
         }
 

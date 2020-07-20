@@ -153,7 +153,7 @@ namespace backend.Services
             }
             else
             {
-                throw new NullReferenceException();
+                throw new NullReferenceException("Nie znaleziono użytkownika");
             }
 
         }
@@ -169,7 +169,7 @@ namespace backend.Services
             }
             else
             {
-                throw new Exception("Nie znaleziono użytkownika");
+                throw new NullReferenceException("Nie znaleziono użytkownika");
             }
 
         }
@@ -198,7 +198,7 @@ namespace backend.Services
             }
             else
             {
-                throw new Exception("Nie znaleziono użytkownika");
+                throw new NullReferenceException("Nie znaleziono użytkownika");
             }
         }
 
@@ -224,7 +224,7 @@ namespace backend.Services
             }
             else
             {
-                throw new Exception("Nie znaleziono użytkownika");
+                throw new NullReferenceException("Nie znaleziono użytkownika");
             }
         }
 
@@ -245,7 +245,7 @@ namespace backend.Services
             }
             else
             {
-                throw new Exception("Nie znaleziono użytkownika o podanym adresie email!");
+                throw new NullReferenceException("Nie znaleziono użytkownika o podanym adresie email!");
             }
         }
 
@@ -267,7 +267,7 @@ namespace backend.Services
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
+                    throw new NullReferenceException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
                 }
             }
 
@@ -286,7 +286,7 @@ namespace backend.Services
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
+                    throw new NullReferenceException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
                 }
             }
 
@@ -306,7 +306,7 @@ namespace backend.Services
             }
             else
             {
-                throw new InvalidOperationException($"Nie znaleziono użytkownika o podanym ID: {id}");
+                throw new NullReferenceException($"Nie znaleziono użytkownika o podanym ID: {id}");
             }
         }
 
