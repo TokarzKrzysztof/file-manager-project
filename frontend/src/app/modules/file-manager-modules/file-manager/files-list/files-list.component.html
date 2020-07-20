@@ -13,7 +13,7 @@
                 <mat-icon>get_app</mat-icon>
             </button>
 
-            <button mat-raised-button color='warn' matTooltip='Anuluj' (click)='onFilesSendCancel()'>
+            <button mat-raised-button color='warn' matTooltip='Anuluj' *ngIf='showCancelButton' (click)='onFilesSendCancel()'>
                  Anuluj
             </button>
         </div>
@@ -33,6 +33,11 @@
                 <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
         </mat-chip-list>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row *ngIf='fileUploadProgress'>
+        <span>{{fileUploadProgress}}%</span>
+        <mat-progress-bar mode="determinate" [value]="fileUploadProgress" color='primary'></mat-progress-bar>
     </mat-toolbar-row>
 </mat-toolbar>
 

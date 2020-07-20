@@ -19,6 +19,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 
@@ -41,7 +43,8 @@ const materialModules = [
   MatListModule,
   MatSelectModule,
   MatAutocompleteModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatProgressBarModule
 ]
 
 @NgModule({

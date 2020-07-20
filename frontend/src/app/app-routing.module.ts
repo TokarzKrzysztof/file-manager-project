@@ -18,7 +18,6 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./modules/auth-modules/register/register.module').then(m => m.RegisterModule),
-    canDeactivate: [ActiveActionGuard]
   },
   {
     path: 'remind-password',
@@ -27,7 +26,6 @@ const routes: Routes = [
   {
     path: 'file-manager',
     canActivate: [AuthGuard],
-    canDeactivate: [ActiveActionGuard],
     loadChildren: () => import('./modules/file-manager-modules/file-manager/file-manager.module').then(m => m.FileManagerModule),
   },
   {

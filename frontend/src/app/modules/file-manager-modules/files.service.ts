@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpUploadProgressEvent, HttpDownloadProgressEvent, HttpEvent } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap, catchError, takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FileModel } from './model-FileModel';
-import { of, Subject } from 'rxjs';
+import { of, Subject, Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
-  onCancel = new Subject<void>();
 
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
     private actionsService: ActionsService
   ) { }
-
-  cancelUpload() {
-    this.onCancel.next();
-  }
 
   getFiles(): Promise<FileModel[]> {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File`).pipe(
@@ -34,7 +29,7 @@ export class FilesService {
     ).toPromise();
   }
 
-  uploadFiles(files: File[], userData: string, creatorId: number): Promise<void> {
+  uploadFiles(files: File[], userData: string, creatorId: number): Observable<HttpEvent<HttpUploadProgressEvent>> {
     const formData = new FormData();
     files.forEach((file: File) => {
       formData.append('files', file, file.name);
@@ -44,20 +39,7 @@ export class FilesService {
     params = params.append('userData', userData);
     params = params.append('creatorId', creatorId.toString());
 
-    this.actionsService.startAction();
-    return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, { params }).pipe(
-      takeUntil(this.onCancel),
-      tap(() => this.toast.success('Pomyślnie dodano pliki')),
-      catchError((error: HttpErrorResponse) => {
-        if (error.error.Data?.reason === 'LIMITUPLOAD') {
-          this.toast.warning(error.error.Message);
-          return of(null);
-        }
-        console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
-      })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    return this.http.post<HttpUploadProgressEvent>(`${environment.apiUrl}/api/File`, formData, { params, reportProgress: true, observe: 'events' });
   }
 
   deleteFiles(filesToDeleteIds: number[], userData: string): Promise<void> {

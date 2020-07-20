@@ -10,6 +10,10 @@ import { FileModel } from '../../model-FileModel';
 import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
+import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { ActionsService } from 'src/app/shared/services/actions.service';
 
 
 @Component({
@@ -21,6 +25,9 @@ import { GlobalSettingsService } from 'src/app/modules/administration-modules/gl
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
+  onCancel = new Subject<void>();
+  showCancelButton: boolean;
+  fileUploadProgress: number;
   maxFilesSize: number;
   currentUser: UserModel;
   displayedColumns: string[] = ['select', 'title', 'fileName', 'uploadTime', 'createdBy', 'size', 'order'];
@@ -34,7 +41,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private authService: AuthService,
     private dialog: MatDialog,
-    private globalSettingsService: GlobalSettingsService
+    private globalSettingsService: GlobalSettingsService,
+    private actionsService: ActionsService
   ) { }
 
   async ngOnInit() {
@@ -119,13 +127,12 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   checkIfFilesSizeIsCorrect(files: File[]): boolean {
     let filesSize = 0;
     files.forEach(file => filesSize += file.size);
-    console.log(filesSize);
     const maxSizeInBytes = this.maxFilesSize * 1048576;
     return filesSize <= maxSizeInBytes;
   }
 
   onFilesSendCancel() {
-    this.filesService.cancelUpload();
+    this.onCancel.next();
   }
 
   async onFilesSend() {
@@ -136,9 +143,42 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
     const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
     const creatorId = this.currentUser.id;
-    await this.filesService.uploadFiles(this.preparedFiles, userData, creatorId);
-    this.preparedFiles = [];
-    this.loadFiles();
+
+    this.actionsService.startAction();
+    this.showCancelButton = true;
+    this.filesService.uploadFiles(this.preparedFiles, userData, creatorId).pipe(
+      takeUntil(this.onCancel),
+      catchError((error: HttpErrorResponse) => {
+        if (error.error.Data?.reason === 'LIMITUPLOAD') {
+          this.toast.warning(error.error.Message);
+          return of(null);
+        }
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).subscribe((event: HttpUploadProgressEvent) => {
+      if (event === null) {
+        return;
+      }
+
+      if (event.type === HttpEventType.UploadProgress) {
+        this.fileUploadProgress = Number(((event.loaded / event.total) * 100).toFixed(0));
+      }
+
+      else if (event instanceof HttpResponse) {
+        this.toast.success('Pomyślnie dodano pliki');
+      }
+    },
+      () => { },
+      () => {
+        this.preparedFiles = [];
+        this.fileUploadProgress = 0;
+        this.actionsService.stopAction();
+        this.showCancelButton = false;
+
+        this.loadFiles();
+      });
   }
 
   async onDeleteFiles() {
