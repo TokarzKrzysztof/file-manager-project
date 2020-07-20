@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FileModel } from './model-FileModel';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
+  onCancel = new Subject<void>();
+
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
     private actionsService: ActionsService
   ) { }
+
+  cancelUpload() {
+    this.onCancel.next();
+  }
 
   getFiles(): Promise<FileModel[]> {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File`).pipe(
@@ -40,6 +46,7 @@ export class FilesService {
 
     this.actionsService.startAction();
     return this.http.post<void>(`${environment.apiUrl}/api/File`, formData, { params }).pipe(
+      takeUntil(this.onCancel),
       tap(() => this.toast.success('Pomyślnie dodano pliki')),
       catchError((error: HttpErrorResponse) => {
         if (error.error.Data?.reason === 'LIMITUPLOAD') {

@@ -124,6 +124,10 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return filesSize <= maxSizeInBytes;
   }
 
+  onFilesSendCancel() {
+    this.filesService.cancelUpload();
+  }
+
   async onFilesSend() {
     if (this.checkIfFilesSizeIsCorrect(this.preparedFiles) === false) {
       this.toast.error(`Maksymalna wielkość wysyłanych plików wynosi ${this.maxFilesSize}MB!`);
