@@ -7,6 +7,7 @@ using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,11 @@ namespace backend
             services.Configure<IISServerOptions>(options =>
             {
                 options.MaxRequestBodySize = 1073741824;
+            });
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 1073741824;
             });
 
             services.AddControllers().AddNewtonsoftJson(options => 
