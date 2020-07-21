@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-button{
+button {
   border: none;
   background: transparent;
 }
@@ -33,9 +33,36 @@ table {
   min-width: 500px;
 }
 
-.mat-toolbar-row, .mat-toolbar-single-row{
+.mat-toolbar-row,
+.mat-toolbar-single-row {
   height: auto;
   min-height: 64px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.end {
+    justify-content: end;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.around {
+    justify-content: space-around;
+  }
+
+}
+
+form {
+  padding: 15px;
 }
 
 mat-card.login-panel-card {
@@ -45,23 +72,34 @@ mat-card.login-panel-card {
   transform: translate(-50%, -50%);
 }
 
-mat-form-field.login-panel-field {
+mat-form-field.full-width {
   width: 100%;
-}
-
-button.login-panel-button {
-}
-
-.file-manager-main-tabs .mat-tab-links {
-  justify-content: space-between;
 }
 
 .user-control-panel {
   display: flex;
   align-items: center;
 
-  .user-data{
-      margin: 0 5px;
-      font-weight: bold;
+  .user-data {
+    margin: 0 5px;
+    font-weight: bold;
   }
+}
+
+.mat-table {
+  .editable {
+    .edit-icon-button {
+      opacity: 0;
+    }
+
+    &:hover .edit-icon-button {
+      opacity: 1;
+    }
+
+    .mat-form-field-underline {
+      opacity: 0;
+    }
+
+  }
+
 }

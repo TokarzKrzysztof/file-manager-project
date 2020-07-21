@@ -7,14 +7,14 @@
         </mat-expansion-panel-header>
 
         <form [formGroup]='filesSettings'>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Maksymalna waga wysyłanych plików: </mat-label>
                 <mat-select formControlName='maxSize'>
                     <mat-option *ngFor="let size of maxFileSizes" [value]="size"> {{size}} MB</mat-option>
                 </mat-select>
                 <mat-error *ngIf='filesSettings.get("maxSize")'>Pole jest wymagane</mat-error>
             </mat-form-field>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Maksymalna ilość plików na godzinę: </mat-label>
                 <input autocomplete='off' appNumberInput type="number" matInput formControlName='limitPerHour'/>
                 <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("required")'>Pole jest wymagane</mat-error>
@@ -32,7 +32,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <form [formGroup]='passwordSettings'>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Minimalna długość hasła: </mat-label>
                 <input autocomplete='off' appNumberInput type="number" matInput formControlName='minLength'/>
                 <mat-error *ngIf='passwordSettings.get("minLength").hasError("required")'>Pole jest wymagane</mat-error>
@@ -40,7 +40,7 @@
                     Wartość musi być większa niż {{minNumberValidator}} i mniejsza niż {{maxPasswordValidator}}
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Minimalna ilość cyfr: </mat-label>
                 <input autocomplete='off' appNumberInput type="number" matInput formControlName='minDigits'/>
                 <mat-error *ngIf='passwordSettings.get("minDigits").hasError("required")'>Pole jest wymagane</mat-error>
@@ -48,7 +48,7 @@
                     Wartość musi być większa niż {{minNumberValidator}} i mniejsza niż {{maxPasswordValidator}}
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Minimalna ilość wielkich liter: </mat-label>
                 <input autocomplete='off' appNumberInput type="number" matInput formControlName='bigLetters'/>
                 <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("required")'>Pole jest wymagane</mat-error>
@@ -56,7 +56,7 @@
                     Wartość musi być większa niż {{minNumberValidator}} i mniejsza niż {{maxPasswordValidator}}
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="settings-field" floatLabel='never'>
+            <mat-form-field class="full-width">
                 <mat-label>Minimalna ilość znaków specjalnych: </mat-label>
                 <input autocomplete='off' appNumberInput type="number" matInput formControlName='specialCharacters'/>
                 <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("required")'>Pole jest wymagane</mat-error>
