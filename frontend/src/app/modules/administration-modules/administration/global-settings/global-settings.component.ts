@@ -12,25 +12,26 @@ import { GlobalSettingsModel } from '../../model-GlobalSettingsModel';
 export class GlobalSettingsComponent implements OnInit {
   settings: GlobalSettingsModel;
   maxFileSizes = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-  minNumberValidator = 0;
+  minPasswordValidator = 0;
   maxPasswordValidator = 5;
+  minLimitPerHourValidator = 1;
   maxLimitPerHourValidator = 20;
 
   filesSettings = new FormGroup({
     maxSize: new FormControl(null, [Validators.required]),
     limitPerHour: new FormControl(null,
-      [Validators.required, Validators.min(this.minNumberValidator), Validators.max(this.maxLimitPerHourValidator)]),
+      [Validators.required, Validators.min(this.minLimitPerHourValidator), Validators.max(this.maxLimitPerHourValidator)]),
   });
 
   passwordSettings = new FormGroup({
     minLength: new FormControl(null,
-      [Validators.required, Validators.min(this.minNumberValidator), Validators.max(this.maxPasswordValidator)]),
+      [Validators.required, Validators.min(this.minPasswordValidator), Validators.max(this.maxPasswordValidator)]),
     minDigits: new FormControl(null,
-      [Validators.required, Validators.min(this.minNumberValidator), Validators.max(this.maxPasswordValidator)]),
+      [Validators.required, Validators.min(this.minPasswordValidator), Validators.max(this.maxPasswordValidator)]),
     bigLetters: new FormControl(null,
-      [Validators.required, Validators.min(this.minNumberValidator), Validators.max(this.maxPasswordValidator)]),
+      [Validators.required, Validators.min(this.minPasswordValidator), Validators.max(this.maxPasswordValidator)]),
     specialCharacters: new FormControl(null,
-      [Validators.required, Validators.min(this.minNumberValidator), Validators.max(this.maxPasswordValidator)]),
+      [Validators.required, Validators.min(this.minPasswordValidator), Validators.max(this.maxPasswordValidator)]),
   });
 
   constructor(
