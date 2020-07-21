@@ -11,8 +11,15 @@
             <mat-error>Pole jest wymagane</mat-error>
         </mat-form-field>
 
-        <button appDisableOnAction mat-raised-button color='primary' type="submit">Zaloguj</button>
-        <button mat-raised-button color='primary' type="button" routerLink='/register'>Zarejestruj się</button>
-        <button mat-button type="button" routerLink='/remind-password'>Przypomnij hasło</button>
+        <div class="flex between">
+            <div>
+                <button appDisableOnAction mat-raised-button color='primary' type="submit">Zaloguj</button>
+                <button mat-raised-button color='primary' type="button" routerLink='/register'>Zarejestruj się</button>
+            </div>
+            <div>
+                <button mat-button type="button" routerLink='/remind-password'>Przypomnij hasło</button>
+            </div>
+        </div>
+        
     </form>
 </mat-card>

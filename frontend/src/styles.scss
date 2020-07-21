@@ -42,13 +42,14 @@ table {
 .flex {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   &.center {
     justify-content: center;
   }
 
   &.end {
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   &.between {
@@ -61,11 +62,29 @@ table {
 
 }
 
+.mat-button-base+.mat-button-base {
+  margin-left: 5px;
+}
+
 form {
-  padding: 15px;
+  padding-top: 15px;
+}
+
+.mat-list {
+  .mat-subheader {
+    padding: 0;
+  }
+
+  &.mat-list-base .mat-list-item .mat-list-item-content {
+    padding: 0;
+  }
 }
 
 mat-card.login-panel-card {
+  width: 90vw;
+  max-height: 80vh;
+  overflow: auto;
+  max-width: 600px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -74,6 +93,10 @@ mat-card.login-panel-card {
 
 mat-form-field.full-width {
   width: 100%;
+}
+
+.mat-form-field {
+  margin-bottom: 5px;
 }
 
 .user-control-panel {

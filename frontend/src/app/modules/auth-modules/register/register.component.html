@@ -1,5 +1,5 @@
 <mat-card class="login-panel-card">
-    <mat-tab-group mat-stretch-tabs>
+    <mat-tab-group mat-stretch-tabs dynamicHeight>
         <mat-tab label="Podstawowe Dane">
             <form [formGroup]='primaryDataForm' (ngSubmit)='onProceed(primaryDataForm)'>
                 <mat-form-field class="full-width">
@@ -26,7 +26,9 @@
                     <mat-error>Pole jest wymagane</mat-error>
                 </mat-form-field>
 
-                <button mat-raised-button color='primary' type='button' type="submit">Dalej</button>
+                <div class="flex end">
+                    <button mat-raised-button color='primary' type='button' type="submit">Dalej</button>
+                </div>
             </form>
         </mat-tab>
 
@@ -57,24 +59,25 @@
                     <h3 matSubheader>Wymagania dotyczące hasła</h3>
                     <mat-list-item [ngClass]='passwordRequirements.minLength ? "correct" : "incorrect"'>
                         <span>Minimalna długość hasła:</span>
-                        <span>{{globalSettings.minLength}}</span>
+                        <span>{{globalSettings?.minLength}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.specialCharacters ? "correct" : "incorrect"'>
                         <span>Minimalna liczba znaków specjalnych:</span>
-                        <span>{{globalSettings.specialCharacters}}</span>
+                        <span>{{globalSettings?.specialCharacters}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.bigLetters ? "correct" : "incorrect"'>
                         <span>Minimalna liczba wielkich liter:</span>
-                        <span>{{globalSettings.bigLetters}}</span>
+                        <span>{{globalSettings?.bigLetters}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.minDigits ? "correct" : "incorrect"'>
                         <span>Minimalna liczba cyfr:</span>
-                        <span>{{globalSettings.minDigits}}</span>
+                        <span>{{globalSettings?.minDigits}}</span>
                     </mat-list-item>
                 </mat-list>
 
-
-                <button mat-raised-button color='primary' type='button' type="submit">Dalej</button>
+                <div class="flex end">
+                    <button mat-raised-button color='primary' type='button' type="submit">Dalej</button>
+                </div>
             </form>
         </mat-tab>
 
@@ -98,14 +101,14 @@
                 <mat-list-item role="listitem">
                     Zarejestruj jako: {{primaryDataForm.get('role').value | convertUserRole}}
                 </mat-list-item>
-                <mat-list-item>
-                    <button appDisableOnAction mat-raised-button color='primary' type="submit"
-                        (click)='register()'>Zarejestruj się</button>
-                    <button mat-raised-button color='primary' type="button" routerLink='/login'>Przejdź do
-                        logowania</button>
-                </mat-list-item>
             </mat-list>
-
+            
+            <div class="flex between">
+                <button appDisableOnAction mat-raised-button color='primary' type="submit"
+                    (click)='register()'>Zarejestruj się</button>
+                <button mat-raised-button class="go-to-login-button" color='primary' type="button" routerLink='/login'>Przejdź do
+                    logowania</button>
+            </div>
         </mat-tab>
     </mat-tab-group>
 </mat-card>
