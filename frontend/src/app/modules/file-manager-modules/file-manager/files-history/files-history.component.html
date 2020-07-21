@@ -1,7 +1,7 @@
 <mat-toolbar>
 
     <mat-toolbar-row>
-        <mat-form-field>
+        <mat-form-field class="full-width date-range">
             <mat-label>Filtruj</mat-label>
             <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
                 <input matStartDate formControlName="start" placeholder="Od">
@@ -12,7 +12,7 @@
         </mat-form-field>
     </mat-toolbar-row>
 
-    <mat-toolbar-row class="filter-row">
+    <mat-toolbar-row>
         <button mat-raised-button color='primary' class="filter-button" (click)='onFilter()'>Filtruj</button>
         <button mat-button (click)='clearFilter()' *ngIf='filterApplied'>Wyczyść filter</button>
     </mat-toolbar-row>
