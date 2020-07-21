@@ -20,6 +20,7 @@ interface PageData {
 })
 export class FilesHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  filterApplied: boolean;
   historyCount = 0;
   dataSource = new MatTableDataSource<HistoryModel>();
   displayedColumns = ['actionDate', 'description', 'userData'];
@@ -51,6 +52,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
     this.dataSource.data = await this.historyService.getHistory(1, this.paginator.pageSize, this.dateRange.value);
     this.historyCount = await this.historyService.getHistoryCount(500, this.dateRange.value);
     this.paginator.firstPage();
+    this.filterApplied = true;
   }
 
   async clearFilter() {
@@ -58,6 +60,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
     this.dataSource.data = await this.historyService.getHistory(1, this.paginator.pageSize);
     this.historyCount = await this.historyService.getHistoryCount(500);
     this.paginator.firstPage();
+    this.filterApplied = false;
   }
 
   async onPageChange(e: PageData) {
