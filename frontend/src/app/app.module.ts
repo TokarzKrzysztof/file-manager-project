@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import '@angular/common/locales/global/PL';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from './polish-paginator-intl';
+import { MAT_NATIVE_DATE_FORMATS } from '@angular/material/core';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { getPolishPaginatorIntl } from './polish-paginator-intl';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl-PL' },
-    { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }
+    { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() },
+    // { provide: MAT, useValue: { useUtc: true } }
   ],
   bootstrap: [AppComponent]
 })

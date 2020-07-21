@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
 import { ConvertUserRolePipe } from './pipes/convert-user-role.pipe';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
 import { BooleanPipe } from './pipes/boolean.pipe';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
 
@@ -33,6 +34,7 @@ import { BooleanPipe } from './pipes/boolean.pipe';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatMomentDateModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-middle-top',
@@ -44,6 +46,7 @@ import { BooleanPipe } from './pipes/boolean.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule,
+    MatMomentDateModule,
     ConvertSizePipe,
     ChangePasswordDialogComponent,
     DeleteAccountDialogComponent,

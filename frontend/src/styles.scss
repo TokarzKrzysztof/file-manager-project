@@ -33,6 +33,11 @@ table {
   min-width: 500px;
 }
 
+.mat-toolbar-row, .mat-toolbar-single-row{
+  height: auto;
+  min-height: 64px;
+}
+
 mat-card.login-panel-card {
   position: absolute;
   top: 50%;
