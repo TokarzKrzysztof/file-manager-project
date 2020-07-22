@@ -3,12 +3,6 @@
             <button mat-stroked-button matTooltip='Kliknij prawym przyciskiem myszy na folder aby wyświetlić dodatkowe opcje' (click)='addRootFolder()'>Dodaj folder nadrzędny</button>
     </mat-toolbar>
     
-    <!-- <mat-form-field class="no-underline" floatLabel='never'>
-        <mat-label>Nazwa</mat-label>
-        <input matInput>
-        <mat-icon matPrefix>folder</mat-icon>
-    </mat-form-field> -->
-    
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent='10'>
             <button mat-icon-button disabled></button>
@@ -31,15 +25,14 @@
     </mat-tree>
     
     <mat-menu #menu='matMenu'>
-        <ng-template matMenuContent let-name='level'>
-            <a mat-menu-item>
+        <ng-template matMenuContent let-id='id'>
+            <a mat-menu-item (click)='addSubfolder(id)'>
                 Dodaj podfolder
-                {{name}}
             </a>
-            <a mat-menu-item >
+            <a mat-menu-item (click)='editName(id)'>
                 Edytuj nazwę
             </a>
-            <a mat-menu-item >
+            <a mat-menu-item (click)='deleteFolder(id)'>
                 Usuń folder
             </a>
         </ng-template>
