@@ -7,55 +7,55 @@ import { FolderModel } from '../../../model-FolderModel';
 import { FoldersService } from '../../../folders.service';
 import { FoldersDialogComponent, AddFolderData } from './dialogs/folders-dialog/folders-dialog.component';
 
-interface FoldersNode {
-  name: string;
-  children?: FoldersNode[];
-}
+// interface FoldersNode {
+//   name: string;
+//   children?: FoldersNode[];
+// }
 
-const TREE_DATA: FoldersNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      { name: 'Apple' },
-      { name: 'Banana' },
-      { name: 'Fruit loops' },
-    ]
-  }, {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          {
-            name: 'Carrots', children: [
-              { name: 'asdas' },
-              {
-                name: 'asas', children: [
-                  {
-                    name: 'aaaa', children: [
-                      {
-                        name: 'asdasdasdsasad', children: [
-                          { name: 'asdassdasdasdsadasd' }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-        ]
-      },
-    ]
-  },
-];
+// const TREE_DATA: FoldersNode[] = [
+//   {
+//     name: 'Fruit',
+//     children: [
+//       { name: 'Apple' },
+//       { name: 'Banana' },
+//       { name: 'Fruit loops' },
+//     ]
+//   }, {
+//     name: 'Vegetables',
+//     children: [
+//       {
+//         name: 'Green',
+//         children: [
+//           { name: 'Broccoli' },
+//           { name: 'Brussels sprouts' },
+//         ]
+//       }, {
+//         name: 'Orange',
+//         children: [
+//           { name: 'Pumpkins' },
+//           {
+//             name: 'Carrots', children: [
+//               { name: 'asdas' },
+//               {
+//                 name: 'asas', children: [
+//                   {
+//                     name: 'aaaa', children: [
+//                       {
+//                         name: 'asdasdasdsasad', children: [
+//                           { name: 'asdassdasdasdsadasd' }
+//                         ]
+//                       }
+//                     ]
+//                   }
+//                 ]
+//               }
+//             ]
+//           },
+//         ]
+//       },
+//     ]
+//   },
+// ];
 
 interface FlatNode {
   expandable: boolean;
@@ -77,16 +77,15 @@ export class FoldersComponent implements OnInit {
     private dialog: MatDialog,
     private foldersService: FoldersService
   ) {
-    this.dataSource.data = TREE_DATA;
   }
-
+  
   async ngOnInit() {
-   await this.foldersService.getFolders();
+    this.dataSource.data = await this.foldersService.getFoldersTree();
   }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
-  private transformer(node: FoldersNode, level: number) {
+  private transformer(node: FolderModel, level: number) {
     const flatNode: FlatNode = {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,

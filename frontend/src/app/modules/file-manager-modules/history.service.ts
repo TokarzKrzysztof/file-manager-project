@@ -27,7 +27,7 @@ export class HistoryService {
     }
 
 
-    return this.http.get<HistoryModel[]>(`${environment.apiUrl}/api/History`, { params }).pipe(
+    return this.http.get<HistoryModel[]>(`${environment.apiUrl}/api/History/GetHistory`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -44,7 +44,7 @@ export class HistoryService {
       params = params.append('end', dateRange.end.toJSON());
     }
 
-    return this.http.get<number>(`${environment.apiUrl}/api/History/count`, { params }).pipe(
+    return this.http.get<number>(`${environment.apiUrl}/api/History/count/GetHistoryCount`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

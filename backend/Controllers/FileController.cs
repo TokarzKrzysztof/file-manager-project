@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class FileController : ControllerBase
     {
         private readonly IFileService _fileService;
@@ -66,7 +66,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("download")]
+        [HttpGet]
         public async Task<IActionResult> DownloadFile([FromQuery] int fileId)
         {
             try
@@ -81,7 +81,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateFile([FromBody] FileViewModel file)
         {
             try
@@ -96,7 +96,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("path")]
+        [HttpGet]
         public async Task<IActionResult> GetFilePath([FromQuery] int fileId)
         {
             try

@@ -13,6 +13,7 @@ namespace backend.Models
         public DbSet<UserModel> Users { get; set; }
         public DbSet<HistoryModel> History { get; set; }
         public DbSet<GlobalSettingsModel> GlobalSettings { get; set; }
+        public DbSet<FolderModel> Folders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

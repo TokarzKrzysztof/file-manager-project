@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FolderModel } from './model-FolderModel';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,8 +16,20 @@ export class FoldersService {
     private actionsService: ActionsService
   ) { }
 
-  getFolders(): Promise<FolderModel[]> {
-    return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders`).pipe(
+  getFoldersTree(): Promise<FolderModel[]> {
+    return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders/GetFoldersTree`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  searchForFolders(searchString: string): Promise<FolderModel[]> {
+    const params = new HttpParams().append('searchString', searchString);
+
+    return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders/SearchForFolders`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -28,7 +40,8 @@ export class FoldersService {
 
   createFolder(folderData: FolderModel): Promise<void> {
     this.actionsService.startAction();
-    return this.http.post<void>(`${environment.apiUrl}/api/Folders`, folderData).pipe(
+    return this.http.post<void>(`${environment.apiUrl}/api/Folders/CreateFolder`, folderData).pipe(
+      tap(() => this.toast.success('Pomyślnie dodano folder')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -39,7 +52,22 @@ export class FoldersService {
 
   updateFolder(folderData: FolderModel): Promise<void> {
     this.actionsService.startAction();
-    return this.http.put<void>(`${environment.apiUrl}/api/Folders`, folderData).pipe(
+    return this.http.put<void>(`${environment.apiUrl}/api/Folders/UpdateFolder`, folderData).pipe(
+      tap(() => this.toast.success('Pomyślnie zaktualizowano folder')),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise().finally(() => this.actionsService.stopAction());
+  }
+
+  deleteFolder(id: number): Promise<void> {
+    const params = new HttpParams().append('id', id.toString());
+
+    this.actionsService.startAction();
+    return this.http.put<void>(`${environment.apiUrl}/api/Folders/delete/DeleteFolder`, {}, { params }).pipe(
+      tap(() => this.toast.success('Pomyślnie usunięto folder')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

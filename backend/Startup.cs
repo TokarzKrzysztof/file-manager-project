@@ -37,6 +37,7 @@ namespace backend
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IHistoryService, HistoryService>();
             services.AddScoped<IGlobalSettingsService, GlobalSettingsService>();
+            services.AddScoped<IFoldersService, FoldersService>();
 
             services.Configure<IISServerOptions>(options =>
             {

@@ -19,7 +19,7 @@ export class GlobalSettingsService {
 
 
   getGlobalSettings(): Promise<GlobalSettingsModel> {
-    return this.http.get<GlobalSettingsModel>(`${environment.apiUrl}/api/GlobalSettings`).pipe(
+    return this.http.get<GlobalSettingsModel>(`${environment.apiUrl}/api/GlobalSettings/GetGlobalSettings`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -30,7 +30,7 @@ export class GlobalSettingsService {
 
   setGlobalSettings(settings: GlobalSettingsModel): Promise<any> {
     this.actionsService.startAction();
-    return this.http.put(`${environment.apiUrl}/api/GlobalSettings`, settings).pipe(
+    return this.http.put(`${environment.apiUrl}/api/GlobalSettings/SetGlobalSettings`, settings).pipe(
       tap(() => this.toast.success('Pomyślnie zaktualizowano ustawienia')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);

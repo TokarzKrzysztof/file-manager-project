@@ -20,7 +20,7 @@ export class FilesService {
   ) { }
 
   getFiles(): Promise<FileModel[]> {
-    return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File`).pipe(
+    return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetFiles`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -39,7 +39,8 @@ export class FilesService {
     params = params.append('userData', userData);
     params = params.append('creatorId', creatorId.toString());
 
-    return this.http.post<HttpUploadProgressEvent>(`${environment.apiUrl}/api/File`, formData, { params, reportProgress: true, observe: 'events' });
+    return this.http.post<HttpUploadProgressEvent>(`${environment.apiUrl}/api/File/UploadFiles`, formData,
+      { params, reportProgress: true, observe: 'events' });
   }
 
   deleteFiles(filesToDeleteIds: number[], userData: string): Promise<void> {
@@ -50,7 +51,7 @@ export class FilesService {
     params = params.append('userData', userData);
 
     this.actionsService.startAction();
-    return this.http.delete<void>(`${environment.apiUrl}/api/File`, { params }).pipe(
+    return this.http.delete<void>(`${environment.apiUrl}/api/File/DeleteFiles`, { params }).pipe(
       tap(() => this.toast.success('Pomyślnie usunięto pliki')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -63,7 +64,7 @@ export class FilesService {
   downloadFile(id: number): Promise<Blob> {
     const params = new HttpParams().append('fileId', id.toString());
 
-    return this.http.get<Blob>(`${environment.apiUrl}/api/File/download`, { params, responseType: 'blob' as 'json' }).pipe(
+    return this.http.get<Blob>(`${environment.apiUrl}/api/File/DownloadFile`, { params, responseType: 'blob' as 'json' }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -73,7 +74,7 @@ export class FilesService {
   }
 
   UpdateFile(element: FileModel): Promise<void> {
-    return this.http.put<void>(`${environment.apiUrl}/api/File/update`, element).pipe(
+    return this.http.put<void>(`${environment.apiUrl}/api/File/UpdateFile`, element).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         throw new Error(error.error.Message);

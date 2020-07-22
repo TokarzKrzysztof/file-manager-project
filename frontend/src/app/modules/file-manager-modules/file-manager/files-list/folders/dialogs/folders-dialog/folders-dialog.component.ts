@@ -6,8 +6,8 @@ import { FolderModel } from 'src/app/modules/file-manager-modules/model-FolderMo
 
 export interface AddFolderData {
   title: string;
-  withParent: boolean;
-  editingFolder: FolderModel;
+  withParent?: boolean;
+  editedFolderId?: number;
   parentId?: number;
 }
 
@@ -41,8 +41,8 @@ export class FoldersDialogComponent implements OnInit {
     }
 
     const folderData: FolderModel = this.formGroup.getRawValue() as FolderModel;
-    if (this.data.editingFolder) {
-      folderData.id = this.data.editingFolder.id;
+    if (this.data.editedFolderId) {
+      folderData.id = this.data.editedFolderId;
     } else {
       folderData.id = 0;
     }

@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   getAllUsers(): Promise<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/getAllUsers`).pipe(
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/GetAllUsers`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -59,7 +59,7 @@ export class AuthService {
     params = params.append('password', password);
 
     this.actionsService.startAction();
-    return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/login`, {}, { params }).pipe(
+    return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/Login`, {}, { params }).pipe(
       tap((res: UserModel) => {
         this.currentUserValue = res;
         this.toast.success('Zalogowano pomyślnie');
@@ -77,7 +77,7 @@ export class AuthService {
     const params = new HttpParams().append('emailActivationUrl', emailActivationUrl);
 
     this.actionsService.startAction();
-    return this.http.post(`${environment.apiUrl}/api/Auth/register`, registerData, { params }).pipe(
+    return this.http.post(`${environment.apiUrl}/api/Auth/Register`, registerData, { params }).pipe(
       tap(() => this.toast.success('Zarejestrowano w systemie, sprawdź swoją skrzynkę pocztową aby aktywować konto')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -90,7 +90,7 @@ export class AuthService {
   activateAccount(token: string): Promise<any> {
     const params = new HttpParams().append('token', token);
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/activateAccount`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/ActivateAccount`, {}, { params }).pipe(
       tap(() => this.toast.success('Konto zostało aktywowane, możesz się teraz zalogować')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -103,7 +103,7 @@ export class AuthService {
   logout(token: string, dontShowToast?: boolean): Promise<any> {
     const params = new HttpParams().append('token', token);
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/logout`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/Logout`, {}, { params }).pipe(
       tap(() => {
         if (dontShowToast) {
           return;
@@ -123,7 +123,7 @@ export class AuthService {
     params = params.append('token', token);
     params = params.append('password', password);
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/deleteAccount`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/DeleteAccount`, {}, { params }).pipe(
       tap(() => this.toast.info('Konto zostało usunięte')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -137,7 +137,7 @@ export class AuthService {
     let params = new HttpParams();
     params = params.append('token', token);
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/changePassword`, passwordChangeData, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/ChangePassword`, passwordChangeData, { params }).pipe(
       tap(() => this.toast.success('Hasło zostało zmienione')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -152,7 +152,7 @@ export class AuthService {
     params = params.append('email', email);
 
     this.actionsService.startAction();
-    return this.http.put(`${environment.apiUrl}/api/Auth/remindPassword`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/RemindPassword`, {}, { params }).pipe(
       tap(() => this.toast.success('Twoje nowe hasło zostało wysłane na podanego maila')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -165,7 +165,7 @@ export class AuthService {
   getCurrentUser(token: string): Promise<UserModel> {
     const params = new HttpParams().append('token', token);
 
-    return this.http.get<UserModel>(`${environment.apiUrl}/api/Auth`, { params }).pipe(
+    return this.http.get<UserModel>(`${environment.apiUrl}/api/Auth/GetCurrentUser`, { params }).pipe(
       tap((res: UserModel) => {
         this.currentUserValue = res;
         this.checkCurrentUserBlockades();
@@ -184,7 +184,7 @@ export class AuthService {
       params = params.append('ids', id.toString());
     });
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/disableUsersSystemEditing`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/DisableUsersSystemEditing`, {}, { params }).pipe(
       tap(() => this.toast.success('Zablokowano możliwość edycji przez wybranych użytkowników')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -200,7 +200,7 @@ export class AuthService {
       params = params.append('ids', id.toString());
     });
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/disableUsersSystemAccess`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/DisableUsersSystemAccess`, {}, { params }).pipe(
       tap(() => this.toast.success('Zablokowano dostęp do systemu dla wybranych użytkowników')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -213,7 +213,7 @@ export class AuthService {
   unlockUser(id: number): Promise<any> {
     const params = new HttpParams().append('id', id.toString());
 
-    return this.http.put(`${environment.apiUrl}/api/Auth/unlockUser`, {}, { params }).pipe(
+    return this.http.put(`${environment.apiUrl}/api/Auth/UnlockUser`, {}, { params }).pipe(
       tap(() => this.toast.success('Użytkownik został odblokowany')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -226,7 +226,7 @@ export class AuthService {
   searchForUsers(searchString: string): Promise<UserModel[]> {
     const params = new HttpParams().append('searchString', searchString);
 
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/searchForUsers`, { params }).pipe(
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/SearchForUsers`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -236,7 +236,7 @@ export class AuthService {
   }
 
   getBlockedUsers(): Promise<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/getBlockedUsers`).pipe(
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/GetBlockedUsers`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

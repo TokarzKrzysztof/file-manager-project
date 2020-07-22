@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HistoryController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("count")]
+        [HttpGet]
         public async Task<IActionResult> GetHistoryCount([FromQuery] int maxAmount, [FromQuery] DateTime start, [FromQuery] DateTime end)
         {
             try

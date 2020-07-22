@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -34,7 +34,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("searchForUsers")]
+        [HttpGet]
         public async Task<IActionResult> SearchForUsers([FromQuery] string searchString)
         {
             try
@@ -48,7 +48,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("getBlockedUsers")]
+        [HttpGet]
         public async Task<IActionResult> GetBlockedUsers()
         {
             try
@@ -62,7 +62,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("getAllUsers")]
+        [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -76,7 +76,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
         {
             try
@@ -90,7 +90,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("logout")]
+        [HttpPut]
         public async Task<IActionResult> Logout([FromQuery] Guid token)
         {
             try
@@ -104,7 +104,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserViewModel userData, [FromQuery] string emailActivationUrl)
         {
             try
@@ -119,7 +119,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("activateAccount")]
+        [HttpPut]
         public async Task<IActionResult> ActivateAccount([FromQuery] Guid token)
         {
             try
@@ -134,7 +134,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("deleteAccount")]
+        [HttpPut]
         public async Task<IActionResult> DeleteAccount([FromQuery] Guid token, [FromQuery] string password)
         {
             try
@@ -149,7 +149,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("changePassword")]
+        [HttpPut]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeData passwordChangeData, [FromQuery] Guid token)
         {
             try
@@ -164,7 +164,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("remindPassword")]
+        [HttpPut]
         public async Task<IActionResult> RemindPassword([FromQuery] string email)
         {
             try
@@ -179,7 +179,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("disableUsersSystemAccess")]
+        [HttpPut]
         public async Task<IActionResult> DisableUsersSystemAccess([FromQuery] int[] ids)
         {
             try
@@ -194,7 +194,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("disableUsersSystemEditing")]
+        [HttpPut]
         public async Task<IActionResult> DisableUsersSystemEditing([FromQuery] int[] ids)
         {
             try
@@ -209,7 +209,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("unlockUser")]
+        [HttpPut]
         public async Task<IActionResult> UnlockUser([FromQuery] int id)
         {
             try
