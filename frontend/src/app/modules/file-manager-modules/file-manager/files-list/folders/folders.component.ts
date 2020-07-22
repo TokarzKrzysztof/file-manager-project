@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { FolderModel } from '../../../model-FolderModel';
+import { FoldersService } from '../../../folders.service';
+import { FoldersDialogComponent, AddFolderData } from './dialogs/folders-dialog/folders-dialog.component';
 
 interface FoldersNode {
   name: string;
@@ -66,30 +70,50 @@ interface FlatNode {
 })
 export class FoldersComponent implements OnInit {
   treeControl = new FlatTreeControl<FlatNode>(node => node.level, node => node.expandable);
-
   treeFlattener = new MatTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children);
-
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor() {
+  constructor(
+    private dialog: MatDialog,
+    private foldersService: FoldersService
+  ) {
     this.dataSource.data = TREE_DATA;
   }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+   await this.foldersService.getFolders();
   }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
   private transformer(node: FoldersNode, level: number) {
-    return {
+    const flatNode: FlatNode = {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       level,
+    }
+
+    return flatNode;
+  }
+
+  addRootFolder() {
+    const dialogData: AddFolderData = {
+      title: 'Dodaj folder nadrzędny',
+      withParent: false,
+      editingFolder: null
     };
+
+    this.dialog.open(FoldersDialogComponent, {
+      data: dialogData
+    }).afterClosed().subscribe(async (folderData: FolderModel) => {
+      if (folderData !== null) {
+        await this.foldersService.createFolder(folderData);
+      }
+    });
   }
 
   openFolderMenu(trigger: MatMenuTrigger) {
+    // timeout needed for context menu disable
     setTimeout(() => {
       trigger.openMenu();
     })

@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <form [formGroup]='formGroup' (ngSubmit)='onAccept()'>
+        <mat-form-field class='full-width'>
+            <mat-label>Nazwa folderu</mat-label>
+            <input autocomplete='off' matInput formControlName='name'>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" *ngIf='data.withParent'>
+            <input type="text" placeholder="Folder nadrzędny" matInput formControlName="parentId"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <!-- <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option> -->
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <div>
+            <button mat-raised-button type="submit" color='primary'>Akceptuj</button>
+            <button mat-raised-button type="button" (click)='onCancel()' color='primary'>Anuluj</button>
+        </div>
+    </form>
+</div>

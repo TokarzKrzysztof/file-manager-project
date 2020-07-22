@@ -31,7 +31,7 @@ export class ChangePasswordDialogComponent implements OnInit {
 
   onAccept() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola');
+      this.toast.error('Wypełnij poprawnie wszystkie pola!');
       return;
     }
 
