@@ -1,117 +1,127 @@
-<mat-toolbar>
-    <mat-toolbar-row class="file-manager-toolbar">
-        <div>
-            <button mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false'
-                (click)='fileInput.click()'
-                matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi {{maxFilesSize}}MB'>Dodaj pliki</button>
-            <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
-            <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary'
-                *ngIf='preparedFiles.length'>Wyślij</button>
-            <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button
-                color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
-                <mat-icon>delete</mat-icon>
-            </button>
+<mat-sidenav-container autosize>
+    <mat-sidenav mode='side' opened>
+        <app-folders></app-folders>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <mat-toolbar-row class="file-manager-toolbar">
+                <div>
+                    <button mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false'
+                        (click)='fileInput.click()'
+                        matTooltip='Maksymalna łączna wielkość wysyłanych plików wynosi {{maxFilesSize}}MB'>Dodaj
+                        pliki</button>
+                    <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
+                    <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary'
+                        *ngIf='preparedFiles.length'>Wyślij</button>
+                    <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button
+                        color='primary' matTooltip='Usuń' (click)='onDeleteFiles()'>
+                        <mat-icon>delete</mat-icon>
+                    </button>
 
-            <button mat-icon-button color='primary' matTooltip='Pobierz' (click)='onDownloadFiles()'>
-                <mat-icon>get_app</mat-icon>
-            </button>
+                    <button mat-icon-button color='primary' matTooltip='Pobierz' (click)='onDownloadFiles()'>
+                        <mat-icon>get_app</mat-icon>
+                    </button>
 
-            <button mat-raised-button color='warn' matTooltip='Anuluj' *ngIf='showCancelButton'
-                (click)='onFilesSendCancel()'>
-                Anuluj
-            </button>
+                    <button mat-raised-button color='warn' matTooltip='Anuluj' *ngIf='showCancelButton'
+                        (click)='onFilesSendCancel()'>
+                        Anuluj
+                    </button>
+                </div>
+
+                <mat-form-field floatLabel='never' class="no-bottom-padding">
+                    <mat-label>Wyszukaj</mat-label>
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input autocomplete='off' matInput (input)="onSearch($event.target.value)" #input>
+                </mat-form-field>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row *ngIf='preparedFiles.length'>
+                <mat-chip-list>
+                    <mat-chip disableRipple *ngFor='let file of preparedFiles' (removed)='removePreparedFile(file)'
+                        removable='true'>
+                        {{file.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row *ngIf='fileUploadProgress'>
+                <span>{{fileUploadProgress}}%</span>
+                <mat-progress-bar mode="determinate" [value]="fileUploadProgress" color='primary'></mat-progress-bar>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <div class="table-container">
+            <table mat-table matSort [dataSource]='dataSource' class="mat-elevation-z8">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox color='primary' (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox color='primary' (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tytuł </th>
+                    <td mat-cell *matCellDef="let element" class="editable">
+                        <mat-form-field floatLabel='never'>
+                            <input autocomplete='off' disabled #inputTitle
+                                (keypress)='onPropertyEdit($event, inputTitle, element, "title")'
+                                [value]='element.title' matInput>
+                        </mat-form-field>
+                        <button [disabled]='currentUser?.systemEditingEnabled === false'
+                            (click)='onEditClick(inputTitle, element.title)' mat-icon-button class="edit-icon-button">
+                            <mat-icon *ngIf='inputTitle.disabled' matTooltip='Edytuj'>create</mat-icon>
+                            <mat-icon *ngIf='!inputTitle.disabled' matTooltip='Anuluj'>clear</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fileName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="uploadTime">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data dodania </th>
+                    <td mat-cell *matCellDef="let element"> {{element.uploadTime | date: 'short'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Dodany przez </th>
+                    <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="size">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga [KB] </th>
+                    <td mat-cell *matCellDef="let element"> {{element.size | convertSize}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="order">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Kolejność </th>
+                    <td mat-cell *matCellDef="let element" class="editable">
+                        <mat-form-field floatLabel='never'>
+                            <input appNumberInput autocomplete='off' disabled #inputOrder
+                                (keypress)='onPropertyEdit($event, inputOrder, element, "order")'
+                                [value]='element.order' matInput>
+                        </mat-form-field>
+                        <button [disabled]='currentUser?.systemEditingEnabled === false'
+                            (click)='onEditClick(inputOrder, element.order)' mat-icon-button class="edit-icon-button">
+                            <mat-icon *ngIf='inputOrder.disabled' matTooltip='Edytuj'>create</mat-icon>
+                            <mat-icon *ngIf='!inputOrder.disabled' matTooltip='Anuluj'>clear</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
-
-        <mat-form-field floatLabel='never'>
-            <mat-label>Wyszukaj</mat-label>
-            <mat-icon matPrefix>search</mat-icon>
-            <input autocomplete='off' matInput (input)="onSearch($event.target.value)" #input>
-        </mat-form-field>
-    </mat-toolbar-row>
-
-    <mat-toolbar-row *ngIf='preparedFiles.length'>
-        <mat-chip-list>
-            <mat-chip disableRipple *ngFor='let file of preparedFiles' (removed)='removePreparedFile(file)'
-                removable='true'>
-                {{file.name}}
-                <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
-    </mat-toolbar-row>
-
-    <mat-toolbar-row *ngIf='fileUploadProgress'>
-        <span>{{fileUploadProgress}}%</span>
-        <mat-progress-bar mode="determinate" [value]="fileUploadProgress" color='primary'></mat-progress-bar>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-<div class="table-container">
-    <table mat-table matSort [dataSource]='dataSource' class="mat-elevation-z8">
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox color='primary' (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()">
-                </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox color='primary' (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-                </mat-checkbox>
-            </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tytuł </th>
-            <td mat-cell *matCellDef="let element" class="editable">
-                <mat-form-field floatLabel='never'>
-                    <input autocomplete='off' disabled #inputTitle
-                        (keypress)='onPropertyEdit($event, inputTitle, element, "title")' [value]='element.title' matInput>
-                </mat-form-field>
-                <button [disabled]='currentUser?.systemEditingEnabled === false'
-                    (click)='onEditClick(inputTitle, element.title)' mat-icon-button class="edit-icon-button">
-                    <mat-icon *ngIf='inputTitle.disabled' matTooltip='Edytuj'>create</mat-icon>
-                    <mat-icon *ngIf='!inputTitle.disabled' matTooltip='Anuluj'>clear</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="fileName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
-            <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="uploadTime">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Data dodania </th>
-            <td mat-cell *matCellDef="let element"> {{element.uploadTime | date: 'short'}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="createdBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Dodany przez </th>
-            <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="size">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga [KB] </th>
-            <td mat-cell *matCellDef="let element"> {{element.size | convertSize}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="order">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kolejność </th>
-            <td mat-cell *matCellDef="let element" class="editable">
-                <mat-form-field floatLabel='never'>
-                    <input appNumberInput autocomplete='off' disabled #inputOrder
-                        (keypress)='onPropertyEdit($event, inputOrder, element, "order")' [value]='element.order' matInput>
-                </mat-form-field>
-                <button [disabled]='currentUser?.systemEditingEnabled === false'
-                    (click)='onEditClick(inputOrder, element.order)' mat-icon-button class="edit-icon-button">
-                    <mat-icon *ngIf='inputOrder.disabled' matTooltip='Edytuj'>create</mat-icon>
-                    <mat-icon *ngIf='!inputOrder.disabled' matTooltip='Anuluj'>clear</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

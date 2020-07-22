@@ -23,7 +23,6 @@ body {
 }
 
 .table-container {
-  width: 100vw;
   overflow-x: auto;
   overflow-y: hidden;
 
@@ -111,6 +110,16 @@ mat-card.login-panel-card {
 
   .mat-form-field-prefix {
     transform: translateY(6px);
+  }
+
+  &.no-bottom-padding {
+    margin-bottom: -1.25em;
+  }
+
+  &.no-underline {
+    .mat-form-field-underline {
+      opacity: 0;
+    }
   }
 }
 

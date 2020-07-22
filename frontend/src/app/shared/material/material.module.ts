@@ -21,6 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 const materialModules = [
@@ -44,7 +45,8 @@ const materialModules = [
   MatAutocompleteModule,
   MatExpansionModule,
   MatProgressBarModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatSidenavModule
 ]
 
 @NgModule({

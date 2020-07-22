@@ -14,6 +14,7 @@ import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpHeaders, Http
 import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
