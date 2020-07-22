@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './model-UserModel';
 import { ActionsService } from 'src/app/shared/services/actions.service';
-import { PasswordChangeData } from '../file-manager-modules/dialogs/change-password-dialog/change-password-dialog.component';
 import { Router } from '@angular/router';
+import { PasswordChangeData } from 'src/app/shared/components/user-panel/dialogs/change-password-dialog/change-password-dialog.component';
 
 
 @Injectable({

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth-modules/auth.service';
 import { Router } from '@angular/router';
-import { PasswordChangeData, ChangePasswordDialogComponent } from 'src/app/modules/file-manager-modules/dialogs/change-password-dialog/change-password-dialog.component';
+import { PasswordChangeData, ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteAccountDialogComponent } from 'src/app/modules/file-manager-modules/dialogs/delete-account-dialog/delete-account-dialog.component';
+import { DeleteAccountDialogComponent } from './dialogs/delete-account-dialog/delete-account-dialog.component';
 import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
