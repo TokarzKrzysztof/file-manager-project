@@ -66,7 +66,7 @@ export class FoldersService {
     const params = new HttpParams().append('id', id.toString());
 
     this.actionsService.startAction();
-    return this.http.put<void>(`${environment.apiUrl}/api/Folders/delete/DeleteFolder`, {}, { params }).pipe(
+    return this.http.put<void>(`${environment.apiUrl}/api/Folders/DeleteFolder`, {}, { params }).pipe(
       tap(() => this.toast.success('Pomyślnie usunięto folder')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);

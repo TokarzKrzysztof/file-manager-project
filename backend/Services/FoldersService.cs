@@ -61,12 +61,34 @@ namespace backend.Services
 
         public async Task SetFolderUnactive(int id)
         {
-            throw new NotImplementedException();
+            List<FolderModel> allFolders = await _context.Folders.Where(x => x.IsActive).ToListAsync();
+            FolderModel folder = allFolders.FirstOrDefault(x => x.Id == id && x.IsActive);
+            List<FolderModel> foldersToDelete = new List<FolderModel>();
+            FindAllCorrespondingFolders(folder, allFolders, foldersToDelete);
+
+            _context.UpdateRange(foldersToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        private void FindAllCorrespondingFolders(FolderModel rootFolder, List<FolderModel> allFolders, List<FolderModel> foldersToDelete)
+        {
+            List<FolderModel> children = allFolders.Where(x => x.ParentId == rootFolder.Id).ToList();
+
+            foreach(FolderModel child in children)
+            {
+                FindAllCorrespondingFolders(child, allFolders, foldersToDelete);
+            }
+
+            rootFolder.IsActive = false;
+            foldersToDelete.Add(rootFolder);
         }
 
         public async Task UpdateFolder(FolderViewModel folderData)
         {
-            throw new NotImplementedException();
+            FolderModel folder = await _context.Folders.FirstOrDefaultAsync(x => x.Id == folderData.id && x.IsActive);
+            folder = FoldersConverter.UpdateDbFolderWithViewFolderData(folder, folderData);
+            _context.Update(folder);
+            await _context.SaveChangesAsync();
         }
 
         

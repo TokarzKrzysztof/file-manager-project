@@ -6,7 +6,7 @@
             <input autocomplete='off' matInput formControlName='name'>
         </mat-form-field>
 
-        <mat-form-field class="full-width" *ngIf='data.parentId'>
+        <mat-form-field class="full-width">
             <input type="text" placeholder="Folder nadrzędny" matInput formControlName="parentId"
                 [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)" autoActiveFirstOption>

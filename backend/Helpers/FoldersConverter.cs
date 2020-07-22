@@ -18,5 +18,13 @@ namespace backend.Helpers
                 parentId = x.ParentId
             }).ToList();
         }
+
+        public static FolderModel UpdateDbFolderWithViewFolderData(FolderModel dbFolder, FolderViewModel viewFolder)
+        {
+            dbFolder.Name = viewFolder.name;
+            dbFolder.ParentId = viewFolder.parentId;
+
+            return dbFolder;
+        }
     }
 }

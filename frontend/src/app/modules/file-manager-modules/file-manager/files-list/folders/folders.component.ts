@@ -5,12 +5,13 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { FolderModel } from '../../../model-FolderModel';
 import { FoldersService } from '../../../folders.service';
-import { FoldersDialogComponent, AddFolderData } from './dialogs/folders-dialog/folders-dialog.component';
+import { FoldersDialogComponent, DialogFolderData } from './dialogs/folders-dialog/folders-dialog.component';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 interface FlatNode {
   id: number;
   name: string;
+  parentId?: number;
   expandable: boolean;
   level: number;
 }
@@ -57,6 +58,7 @@ export class FoldersComponent implements OnInit {
     const flatNode: FlatNode = {
       id: node.id,
       name: node.name,
+      parentId: node.parentId,
       expandable: node.children?.length > 0,
       level,
     }
@@ -65,8 +67,9 @@ export class FoldersComponent implements OnInit {
   }
 
   addRootFolder() {
-    const dialogData: AddFolderData = {
+    const dialogData: DialogFolderData = {
       title: 'Dodaj folder nadrzędny',
+      flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
 
     this.dialog.open(FoldersDialogComponent, {
@@ -80,12 +83,10 @@ export class FoldersComponent implements OnInit {
   }
 
   addSubfolder(folderId: number) {
-    const flatenedFolders: FlatNode[] = this.treeFlattener.flattenNodes(this.dataSource.data);
-
-    const dialogData: AddFolderData = {
+    const dialogData: DialogFolderData = {
       title: 'Dodaj podfolder',
       parentId: folderId,
-      flatenedFolders: flatenedFolders.map(x => ({ id: x.id, name: x.name }))
+      flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
 
     this.dialog.open(FoldersDialogComponent, {
@@ -98,10 +99,14 @@ export class FoldersComponent implements OnInit {
     });
   }
 
-  editName(folderId: number) {
-    const dialogData: AddFolderData = {
-      title: 'Edytuj nazwę folderu',
-      editedFolderId: folderId
+  editFolder(folderId: number) {
+    const editedFolderNode: FlatNode = this.treeControl.dataNodes.find(x => x.id === folderId);
+
+    const dialogData: DialogFolderData = {
+      title: 'Edytuj folder',
+      editedFolder: {id: editedFolderNode.id, name: editedFolderNode.name},
+      parentId: editedFolderNode.parentId,
+      flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
 
     this.dialog.open(FoldersDialogComponent, {

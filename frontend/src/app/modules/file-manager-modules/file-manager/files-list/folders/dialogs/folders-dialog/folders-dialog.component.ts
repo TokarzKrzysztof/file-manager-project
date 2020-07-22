@@ -6,11 +6,12 @@ import { FolderModel } from 'src/app/modules/file-manager-modules/model-FolderMo
 import { Observable } from 'rxjs';
 import { startWith, filter, map } from 'rxjs/operators';
 
-export interface AddFolderData {
+
+export interface DialogFolderData {
   title: string;
-  editedFolderId?: number;
+  flatenedFolders: { id: number, name: string }[];
+  editedFolder?: { id: number, name: string };
   parentId?: number;
-  flatenedFolders?: { id: number, name: string }[];
 }
 
 @Component({
@@ -29,22 +30,24 @@ export class FoldersDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<FoldersDialogComponent>,
     private toast: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: AddFolderData
+    @Inject(MAT_DIALOG_DATA) public data: DialogFolderData
   ) { }
 
   ngOnInit(): void {
-    if (this.data.parentId) {
-      const parentIdForm: FormControl = this.formGroup.get('parentId') as FormControl;
-      parentIdForm.setValidators(Validators.required);
-      parentIdForm.setValue(this.data.parentId);
+    this.filteredFolders = this.formGroup.get('parentId').valueChanges.pipe(
+      startWith(''),
+      filter(value => typeof value === 'string'),
+      map((value: string) => this.data.flatenedFolders.filter(x => x.name.toLowerCase().includes(value.toLowerCase())))
+    );
 
-      this.filteredFolders = parentIdForm.valueChanges.pipe(
-        startWith(''),
-        filter(value => typeof value === 'string'),
-        map((value: string) => this.data.flatenedFolders.filter(x => x.name.toLowerCase().includes(value.toLowerCase())))
-      );
+    if (this.data.parentId) {
+      this.formGroup.get('parentId').setValue(this.data.parentId);
     }
 
+    if (this.data.editedFolder) {
+      this.formGroup.get('name').setValue(this.data.editedFolder.name);
+      this.data.flatenedFolders = this.data.flatenedFolders.filter(x => x.id !== this.data.editedFolder.id)
+    }
   }
 
   displayFn(folderId: number): string {
@@ -60,17 +63,14 @@ export class FoldersDialogComponent implements OnInit {
       return;
     }
 
-    if (typeof this.formGroup.get('parentId').value === 'string') {
+    const parentIdValue = this.formGroup.get('parentId').value;
+    if (typeof parentIdValue === 'string' && parentIdValue !== '') {
       this.toast.error('Wybierz poprawny folder nadrzędny!');
       return;
     }
 
     const folderData: FolderModel = this.formGroup.getRawValue() as FolderModel;
-    if (this.data.editedFolderId) {
-      folderData.id = this.data.editedFolderId;
-    } else {
-      folderData.id = 0;
-    }
+    folderData.id = this.data.editedFolder?.id || 0;
 
     this.dialogRef.close(folderData);
   }
