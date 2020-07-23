@@ -23,6 +23,7 @@ namespace backend.Models
         public int CreatorId { get; set; }
 
         public string CreatedBy { get; set; }
+        public int FolderId { get; set; }
 #nullable enable
         public string? DeletedBy { get; set; }
 

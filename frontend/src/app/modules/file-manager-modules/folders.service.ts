@@ -38,9 +38,9 @@ export class FoldersService {
     ).toPromise();
   }
 
-  createFolder(folderData: FolderModel): Promise<void> {
+  createFolder(folderData: FolderModel): Promise<number> {
     this.actionsService.startAction();
-    return this.http.post<void>(`${environment.apiUrl}/api/Folders/CreateFolder`, folderData).pipe(
+    return this.http.post<number>(`${environment.apiUrl}/api/Folders/CreateFolder`, folderData).pipe(
       tap(() => this.toast.success('Pomyślnie dodano folder')),
       catchError((error: HttpErrorResponse) => {
         console.error(error);

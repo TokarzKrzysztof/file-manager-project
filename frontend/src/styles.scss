@@ -175,3 +175,7 @@ mat-card.login-panel-card {
     margin-bottom: 5px;
   }
 }
+
+.mat-sidenav-container {
+  min-height: calc(100% - 49px);
+}

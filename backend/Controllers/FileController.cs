@@ -36,12 +36,27 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData, [FromQuery] int creatorId)
+        [HttpGet]
+        public async Task<IActionResult> GetFilesInsideFolder([FromQuery] int folderId)
         {
             try
             {
-                await _fileService.UploadFiles(files, userData, creatorId);             
+                List<FileViewModel> files = await _fileService.GetFilesInsideFolder(folderId);
+                return Ok(files);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles([FromForm] IFormFileCollection files, [FromQuery] string userData, [FromQuery] int creatorId, [FromQuery] int folderId)
+        {
+            try
+            {
+                await _fileService.UploadFiles(files, userData, creatorId, folderId);             
                 return Ok();
             }
 

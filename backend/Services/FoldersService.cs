@@ -18,7 +18,7 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task CreateFolder(FolderViewModel folderData)
+        public async Task<int> CreateFolder(FolderViewModel folderData)
         {
             FolderModel folder = new FolderModel()
             {
@@ -29,6 +29,8 @@ namespace backend.Services
 
             _context.Folders.Add(folder);
             await _context.SaveChangesAsync();
+
+            return folder.Id;
         }
 
         public async Task<List<FolderViewModel>> GetFoldersTree()

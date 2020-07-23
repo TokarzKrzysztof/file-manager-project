@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -22,6 +22,9 @@ interface FlatNode {
   styleUrls: ['./folders.component.scss']
 })
 export class FoldersComponent implements OnInit {
+  @Output() folderChanged = new EventEmitter<FolderModel>();
+
+  activeFolder: FolderModel;
   expandedNodes: FlatNode[] = [];
   treeControl = new FlatTreeControl<FlatNode>(node => node.level, node => node.expandable);
   treeFlattener = new MatTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children);
@@ -35,14 +38,15 @@ export class FoldersComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadFolders();
+    this.setActiveFolder(this.treeControl.dataNodes[0]);
   }
 
   async loadFolders() {
     this.expandedNodes = [];
     this.treeControl.dataNodes?.forEach(node => {
-        if (this.treeControl.isExpanded(node)) {
-            this.expandedNodes.push(node);
-        }
+      if (this.treeControl.isExpanded(node)) {
+        this.expandedNodes.push(node);
+      }
     });
 
     this.dataSource.data = await this.foldersService.getFoldersTree();
@@ -54,7 +58,7 @@ export class FoldersComponent implements OnInit {
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
-  private transformer(node: FolderModel, level: number) {
+  private transformer(node: FolderModel, level: number): FlatNode {
     const flatNode: FlatNode = {
       id: node.id,
       name: node.name,
@@ -64,6 +68,25 @@ export class FoldersComponent implements OnInit {
     }
 
     return flatNode;
+  }
+
+  private revertTransform(node: FlatNode): FolderModel {
+    const folder: FolderModel = {
+      id: node.id,
+      parentId: node.parentId,
+      name: node.name
+    }
+
+    return folder;
+  }
+
+  setActiveFolder(node: FlatNode) {
+    const folder: FolderModel = this.revertTransform(node);
+    this.activeFolder = folder;
+    if (node.parentId) {
+      this.treeControl.expand(this.treeControl.dataNodes.find(x => x.id === node.parentId));
+    }
+    this.folderChanged.emit(this.activeFolder);
   }
 
   addRootFolder() {
@@ -76,16 +99,18 @@ export class FoldersComponent implements OnInit {
       data: dialogData
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
       if (folderData !== null) {
-        await this.foldersService.createFolder(folderData);
+        const folderId: number = await this.foldersService.createFolder(folderData);
+        console.log(folderId)
         await this.loadFolders();
+        this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
       }
     });
   }
 
-  addSubfolder(folderId: number) {
+  addSubfolder(parentId: number) {
     const dialogData: DialogFolderData = {
       title: 'Dodaj podfolder',
-      parentId: folderId,
+      parentId,
       flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
 
@@ -93,8 +118,9 @@ export class FoldersComponent implements OnInit {
       data: dialogData
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
       if (folderData !== null) {
-        await this.foldersService.createFolder(folderData);
+        const folderId = await this.foldersService.createFolder(folderData);
         await this.loadFolders();
+        this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
       }
     });
   }
@@ -104,7 +130,7 @@ export class FoldersComponent implements OnInit {
 
     const dialogData: DialogFolderData = {
       title: 'Edytuj folder',
-      editedFolder: {id: editedFolderNode.id, name: editedFolderNode.name},
+      editedFolder: { id: editedFolderNode.id, name: editedFolderNode.name },
       parentId: editedFolderNode.parentId,
       flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
@@ -115,6 +141,7 @@ export class FoldersComponent implements OnInit {
       if (folderData !== null) {
         await this.foldersService.updateFolder(folderData);
         await this.loadFolders();
+        this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
       }
     });
   }

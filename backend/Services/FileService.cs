@@ -64,6 +64,12 @@ namespace backend.Services
             return FileConverter.ConvertDbListToViewModelList(dbFiles);
         }
 
+        public async Task<List<FileViewModel>> GetFilesInsideFolder(int folderId)
+        {
+            List<FileModel> dbFiles = await _context.Files.Where(x => x.FolderId == folderId).ToListAsync();
+            return FileConverter.ConvertDbListToViewModelList(dbFiles);
+        }
+
         public async Task UpdateFile(FileViewModel file)
         {
             FileModel dbFile = await _context.Files.FirstOrDefaultAsync(x => x.Id == file.id);
@@ -72,7 +78,7 @@ namespace backend.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId)
+        public async Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId, int folderId)
         {
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
 
@@ -110,7 +116,8 @@ namespace backend.Services
                     ContentType = file.ContentType,
                     Size = file.Length,
                     CreatedBy = userData,
-                    CreatorId = creatorId
+                    CreatorId = creatorId,
+                    FolderId = folderId
                 };
 
                 HistoryModel historyRow = new HistoryModel()

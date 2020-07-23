@@ -55,8 +55,8 @@ namespace backend.Controllers
         {
             try
             {
-                await _foldersService.CreateFolder(folderData);
-                return Ok();
+                int folderId = await _foldersService.CreateFolder(folderData);
+                return Ok(folderId);
             }
 
             catch (Exception ex)

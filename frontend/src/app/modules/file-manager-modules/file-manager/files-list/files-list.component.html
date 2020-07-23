@@ -1,8 +1,8 @@
 <mat-sidenav-container autosize>
     <mat-sidenav mode='side' opened>
-        <app-folders></app-folders>
+        <app-folders (folderChanged)='onFolderChange($event)'></app-folders>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content *ngIf='activeFolder'>
         <mat-toolbar>
             <mat-toolbar-row class="file-manager-toolbar">
                 <div>
@@ -28,11 +28,18 @@
                     </button>
                 </div>
 
-                <mat-form-field floatLabel='never' class="no-bottom-padding">
-                    <mat-label>Wyszukaj</mat-label>
-                    <mat-icon matPrefix>search</mat-icon>
-                    <input autocomplete='off' matInput (input)="onSearch($event.target.value)" #input>
-                </mat-form-field>
+                <div class="folder-container">
+                    <mat-icon class="folder-icon">folder</mat-icon>
+                    <span class="folder-name"> {{activeFolder.name}} </span>
+                </div>
+
+                <div>
+                    <mat-form-field floatLabel='never' class="no-bottom-padding">
+                        <mat-label>Wyszukaj</mat-label>
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input autocomplete='off' matInput (input)="onSearch($event.target.value)" #input>
+                    </mat-form-field>
+                </div>
             </mat-toolbar-row>
 
             <mat-toolbar-row *ngIf='preparedFiles.length'>

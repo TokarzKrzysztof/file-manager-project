@@ -13,14 +13,15 @@ import { of, Subject, Observable } from 'rxjs';
 })
 export class FilesService {
 
+
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
     private actionsService: ActionsService
   ) { }
 
-  getFiles(): Promise<FileModel[]> {
-    return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetFiles`).pipe(
+  getAllFiles(): Promise<FileModel[]> {
+    return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetAllFiles`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -29,7 +30,19 @@ export class FilesService {
     ).toPromise();
   }
 
-  uploadFiles(files: File[], userData: string, creatorId: number): Observable<HttpEvent<HttpUploadProgressEvent>> {
+  getFilesInsideFolder(folderId: number): Promise<FileModel[]> {
+    const params = new HttpParams().append('folderId', folderId.toString());
+
+    return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetFilesInsideFolder`, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        this.toast.error(error.error.Message);
+        throw new Error(error.error.Message);
+      })
+    ).toPromise();
+  }
+
+  uploadFiles(files: File[], userData: string, creatorId: number, folderId: number): Observable<HttpEvent<HttpUploadProgressEvent>> {
     const formData = new FormData();
     files.forEach((file: File) => {
       formData.append('files', file, file.name);
@@ -38,6 +51,7 @@ export class FilesService {
     let params = new HttpParams();
     params = params.append('userData', userData);
     params = params.append('creatorId', creatorId.toString());
+    params = params.append('folderId', folderId.toString());
 
     return this.http.post<HttpUploadProgressEvent>(`${environment.apiUrl}/api/File/UploadFiles`, formData,
       { params, reportProgress: true, observe: 'events' });

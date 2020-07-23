@@ -7,7 +7,7 @@ namespace backend.Interfaces
     public interface IFoldersService
     {
         Task<List<FolderViewModel>> GetFoldersTree();
-        Task CreateFolder(FolderViewModel folderData);
+        Task<int> CreateFolder(FolderViewModel folderData);
         Task SetFolderUnactive(int id);
         Task UpdateFolder(FolderViewModel folderData);
         Task<List<FolderViewModel>> SearchForFolders(string searchString);

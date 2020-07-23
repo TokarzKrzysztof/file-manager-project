@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -10,11 +10,11 @@ import { FileModel } from '../../model-FileModel';
 import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
-import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
-import { MatSidenav } from '@angular/material/sidenav';
+import { FolderModel } from '../../model-FolderModel';
 
 
 @Component({
@@ -26,6 +26,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
+  activeFolder: FolderModel;
   onCancel = new Subject<void>();
   showCancelButton: boolean;
   fileUploadProgress: number;
@@ -49,11 +50,22 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.maxFilesSize = (await this.globalSettingsService.getGlobalSettings()).maxSize;
     this.currentUser = await this.authService.getCurrentUserValue();
-    this.loadFiles();
+    // this.loadFiles();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  onFolderChange(folder: FolderModel) {
+    this.activeFolder = folder;
+    this.loadFiles(this.activeFolder.id);
+  }
+
+  async loadFiles(folderId: number) {
+    this.dataSource.data = await this.filesService.getFilesInsideFolder(folderId);
+    this.sortFilesByOrder(this.dataSource.data);
+    this.selection.clear();
   }
 
   onSearch(value: string) {
@@ -103,12 +115,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.preparedFiles.splice(deletedFileIndex, 1);
   }
 
-  async loadFiles() {
-    this.dataSource.data = await this.filesService.getFiles();
-    this.sortFilesByOrder(this.dataSource.data);
-    this.selection.clear();
-  }
-
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -147,7 +153,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
     this.actionsService.startAction();
     this.showCancelButton = true;
-    this.filesService.uploadFiles(this.preparedFiles, userData, creatorId).pipe(
+    this.filesService.uploadFiles(this.preparedFiles, userData, creatorId, this.activeFolder.id).pipe(
       takeUntil(this.onCancel),
       catchError((error: HttpErrorResponse) => {
         if (error.error.Data?.reason === 'LIMITUPLOAD') {
@@ -178,7 +184,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         this.actionsService.stopAction();
         this.showCancelButton = false;
 
-        this.loadFiles();
+        this.loadFiles(this.activeFolder.id);
       });
   }
 
@@ -202,7 +208,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       const filesToDeleteIds = selectedFiles.map(x => x.id);
       const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
       await this.filesService.deleteFiles(filesToDeleteIds, userData);
-      this.loadFiles();
+      this.loadFiles(this.activeFolder.id);
     });
   }
 
