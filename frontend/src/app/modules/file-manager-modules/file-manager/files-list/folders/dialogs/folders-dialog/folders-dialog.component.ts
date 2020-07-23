@@ -22,8 +22,9 @@ export interface DialogFolderData {
 export class FoldersDialogComponent implements OnInit {
   filteredFolders: Observable<{ id: number, name: string }[]>;
 
+  hasParentFolder = new FormControl(false);
   formGroup = new FormGroup({
-    parentId: new FormControl(null),
+    parentId: new FormControl(null, [Validators.required]),
     name: new FormControl('', [Validators.required])
   });
 
@@ -40,13 +41,21 @@ export class FoldersDialogComponent implements OnInit {
       map((value: string) => this.data.flatenedFolders.filter(x => x.name.toLowerCase().includes(value.toLowerCase())))
     );
 
+    this.hasParentFolder.valueChanges.pipe(
+      startWith(this.hasParentFolder.value)
+    ).subscribe((value: boolean) => {
+      const action = value ? 'enable' : 'disable';
+      this.formGroup.get('parentId')[action]();
+    })
+
     if (this.data.parentId) {
+      this.hasParentFolder.setValue(true);
       this.formGroup.get('parentId').setValue(this.data.parentId);
     }
 
     if (this.data.editedFolder) {
       this.formGroup.get('name').setValue(this.data.editedFolder.name);
-      this.data.flatenedFolders = this.data.flatenedFolders.filter(x => x.id !== this.data.editedFolder.id)
+      this.data.flatenedFolders = this.data.flatenedFolders.filter(x => x.id !== this.data.editedFolder.id);
     }
   }
 
@@ -69,7 +78,7 @@ export class FoldersDialogComponent implements OnInit {
       return;
     }
 
-    const folderData: FolderModel = this.formGroup.getRawValue() as FolderModel;
+    const folderData: FolderModel = this.formGroup.value as FolderModel;
     folderData.id = this.data.editedFolder?.id || 0;
 
     this.dialogRef.close(folderData);
