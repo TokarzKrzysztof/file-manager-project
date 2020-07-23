@@ -100,7 +100,6 @@ export class FoldersComponent implements OnInit {
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
       if (folderData !== null) {
         const folderId: number = await this.foldersService.createFolder(folderData);
-        console.log(folderId)
         await this.loadFolders();
         this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
       }
@@ -157,6 +156,7 @@ export class FoldersComponent implements OnInit {
       if (result) {
         await this.foldersService.deleteFolder(folderId);
         await this.loadFolders();
+        this.setActiveFolder(this.treeControl.dataNodes[0]);
       }
     });
   }

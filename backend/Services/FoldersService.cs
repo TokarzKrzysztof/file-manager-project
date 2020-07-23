@@ -13,9 +13,11 @@ namespace backend.Services
     public class FoldersService : IFoldersService
     {
         private readonly FileManagerDbContext _context;
-        public FoldersService(FileManagerDbContext context)
+        private readonly IFileService _filesService;
+        public FoldersService(FileManagerDbContext context, IFileService filesService)
         {
             _context = context;
+            _filesService = filesService;
         }
 
         public async Task<int> CreateFolder(FolderViewModel folderData)
@@ -57,32 +59,40 @@ namespace backend.Services
 
         public async Task<List<FolderViewModel>> SearchForFolders(string searchString)
         {
-            List<FolderModel> dbFolders =  await _context.Folders.Where(x => x.Name.ToLower().Contains(searchString.ToLower()) && x.IsActive).ToListAsync();
+            List<FolderModel> dbFolders = await _context.Folders.Where(x => x.Name.ToLower().Contains(searchString.ToLower()) && x.IsActive).ToListAsync();
             return FoldersConverter.ConvertDbListToViewList(dbFolders);
         }
 
         public async Task SetFolderUnactive(int id)
         {
             List<FolderModel> allFolders = await _context.Folders.Where(x => x.IsActive).ToListAsync();
+            List<FileModel> allFiles = await _context.Files.ToListAsync();
+
             FolderModel folder = allFolders.FirstOrDefault(x => x.Id == id && x.IsActive);
+
             List<FolderModel> foldersToDelete = new List<FolderModel>();
-            FindAllCorrespondingFolders(folder, allFolders, foldersToDelete);
+            List<FileModel> filesToDelete = new List<FileModel>();
+
+            FindAllCorrespondingFolders(folder, allFolders, foldersToDelete, allFiles, filesToDelete);
 
             _context.UpdateRange(foldersToDelete);
+            await _filesService.DeleteFiles(filesToDelete);
             await _context.SaveChangesAsync();
         }
 
-        private void FindAllCorrespondingFolders(FolderModel rootFolder, List<FolderModel> allFolders, List<FolderModel> foldersToDelete)
+        private void FindAllCorrespondingFolders(FolderModel rootFolder, List<FolderModel> allFolders, List<FolderModel> foldersToDelete, List<FileModel> allFiles, List<FileModel> filesToDelete)
         {
             List<FolderModel> children = allFolders.Where(x => x.ParentId == rootFolder.Id).ToList();
+            List<FileModel> filesInsideFolder = allFiles.Where(x => x.FolderId == rootFolder.Id).ToList(); 
 
-            foreach(FolderModel child in children)
+            foreach (FolderModel child in children)
             {
-                FindAllCorrespondingFolders(child, allFolders, foldersToDelete);
+                FindAllCorrespondingFolders(child, allFolders, foldersToDelete, allFiles, filesToDelete);
             }
 
             rootFolder.IsActive = false;
             foldersToDelete.Add(rootFolder);
+            filesToDelete.AddRange(filesInsideFolder);
         }
 
         public async Task UpdateFolder(FolderViewModel folderData)
@@ -93,6 +103,6 @@ namespace backend.Services
             await _context.SaveChangesAsync();
         }
 
-        
+
     }
 }

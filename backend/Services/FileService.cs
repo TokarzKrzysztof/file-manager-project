@@ -21,7 +21,7 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task<bool> DeleteFiles(int[] ids, string userData)
+        public async Task DeleteFiles(int[] ids, string userData)
         {
             foreach (int fileId in ids)
             {
@@ -43,7 +43,21 @@ namespace backend.Services
             }
 
             await _context.SaveChangesAsync();
-            return true;
+        }
+
+        public async Task DeleteFiles(List<FileModel> files)
+        {
+            foreach (FileModel file in files)
+            {
+                if (file != null)
+                {
+                    File.Delete(file.FilePath);
+
+                }
+            }
+
+           _context.Files.RemoveRange(files);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<FileStream> DownloadFile(int id)
