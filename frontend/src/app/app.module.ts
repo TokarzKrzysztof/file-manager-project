@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 
-import '@angular/common/locales/global/PL';
+// import '@angular/common/locales/global/EN';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from './polish-paginator-intl';
 
@@ -19,7 +19,7 @@ import { getPolishPaginatorIntl } from './polish-paginator-intl';
     SharedModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pl-PL' },
+    // { provide: LOCALE_ID, useValue: 'en-EN' },
     { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() },
   ],
   bootstrap: [AppComponent]

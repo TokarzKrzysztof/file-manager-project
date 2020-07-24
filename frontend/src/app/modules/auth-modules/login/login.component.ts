@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   async login() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error($localize `:@@ENTER_VALID_FIELDS:`);
       return;
     }
 

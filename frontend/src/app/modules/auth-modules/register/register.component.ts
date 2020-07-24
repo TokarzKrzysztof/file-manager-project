@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onProceed(form: FormGroup) {
     if (form.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error($localize `:@@ENTER_VALID_FIELDS:`);
       return;
     }
 
@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   async register() {
     if (this.primaryDataForm.invalid || this.passwordForm.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error($localize `:@@ENTER_VALID_FIELDS:`);
       return;
     }
 
