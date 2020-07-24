@@ -44,7 +44,7 @@ export class HistoryService {
       params = params.append('end', dateRange.end.toJSON());
     }
 
-    return this.http.get<number>(`${environment.apiUrl}/api/History/count/GetHistoryCount`, { params }).pipe(
+    return this.http.get<number>(`${environment.apiUrl}/api/History/GetHistoryCount`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
