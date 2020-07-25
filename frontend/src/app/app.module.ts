@@ -9,8 +9,13 @@ import '@angular/common/locales/global/PL';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from './polish-paginator-intl';
 import { ToastrModule } from 'ngx-toastr';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +29,14 @@ import { TranslateModule } from '@ngx-translate/core';
       positionClass: 'toast-middle-top',
       preventDuplicates: true,
     }),
-    TranslateModule.forRoot()
+    TranslateModule.forRoot({
+      defaultLanguage: 'pl',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl-PL' },
@@ -33,3 +45,5 @@ import { TranslateModule } from '@ngx-translate/core';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
