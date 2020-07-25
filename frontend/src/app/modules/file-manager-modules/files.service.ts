@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FileModel } from './model-FileModel';
 import { of, Subject, Observable } from 'rxjs';
+import { translations } from 'src/app/app.component';
 
 
 @Injectable({
@@ -66,7 +67,7 @@ export class FilesService {
 
     this.actionsService.startAction();
     return this.http.delete<void>(`${environment.apiUrl}/api/File/DeleteFiles`, { params }).pipe(
-      tap(() => this.toast.success('Pomyślnie usunięto pliki')),
+      tap(() => this.toast.success(translations.FILES_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

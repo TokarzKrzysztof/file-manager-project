@@ -8,17 +8,17 @@
                     <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.NAME" | translate}}</mat-label>
+                    <mat-label>{{"PERSON_NAME" | translate}}</mat-label>
                     <input autocomplete='off' matInput formControlName='name'>
                     <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.SURNAME" | translate}}</mat-label>
+                    <mat-label>{{"SURNAME" | translate}}</mat-label>
                     <input autocomplete='off' matInput formControlName='surname'>
                     <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.REGISTER_AS" | translate}}</mat-label>
+                    <mat-label>{{"REGISTER_AS" | translate}}</mat-label>
                     <mat-select formControlName='role'>
                         <mat-option value='USER'>{{"USER" | translate}}</mat-option>
                         <mat-option value='ADMIN'>{{"ADMIN" | translate}}</mat-option>
@@ -89,10 +89,10 @@
                     {{"EMAIL" | translate}} {{primaryDataForm.get('email').value}}
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"AUTH.NAME" | translate}} {{primaryDataForm.get('name').value}}
+                    {{"NAME" | translate}} {{primaryDataForm.get('name').value}}
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"AUTH.SURNAME" | translate}} {{primaryDataForm.get('surname').value}}
+                    {{"SURNAME" | translate}} {{primaryDataForm.get('surname').value}}
                 </mat-list-item>
                 <mat-list-item role="listitem">
                     {{"PASSWORD" | translate}} {{showPasswordOnSummary ? passwordForm.get('password').value : ''}}
@@ -101,15 +101,15 @@
                     </button>
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"AUTH.REGISTER_AS" | translate}} {{primaryDataForm.get('role').value | convertUserRole}}
+                    {{"REGISTER_AS" | translate}} {{primaryDataForm.get('role').value | convertUserRole}}
                 </mat-list-item>
             </mat-list>
 
             <div class="flex between">
                 <button appDisableOnAction mat-raised-button color='primary' type="submit"
-                    (click)='register()'>{{"AUTH.REGISTER" | translate}}</button>
+                    (click)='register()'>{{"REGISTER" | translate}}</button>
                 <button mat-raised-button class="go-to-login-button" color='primary' type="button"
-                    routerLink='/login'>{{"AUTH.GO_TO_LOGIN" | translate}}</button>
+                    routerLink='/login'>{{"GO_TO_LOGIN" | translate}}</button>
             </div>
         </mat-tab>
     </mat-tab-group>

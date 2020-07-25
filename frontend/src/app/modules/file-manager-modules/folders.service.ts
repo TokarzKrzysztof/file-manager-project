@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { translations } from 'src/app/app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class FoldersService {
   createFolder(folderData: FolderModel): Promise<number> {
     this.actionsService.startAction();
     return this.http.post<number>(`${environment.apiUrl}/api/Folders/CreateFolder`, folderData).pipe(
-      tap(() => this.toast.success('Pomyślnie dodano folder')),
+      tap(() => this.toast.success(translations.FOLDER_ADD_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -53,7 +54,7 @@ export class FoldersService {
   updateFolder(folderData: FolderModel): Promise<void> {
     this.actionsService.startAction();
     return this.http.put<void>(`${environment.apiUrl}/api/Folders/UpdateFolder`, folderData).pipe(
-      tap(() => this.toast.success('Pomyślnie zaktualizowano folder')),
+      tap(() => this.toast.success(translations.FOLDER_UPDATE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -67,7 +68,7 @@ export class FoldersService {
 
     this.actionsService.startAction();
     return this.http.put<void>(`${environment.apiUrl}/api/Folders/DeleteFolder`, {}, { params }).pipe(
-      tap(() => this.toast.success('Pomyślnie usunięto folder')),
+      tap(() => this.toast.success(translations.FOLDER_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);

@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalSettingsService } from '../../global-settings.service';
 import { GlobalSettingsModel } from '../../model-GlobalSettingsModel';
+import { translations } from 'src/app/app.component';
 
 @Component({
   selector: 'app-global-settings',
@@ -51,7 +52,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.passwordSettings.markAllAsTouched();
 
     if (this.filesSettings.invalid || this.passwordSettings.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 

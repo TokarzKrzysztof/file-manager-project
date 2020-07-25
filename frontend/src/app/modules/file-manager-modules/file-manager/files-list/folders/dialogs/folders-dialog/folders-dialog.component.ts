@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FolderModel } from 'src/app/modules/file-manager-modules/model-FolderModel';
 import { Observable } from 'rxjs';
 import { startWith, filter, map } from 'rxjs/operators';
+import { translations } from 'src/app/app.component';
 
 
 export interface DialogFolderData {
@@ -68,7 +69,7 @@ export class FoldersDialogComponent implements OnInit {
 
   onAccept() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 

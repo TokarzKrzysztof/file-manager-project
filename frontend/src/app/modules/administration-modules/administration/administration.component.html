@@ -1,7 +1,7 @@
 <nav mat-tab-nav-bar>
     <div>
-        <a mat-tab-link active routerLink='users-list'> Lista Użytkowników </a>
-        <a mat-tab-link routerLink='global-settings'> Ustawienia globalne </a>
+        <a mat-tab-link active routerLink='users-list'> {{"USERS_LIST" | translate}} </a>
+        <a mat-tab-link routerLink='global-settings'> {{"GLOBAL_SETTINGS" | translate}} </a>
     </div>
 
     <app-user-panel [showFileManagerLink]='true'></app-user-panel>

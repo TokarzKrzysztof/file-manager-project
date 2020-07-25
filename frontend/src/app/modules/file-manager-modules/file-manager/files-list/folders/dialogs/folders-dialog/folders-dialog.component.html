@@ -2,15 +2,15 @@
 <div mat-dialog-content>
     <form [formGroup]='formGroup' (ngSubmit)='onAccept()'>
         <mat-form-field class='full-width'>
-            <mat-label>{{"FM.FOLDER_NAME" | translate}}</mat-label>
+            <mat-label>{{"FOLDER_NAME" | translate}}</mat-label>
             <input autocomplete='off' matInput formControlName='name'>
             <mat-error>Pole jest wymagane</mat-error>
         </mat-form-field>
 
         <div class="parent-folder-forms">
-            <mat-checkbox [formControl]='hasParentFolder' color='primary'>{{"FM.HAS_ROOT_FOLDER" | translate}}</mat-checkbox>
+            <mat-checkbox [formControl]='hasParentFolder' color='primary'>{{"HAS_ROOT_FOLDER" | translate}}</mat-checkbox>
             <mat-form-field class="full-width">
-                <input type="text" placeholder='{{"FM.ROOT_FOLDER" | translate}}' matInput formControlName="parentId"
+                <input type="text" placeholder='{{"ROOT_FOLDER" | translate}}' matInput formControlName="parentId"
                     [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)" autoActiveFirstOption>
                     <mat-option *ngFor="let folder of filteredFolders | async" [value]="folder.id">

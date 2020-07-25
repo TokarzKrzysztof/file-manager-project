@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { translations } from 'src/app/app.component';
 
 export interface PasswordChangeData {
   oldPassword: string;
@@ -31,7 +32,7 @@ export class ChangePasswordDialogComponent implements OnInit {
 
   onAccept() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 

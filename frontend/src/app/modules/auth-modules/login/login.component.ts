@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserModel } from '../model-UserModel';
+import { translations } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   async login() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 

@@ -1,24 +1,24 @@
 <div class="user-control-panel">
     <p class="user-credentials">
-        <span class="login-as-label">Zalogowany jako:</span>
+        <span class="login-as-label">{{"LOGGED_AS" | translate}}</span>
         <span class="user-data">{{currentUser?.name}} {{currentUser?.surname}}</span>
     </p>
-    <a mat-tab-link [matMenuTriggerFor]="menu">Menu</a>
+    <a mat-tab-link [matMenuTriggerFor]="menu">{{"MENU" | translate}}</a>
     <mat-menu #menu="matMenu">
         <a mat-menu-item (click)='logout()'>
-            Wyloguj
+            {{"LOGOUT" | translate}}
         </a>
         <a mat-menu-item (click)='changePassword()'>
-            Zmień hasło
+            {{"CHANGE_PASSWORD" | translate}}
         </a>
         <a mat-menu-item (click)='deleteAccount()'>
-            Usuń konto
+            {{"DELETE_ACCOUNT" | translate}}
         </a>
         <a mat-menu-item *ngIf='showAdministrationPanelLink && currentUser?.role === "ADMIN"' (click)='showAdminPanel()'>
-            Panel administratora
+            {{"ADMIN_PANEL" | translate}}
         </a>
         <a mat-menu-item *ngIf='showFileManagerLink' (click)='showFileManager()'>
-            Menadżer plików
+            {{"FILE_MANAGER" | translate}}
         </a>
     </mat-menu>
 </div>

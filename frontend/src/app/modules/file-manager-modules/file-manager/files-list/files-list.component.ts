@@ -15,6 +15,7 @@ import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FolderModel } from '../../model-FolderModel';
+import { translations } from 'src/app/app.component';
 
 
 @Component({
@@ -174,7 +175,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
 
       else if (event instanceof HttpResponse) {
-        this.toast.success('Pomyślnie dodano pliki');
+        this.toast.success(translations.FILES_ADD_SUCCESS);
       }
     },
       () => { },

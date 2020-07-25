@@ -7,6 +7,7 @@ import { UserModel } from './model-UserModel';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { Router } from '@angular/router';
 import { PasswordChangeData } from 'src/app/shared/components/user-panel/dialogs/change-password-dialog/change-password-dialog.component';
+import { translations } from 'src/app/app.component';
 
 
 @Injectable({
@@ -62,7 +63,7 @@ export class AuthService {
     return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/Login`, {}, { params }).pipe(
       tap((res: UserModel) => {
         this.currentUserValue = res;
-        this.toast.success('Zalogowano pomyślnie');
+        this.toast.success(translations.LOGIN_SUCCESS);
         this.checkCurrentUserBlockades();
       }),
       catchError((error: HttpErrorResponse) => {
@@ -78,7 +79,7 @@ export class AuthService {
 
     this.actionsService.startAction();
     return this.http.post(`${environment.apiUrl}/api/Auth/Register`, registerData, { params }).pipe(
-      tap(() => this.toast.success('Zarejestrowano w systemie, sprawdź swoją skrzynkę pocztową aby aktywować konto')),
+      tap(() => this.toast.success(translations.REGISTER_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -91,7 +92,7 @@ export class AuthService {
     const params = new HttpParams().append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/ActivateAccount`, {}, { params }).pipe(
-      tap(() => this.toast.success('Konto zostało aktywowane, możesz się teraz zalogować')),
+      tap(() => this.toast.success(translations.ACTIVATION_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -108,7 +109,7 @@ export class AuthService {
         if (dontShowToast) {
           return;
         }
-        this.toast.success('Wylogowano pomyślnie');
+        this.toast.success(translations.LOGOUT_SUCCESS);
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -124,7 +125,7 @@ export class AuthService {
     params = params.append('password', password);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/DeleteAccount`, {}, { params }).pipe(
-      tap(() => this.toast.info('Konto zostało usunięte')),
+      tap(() => this.toast.info(translations.ACCOUNT_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -138,7 +139,7 @@ export class AuthService {
     params = params.append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/ChangePassword`, passwordChangeData, { params }).pipe(
-      tap(() => this.toast.success('Hasło zostało zmienione')),
+      tap(() => this.toast.success(translations.PASSWORD_CHANGE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -153,7 +154,7 @@ export class AuthService {
 
     this.actionsService.startAction();
     return this.http.put(`${environment.apiUrl}/api/Auth/RemindPassword`, {}, { params }).pipe(
-      tap(() => this.toast.success('Twoje nowe hasło zostało wysłane na podanego maila')),
+      tap(() => this.toast.success(translations.PASSWORD_REMIND_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -185,7 +186,7 @@ export class AuthService {
     });
 
     return this.http.put(`${environment.apiUrl}/api/Auth/DisableUsersSystemEditing`, {}, { params }).pipe(
-      tap(() => this.toast.success('Zablokowano możliwość edycji przez wybranych użytkowników')),
+      tap(() => this.toast.success(translations.USERS_BLOCK_EDIT_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -201,7 +202,7 @@ export class AuthService {
     });
 
     return this.http.put(`${environment.apiUrl}/api/Auth/DisableUsersSystemAccess`, {}, { params }).pipe(
-      tap(() => this.toast.success('Zablokowano dostęp do systemu dla wybranych użytkowników')),
+      tap(() => this.toast.success(translations.USERS_BLOCK_ACCESS_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -214,7 +215,7 @@ export class AuthService {
     const params = new HttpParams().append('id', id.toString());
 
     return this.http.put(`${environment.apiUrl}/api/Auth/UnlockUser`, {}, { params }).pipe(
-      tap(() => this.toast.success('Użytkownik został odblokowany')),
+      tap(() => this.toast.success(translations.USER_UNLOCK_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.toast.error(error.error.Message);
@@ -247,12 +248,12 @@ export class AuthService {
 
   private async checkCurrentUserBlockades() {
     if (this.currentUserValue.systemEditingEnabled === false) {
-      this.toast.warning('Możliwość dodawania, edycji i usuwania plików została dla Ciebie zablokowana');
+      this.toast.warning(translations.BLOCKADE_WARNING);
     }
 
     if (this.currentUserValue.systemAccess === false) {
       await this.logout(this.currentUserValue.token, true);
-      this.toast.error('Twoje konto zostało zablokowane');
+      this.toast.error(translations.ACCOUNT_BLOCKED_ERROR);
       window.localStorage.removeItem('currentUserToken');
       this.clearCurrentUserValue();
       this.router.navigateByUrl('/login');

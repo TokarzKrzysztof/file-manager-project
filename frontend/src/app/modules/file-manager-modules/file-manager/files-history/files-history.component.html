@@ -4,8 +4,8 @@
         <mat-form-field class="full-width date-range">
             <mat-label>{{"FILTER" | translate}}</mat-label>
             <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
-                <input matStartDate formControlName="start" placeholder="{{"FROM" | translate}}">
-                <input matEndDate formControlName="end" placeholder="{{"TO" | translate}}">
+                <input matStartDate formControlName="start" placeholder='{{"FROM" | translate}}'>
+                <input matEndDate formControlName="end" placeholder='{{"TO" | translate}}'>
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>

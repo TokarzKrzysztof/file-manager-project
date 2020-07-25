@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
+
+export let translations;
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,19 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private translate: TranslateService
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
-    this.translate.setDefaultLang('pl');
-    this.translate.use('pl');
+    const defaultLang = 'en';
+
+    this.translateService.setDefaultLang('en');
+    this.translateService.use('en');
+
+    translations = this.translateService.translations[defaultLang];
+
+    this.translateService.onTranslationChange.subscribe((event: TranslationChangeEvent) => {
+      translations = this.translateService.translations[event.lang];
+    })
   }
 }

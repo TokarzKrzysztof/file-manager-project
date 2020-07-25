@@ -7,6 +7,7 @@ import { UserModel } from '../model-UserModel';
 import { Router } from '@angular/router';
 import { GlobalSettingsService } from '../../administration-modules/global-settings.service';
 import { GlobalSettingsModel } from '../../administration-modules/model-GlobalSettingsModel';
+import { translations } from 'src/app/app.component';
 
 class PasswordRequirementsValidation {
   minLength: boolean;
@@ -84,7 +85,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onProceed(form: FormGroup) {
     if (form.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 
@@ -93,7 +94,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   async register() {
     if (this.primaryDataForm.invalid || this.passwordForm.invalid) {
-      this.toast.error('Wypełnij poprawnie wszystkie pola!');
+      this.toast.error(translations.FILL_ALL_FIELDS);
       return;
     }
 

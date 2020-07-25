@@ -3,72 +3,88 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Ustawienia plików
+                    {{"FILES_SETTINGS" | translate}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-    
+
             <form [formGroup]='filesSettings'>
                 <mat-form-field class="full-width">
-                    <mat-label>Maksymalna waga wysyłanych plików: </mat-label>
+                    <mat-label> {{"FILES_MAX_WEIGHT" | translate}} </mat-label>
                     <mat-select formControlName='maxSize'>
                         <mat-option *ngFor="let size of maxFileSizes" [value]="size"> {{size}} MB</mat-option>
                     </mat-select>
                     <mat-error *ngIf='filesSettings.get("maxSize")'>Pole jest wymagane</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>Maksymalna ilość plików na godzinę: </mat-label>
-                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='limitPerHour'/>
-                    <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("required")'>Pole jest wymagane</mat-error>
-                    <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("min") || filesSettings.get("limitPerHour").hasError("max")'>
-                        Wartość musi być większa lub równa {{minLimitPerHourValidator}} i mniejsza niż {{maxLimitPerHourValidator}}
+                    <mat-label> {{"FILES_MAX_PER_HOUR" | translate}} </mat-label>
+                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='limitPerHour' />
+                    <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("required")'>Pole jest wymagane
+                    </mat-error>
+                    <mat-error
+                        *ngIf='filesSettings.get("limitPerHour").hasError("min") || filesSettings.get("limitPerHour").hasError("max")'
+                        translate='VALUE_MIN_MAX'
+                        [translateParams]='{min: minLimitPerHourValidator, max: maxLimitPerHourValidator}'>
                     </mat-error>
                 </mat-form-field>
             </form>
         </mat-expansion-panel>
-    
+
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Ustawienia haseł
+                    {{"PASSWORD_SETTINGS" | translate}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <form [formGroup]='passwordSettings'>
                 <mat-form-field class="full-width">
-                    <mat-label>Minimalna długość hasła: </mat-label>
-                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='minLength'/>
-                    <mat-error *ngIf='passwordSettings.get("minLength").hasError("required")'>Pole jest wymagane</mat-error>
-                    <mat-error *ngIf='passwordSettings.get("minLength").hasError("min") || passwordSettings.get("minLength").hasError("max")'>
-                        Wartość musi być większa lub równa {{minPasswordValidator}} i mniejsza niż {{maxPasswordValidator}}
+                    <mat-label> {{"PASSWORD_MIN_LENGTH" | translate}} </mat-label>
+                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='minLength' />
+                    <mat-error *ngIf='passwordSettings.get("minLength").hasError("required")'>Pole jest wymagane
+                    </mat-error>
+                    <mat-error
+                        *ngIf='passwordSettings.get("minLength").hasError("min") || passwordSettings.get("minLength").hasError("max")'
+                        translate='VALUE_MIN_MAX'
+                        [translateParams]='{min: minPasswordValidator, max: maxPasswordValidator}'>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>Minimalna ilość cyfr: </mat-label>
-                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='minDigits'/>
-                    <mat-error *ngIf='passwordSettings.get("minDigits").hasError("required")'>Pole jest wymagane</mat-error>
-                    <mat-error *ngIf='passwordSettings.get("minDigits").hasError("min") || passwordSettings.get("minDigits").hasError("max")'>
-                        Wartość musi być większa lub równa {{minPasswordValidator}} i mniejsza niż {{maxPasswordValidator}}
+                    <mat-label> {{"PASSWORD_MIN_DIGITS" | translate}} </mat-label>
+                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='minDigits' />
+                    <mat-error *ngIf='passwordSettings.get("minDigits").hasError("required")'>Pole jest wymagane
+                    </mat-error>
+                    <mat-error
+                        *ngIf='passwordSettings.get("minDigits").hasError("min") || passwordSettings.get("minDigits").hasError("max")'
+                        translate='VALUE_MIN_MAX'
+                        [translateParams]='{min: minPasswordValidator, max: maxPasswordValidator}'>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>Minimalna ilość wielkich liter: </mat-label>
-                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='bigLetters'/>
-                    <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("required")'>Pole jest wymagane</mat-error>
-                    <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("min") || passwordSettings.get("bigLetters").hasError("max")'>
-                        Wartość musi być większa lub równa {{minPasswordValidator}} i mniejsza niż {{maxPasswordValidator}}
+                    <mat-label> {{"PASSWORD_MIN_UPPERCASE" | translate}} </mat-label>
+                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='bigLetters' />
+                    <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("required")'>Pole jest wymagane
+                    </mat-error>
+                    <mat-error
+                        *ngIf='passwordSettings.get("bigLetters").hasError("min") || passwordSettings.get("bigLetters").hasError("max")'
+                        translate='VALUE_MIN_MAX'
+                        [translateParams]='{min: minPasswordValidator, max: maxPasswordValidator}'>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>Minimalna ilość znaków specjalnych: </mat-label>
-                    <input autocomplete='off' appNumberInput type="number" matInput formControlName='specialCharacters'/>
-                    <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("required")'>Pole jest wymagane</mat-error>
-                    <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("min") || passwordSettings.get("specialCharacters").hasError("max")'>
-                        Wartość musi być większa lub równa {{minPasswordValidator}} i mniejsza niż {{maxPasswordValidator}}
+                    <mat-label> {{"PASSWORD_MIN_SPECIALS" | translate}} </mat-label>
+                    <input autocomplete='off' appNumberInput type="number" matInput
+                        formControlName='specialCharacters' />
+                    <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("required")'>Pole jest wymagane
+                    </mat-error>
+                    <mat-error
+                        *ngIf='passwordSettings.get("specialCharacters").hasError("min") || passwordSettings.get("specialCharacters").hasError("max")'
+                        translate='VALUE_MIN_MAX'
+                        [translateParams]='{min: minPasswordValidator, max: maxPasswordValidator}'>
                     </mat-error>
                 </mat-form-field>
             </form>
         </mat-expansion-panel>
     </mat-accordion>
-    
+
     <div class="flex end global-settings-button-container">
         <button appDisableOnAction mat-raised-button (click)='onSave()' color='primary'>Zapisz</button>
     </div>

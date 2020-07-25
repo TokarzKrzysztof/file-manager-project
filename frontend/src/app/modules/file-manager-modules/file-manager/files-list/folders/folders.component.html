@@ -1,8 +1,8 @@
 <div>
     <mat-toolbar>
         <button mat-stroked-button
-            matTooltip='{{"FM.CLICK_TO_SEE_DETAILS" | translate}}'
-            (click)='addRootFolder()'>{{"FM.ADD_ROOT_FOLDER" | translate}}</button>
+            matTooltip='{{"CLICK_TO_SEE_DETAILS" | translate}}'
+            (click)='addRootFolder()'>{{"ADD_ROOT_FOLDER" | translate}}</button>
     </mat-toolbar>
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -33,13 +33,13 @@
     <mat-menu #menu='matMenu'>
         <ng-template matMenuContent let-id='id'>
             <a mat-menu-item (click)='addSubfolder(id)'>
-                {{"FM.ADD_SUBFOLDER" | translate}}
+                {{"ADD_SUBFOLDER" | translate}}
             </a>
             <a mat-menu-item (click)='editFolder(id)'>
-                {{"FM.EDIT_FOLDER" | translate}}
+                {{"EDIT_FOLDER" | translate}}
             </a>
             <a mat-menu-item (click)='deleteFolder(id)'>
-                {{"FM.DELETE_FOLDER" | translate}}
+                {{"DELETE_FOLDER" | translate}}
             </a>
         </ng-template>
     </mat-menu>

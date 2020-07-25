@@ -1,8 +1,8 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <mat-form-field class="full-width search-for-users">
-      <mat-label>Wyszukaj użytkowników: </mat-label>
-      <input matInput [formControl]="usersSearch" placeholder="Imię, nazwisko, adres email...">
+      <mat-label>{{"SEARCH_FOR_USERS" | translate}}</mat-label>
+      <input matInput [formControl]="usersSearch" placeholder='{{"PERSON_NAME" | translate}}, {{"SURNAME" | translate}}, {{"EMAIL" | translate}}...'>
     </mat-form-field>
   </mat-toolbar-row>
 
@@ -17,37 +17,37 @@
   </mat-toolbar-row>
 
   <mat-toolbar-row>
-    <button mat-raised-button color='primary' (click)='onBlockAccess()'>Zablokuj dostęp do systemu</button>
-    <button mat-raised-button color='primary' (click)='onBlockEdit()'>Zablokuj edycję danych w systemie</button>
+    <button mat-raised-button color='primary' (click)='onBlockAccess()'>{{"BLOCK_ACCESS_IN_SYSTEM" | translate}}</button>
+    <button mat-raised-button color='primary' (click)='onBlockEdit()'>{{"BLOCK_EDIT_IN_SYSTEM" | translate}}</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
 
 
-<h2 class="header">Zablokowani użytkownicy</h2>
+<h2 class="header">{{"BLOCKED_USERS" | translate}}</h2>
 
 <div class="table-container">
   <table mat-table [dataSource]="blockedUsers" class="mat-elevation-z8">
   
     <ng-container matColumnDef="userData">
-      <th mat-header-cell *matHeaderCellDef> Dane użytkownika </th>
+      <th mat-header-cell *matHeaderCellDef> {{"USER_DATA" | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} {{element.surname}} </td>
     </ng-container>
   
     <ng-container matColumnDef="blockEdit">
-      <th mat-header-cell *matHeaderCellDef> Blokada edycji </th>
+      <th mat-header-cell *matHeaderCellDef> {{"EDIT_BLOCKED" | translate}} </th>
       <td mat-cell *matCellDef="let element">{{!element.systemEditingEnabled | appBoolean}}</td>
     </ng-container>
   
     <ng-container matColumnDef="blockAccess">
-      <th mat-header-cell *matHeaderCellDef> Blokada dostępu </th>
+      <th mat-header-cell *matHeaderCellDef> {{"ACCESS_BLOCKED" | translate}} </th>
       <td mat-cell *matCellDef="let element">{{!element.systemAccess | appBoolean}}</td>
     </ng-container>
   
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Akcje </th>
+      <th mat-header-cell *matHeaderCellDef> {{"ACTIONS" | translate}} </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-button (click)='unlockUser(element)'>Odblokuj użytkownika</button>
+        <button mat-button (click)='unlockUser(element)'>{{"UNLOCK_USER" | translate}}</button>
       </td>
     </ng-container>
   
