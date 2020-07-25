@@ -13,19 +13,10 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "pl": "src/locale/messages/messages.pl.xlf",
-          "en": "src/locale/messages/messages.en.xlf",
-          "de": "src/locale/messages/messages.de.xlf"
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": true,
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -44,15 +35,6 @@
             "scripts": []
           },
           "configurations": {
-            "pl": {
-              "localize": ["pl"]
-            },
-            "en": {
-              "localize": ["en"]
-            },
-            "de": {
-              "localize": ["de"]
-            },
             "production": {
               "fileReplacements": [
                 {
@@ -89,15 +71,6 @@
             "browserTarget": "frontend:build"
           },
           "configurations": {
-            "pl": {
-              "browserTarget": "frontend:build:pl"
-            },
-            "en": {
-              "browserTarget": "frontend:build:en"
-            },
-            "de": {
-              "browserTarget": "frontend:build:de"
-            },
             "production": {
               "browserTarget": "frontend:build:production"
             }

@@ -1,25 +1,23 @@
-<h3 i18n>tłumaczenie</h3>
-
 <mat-card class="login-panel-card">
     <form [formGroup]='formGroup' (ngSubmit)='login()'>
         <mat-form-field appearance='outline' class="full-width">
-            <mat-label i18n>E-mail:</mat-label>
+            <mat-label>E-mail:</mat-label>
             <input autocomplete='off' matInput formControlName='email'>
-            <mat-error i18n>Pole jest wymagane</mat-error>
+            <mat-error>Pole jest wymagane</mat-error>
         </mat-form-field>
         <mat-form-field appearance='outline' class="full-width">
-            <mat-label i18n>hasło:</mat-label>
+            <mat-label>hasło:</mat-label>
             <input autocomplete='off' type='password' matInput formControlName='password'>
-            <mat-error i18n>Pole jest wymagane</mat-error>
+            <mat-error>Pole jest wymagane</mat-error>
         </mat-form-field>
 
         <div class="flex between">
             <div>
-                <button appDisableOnAction mat-raised-button color='primary' type="submit" i18n>Zaloguj</button>
-                <button mat-raised-button color='primary' type="button" routerLink='/register' i18n>Zarejestruj się</button>
+                <button appDisableOnAction mat-raised-button color='primary' type="submit">Zaloguj</button>
+                <button mat-raised-button color='primary' type="button" routerLink='/register'>Zarejestruj się</button>
             </div>
             <div>
-                <button mat-button type="button" routerLink='/remind-password' i18n>Przypomnij hasło</button>
+                <button mat-button type="button" routerLink='/remind-password'>Przypomnij hasło</button>
             </div>
         </div>
         

@@ -68,7 +68,7 @@ export class FoldersDialogComponent implements OnInit {
 
   onAccept() {
     if (this.formGroup.invalid) {
-      this.toast.error($localize `:@@ENTER_VALID_FIELDS:`);
+      this.toast.error('Wypełnij poprawnie wszystkie pola!');
       return;
     }
 

@@ -51,7 +51,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.passwordSettings.markAllAsTouched();
 
     if (this.filesSettings.invalid || this.passwordSettings.invalid) {
-      this.toast.error($localize `:@@ENTER_VALID_FIELDS:`);
+      this.toast.error('Wypełnij poprawnie wszystkie pola!');
       return;
     }
 
