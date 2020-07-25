@@ -25,40 +25,32 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTreeModule } from '@angular/material/tree';
 
 
-const materialModules = [
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatTabsModule,
-  MatTableModule,
-  MatCheckboxModule,
-  MatIconModule,
-  MatTooltipModule,
-  MatMenuModule,
-  MatPaginatorModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatSortModule,
-  MatListModule,
-  MatSelectModule,
-  MatAutocompleteModule,
-  MatExpansionModule,
-  MatProgressBarModule,
-  MatDatepickerModule,
-  MatSidenavModule,
-  MatTreeModule
-]
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ...materialModules
-  ],
   exports: [
-    ...materialModules
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatSortModule,
+    MatListModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatSidenavModule,
+    MatTreeModule
   ]
 })
 export class MaterialModule { }

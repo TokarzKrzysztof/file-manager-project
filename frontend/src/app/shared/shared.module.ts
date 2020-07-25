@@ -15,8 +15,16 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
 import { BooleanPipe } from './pipes/boolean.pipe';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DisableContextMenuDirective } from './directives/disable-context-menu.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
-
+const sharedModules = [
+  MaterialModule,
+  ReactiveFormsModule,
+  HttpClientModule,
+  MatMomentDateModule,
+  TranslateModule,
+  ToastrModule
+];
 
 @NgModule({
   declarations: [
@@ -33,22 +41,10 @@ import { DisableContextMenuDirective } from './directives/disable-context-menu.d
   ],
   imports: [
     CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatMomentDateModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-middle-top',
-      preventDuplicates: true,
-    })
+    sharedModules
   ],
   exports: [
-    MaterialModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ToastrModule,
-    MatMomentDateModule,
+    sharedModules,
     ConvertSizePipe,
     ChangePasswordDialogComponent,
     DeleteAccountDialogComponent,

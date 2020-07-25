@@ -8,6 +8,8 @@ import { SharedModule } from './shared/shared.module';
 import '@angular/common/locales/global/PL';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from './polish-paginator-intl';
+import { ToastrModule } from 'ngx-toastr';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -17,6 +19,12 @@ import { getPolishPaginatorIntl } from './polish-paginator-intl';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-middle-top',
+      preventDuplicates: true,
+    }),
+    TranslateModule.forRoot()
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl-PL' },
