@@ -3,32 +3,32 @@
         <mat-tab label="Podstawowe Dane">
             <form [formGroup]='primaryDataForm' (ngSubmit)='onProceed(primaryDataForm)'>
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.EMAIL" | translate}}</mat-label>
+                    <mat-label>{{"EMAIL" | translate}}</mat-label>
                     <input autocomplete='off' matInput formControlName='email'>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>{{"AUTH.NAME" | translate}}</mat-label>
                     <input autocomplete='off' matInput formControlName='name'>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>{{"AUTH.SURNAME" | translate}}</mat-label>
                     <input autocomplete='off' matInput formControlName='surname'>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label>{{"AUTH.REGISTER_AS" | translate}}</mat-label>
                     <mat-select formControlName='role'>
-                        <mat-option value='USER'>{{'AUTH.USER' | translate}}</mat-option>
-                        <mat-option value='ADMIN'>{{'AUTH.ADMIN' | translate}}</mat-option>
+                        <mat-option value='USER'>{{"USER" | translate}}</mat-option>
+                        <mat-option value='ADMIN'>{{"ADMIN" | translate}}</mat-option>
                     </mat-select>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
 
                 <div class="flex end">
                     <button mat-raised-button color='primary' type='button'
-                        type="submit">{{"AUTH.PROCEED" | translate}}</button>
+                        type="submit">{{"PROCEED" | translate}}</button>
                 </div>
             </form>
         </mat-tab>
@@ -39,46 +39,46 @@
                 <input type="password" hidden />
                 <!-- for autocomplete disable -->
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.PASSWORD" | translate}}</mat-label>
+                    <mat-label>{{"PASSWORD" | translate}}</mat-label>
                     <input autocomplete='new-password' [type]="hidePassword ? 'password' : 'text'" matInput
                         formControlName='password'>
                     <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
-                    <mat-label>{{"AUTH.PASSWORD_REPEAT" | translate}}</mat-label>
+                    <mat-label>{{"PASSWORD_REPEAT" | translate}}</mat-label>
                     <input autocomplete='new-password' [type]="hidePasswordRepeat ? 'password' : 'text'" matInput
                         formControlName='passwordRepeat'>
                     <button mat-icon-button matSuffix (click)="hidePasswordRepeat = !hidePasswordRepeat">
                         <mat-icon>{{hidePasswordRepeat ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error>{{"FORMS.REQUIRED" | translate}}</mat-error>
+                    <mat-error>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-list>
-                    <h3 matSubheader>{{"AUTH.PASSWORD_REQUIREMENTS" | translate}}</h3>
+                    <h3 matSubheader>{{"PASSWORD_REQUIREMENTS" | translate}}</h3>
                     <mat-list-item [ngClass]='passwordRequirements.minLength ? "correct" : "incorrect"'>
-                        <span>{{"AUTH.PASSWORD_MIN_LENGTH" | translate}}</span>
+                        <span>{{"PASSWORD_MIN_LENGTH" | translate}}</span>
                         <span>{{globalSettings?.minLength}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.specialCharacters ? "correct" : "incorrect"'>
-                        <span>{{"AUTH.PASSWORD_MIN_SPECIALS" | translate}}</span>
+                        <span>{{"PASSWORD_MIN_SPECIALS" | translate}}</span>
                         <span>{{globalSettings?.specialCharacters}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.bigLetters ? "correct" : "incorrect"'>
-                        <span>{{"AUTH.PASSWORD_MIN_UPPERCASE" | translate}}</span>
+                        <span>{{"PASSWORD_MIN_UPPERCASE" | translate}}</span>
                         <span>{{globalSettings?.bigLetters}}</span>
                     </mat-list-item>
                     <mat-list-item [ngClass]='passwordRequirements.minDigits ? "correct" : "incorrect"'>
-                        <span>{{"AUTH.PASSWORD_MIN_DIGITS" | translate}}</span>
+                        <span>{{"PASSWORD_MIN_DIGITS" | translate}}</span>
                         <span>{{globalSettings?.minDigits}}</span>
                     </mat-list-item>
                 </mat-list>
 
                 <div class="flex end">
                     <button mat-raised-button color='primary' type='button'
-                        type="submit">{{"AUTH.PROCEED" | translate}}</button>
+                        type="submit">{{"PROCEED" | translate}}</button>
                 </div>
             </form>
         </mat-tab>
@@ -86,7 +86,7 @@
         <mat-tab disabled label="Podsumowanie">
             <mat-list role="list">
                 <mat-list-item role="listitem">
-                    {{"AUTH.EMAIL" | translate}} {{primaryDataForm.get('email').value}}
+                    {{"EMAIL" | translate}} {{primaryDataForm.get('email').value}}
                 </mat-list-item>
                 <mat-list-item role="listitem">
                     {{"AUTH.NAME" | translate}} {{primaryDataForm.get('name').value}}
@@ -95,7 +95,7 @@
                     {{"AUTH.SURNAME" | translate}} {{primaryDataForm.get('surname').value}}
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"AUTH.PASSWORD" | translate}} {{showPasswordOnSummary ? passwordForm.get('password').value : ''}}
+                    {{"PASSWORD" | translate}} {{showPasswordOnSummary ? passwordForm.get('password').value : ''}}
                     <button mat-button (click)='showPasswordOnSummary = !showPasswordOnSummary'>
                         {{showPasswordOnSummary ? 'Ukryj' : 'Pokaż'}}
                     </button>

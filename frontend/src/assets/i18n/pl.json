@@ -1,10 +1,26 @@
 {
-    "FORMS": {
-        "REQUIRED": "Pole jest wymagane"
+    "ACCEPT": "Akceptuj",
+    "EDIT": "Edytuj",
+    "CANCEL": "Anuluj",
+    "DELETE": "Usuń",
+    "REQUIRED": "Pole jest wymagane",
+    "USER": "Użytkownik",
+    "ADMIN": "Administrator",
+    "SEARCH": "Wyszukaj",
+    "FROM": "Od",
+    "TO": "Do",
+    "FILTER": "Filtruj",
+    "CLEAR_FILTER": "Wyczyść filter",
+    "DATE": "Data",
+    "DESCRIPTION": "Opis",
+    "USER_DATA": "Dane użytkownika",
+    "PASSWORD": "Hasło",
+    "EMAIL": "E-mail",
+    "PROCEED": "Dalej",
+
+    "TOAST": {
     },
     "AUTH": {
-        "EMAIL": "E-mail",
-        "PASSWORD": "Hasło",
         "PASSWORD_REPEAT": "Powtórz hasło",
         "PASSWORD_REQUIREMENTS": "Wymagania dotyczące hasła",
         "PASSWORD_MIN_LENGTH": "Minimalna długość hasła",
@@ -17,9 +33,34 @@
         "NAME": "Imię",
         "SURNAME": "Nazwisko",
         "REGISTER_AS": "Zarejestruj jako",
-        "PROCEED": "Dalej",
-        "USER": "Użytkownik",
-        "ADMIN": "Administrator",
         "GO_TO_LOGIN": "Przejdź do logowania"
+    },
+    "FM":{
+        "FILE_LIST": "Lista plików",
+        "HISTORY": "Historia",
+        "ADD_FILES": "Dodaj pliki",
+        "DOWNLOAD": "Pobierz",
+        "SEND": "Wyślij",
+        "TITLE": "Tytuł",
+        "NAME": "Nazwa",
+        "CREATION_DATE": "Data dodania",
+        "CREATED_BY": "Dodany przez",
+        "WEIGHT": "Waga",
+        "ORDER": "Kolejność",
+        "MAX_SIZE": "Maksymalna łączna wielkość wysyłanych plików wynosi {{param}}MB",
+        "CLICK_TO_SEE_DETAILS": "Kliknij prawym przyciskiem myszy na folder aby wyświetlić dodatkowe opcje",
+        "ROOT_FOLDER": "Folder nadrzędny",
+        "ADD_ROOT_FOLDER": "Dodaj folder nadrzędny",
+        "ADD_SUBFOLDER": "Dodaj podfolder",
+        "EDIT_FOLDER": "Edytuj folder",
+        "DELETE_FOLDER": "Usuń folder",
+        "FOLDER_NAME": "Nazwa folderu",
+        "HAS_ROOT_FOLDER": "Posiada folder nadrzędny",
+        "FILTER": "",
+       
+    },
+    "ADMINISTRATION":{
+
     }
+
 }

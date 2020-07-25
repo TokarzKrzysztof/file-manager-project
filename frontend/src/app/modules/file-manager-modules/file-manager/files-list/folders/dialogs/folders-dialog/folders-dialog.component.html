@@ -2,28 +2,28 @@
 <div mat-dialog-content>
     <form [formGroup]='formGroup' (ngSubmit)='onAccept()'>
         <mat-form-field class='full-width'>
-            <mat-label>Nazwa folderu</mat-label>
+            <mat-label>{{"FM.FOLDER_NAME" | translate}}</mat-label>
             <input autocomplete='off' matInput formControlName='name'>
             <mat-error>Pole jest wymagane</mat-error>
         </mat-form-field>
 
         <div class="parent-folder-forms">
-            <mat-checkbox [formControl]='hasParentFolder' color='primary'>Posiada folder nadrzędny</mat-checkbox>
+            <mat-checkbox [formControl]='hasParentFolder' color='primary'>{{"FM.HAS_ROOT_FOLDER" | translate}}</mat-checkbox>
             <mat-form-field class="full-width">
-                <input type="text" placeholder="Folder nadrzędny" matInput formControlName="parentId"
+                <input type="text" placeholder='{{"FM.ROOT_FOLDER" | translate}}' matInput formControlName="parentId"
                     [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)" autoActiveFirstOption>
                     <mat-option *ngFor="let folder of filteredFolders | async" [value]="folder.id">
                         {{folder.name}}
                     </mat-option>
                 </mat-autocomplete>
-                <mat-error>Pole jest wymagane</mat-error>
+                <mat-error>{{"REQUIRED" | translate}}</mat-error>
             </mat-form-field>
         </div>
 
         <div>
-            <button mat-raised-button type="submit" color='primary'>Akceptuj</button>
-            <button mat-raised-button type="button" (click)='onCancel()' color='primary'>Anuluj</button>
+            <button mat-raised-button type="submit" color='primary'>{{"ACCEPT" | translate}}</button>
+            <button mat-raised-button type="button" (click)='onCancel()' color='primary'>{{"CANCEL" | translate}}</button>
         </div>
     </form>
 </div>
