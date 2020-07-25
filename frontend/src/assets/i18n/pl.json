@@ -1,0 +1,25 @@
+{
+    "FORMS": {
+        "REQUIRED": "Pole jest wymagane"
+    },
+    "AUTH": {
+        "EMAIL": "E-mail",
+        "PASSWORD": "Hasło",
+        "PASSWORD_REPEAT": "Powtórz hasło",
+        "PASSWORD_REQUIREMENTS": "Wymagania dotyczące hasła",
+        "PASSWORD_MIN_LENGTH": "Minimalna długość hasła",
+        "PASSWORD_MIN_SPECIALS": "Minimalna liczba znaków specjalnych",
+        "PASSWORD_MIN_UPPERCASE": "Minimalna liczba wielkich liter",
+        "PASSWORD_MIN_DIGITS": "Minimalna liczba cyfr",
+        "LOGIN": "Zaloguj",
+        "REGISTER": "Zarejestruj",
+        "REMIND_PASSWORD": "Przypomnij hasło",
+        "NAME": "Imię",
+        "SURNAME": "Nazwisko",
+        "REGISTER_AS": "Zarejestruj jako",
+        "PROCEED": "Dalej",
+        "USER": "Użytkownik",
+        "ADMIN": "Administrator",
+        "GO_TO_LOGIN": "Przejdź do logowania"
+    }
+}

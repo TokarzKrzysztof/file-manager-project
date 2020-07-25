@@ -1,23 +1,23 @@
 <mat-card class="login-panel-card">
     <form [formGroup]='formGroup' (ngSubmit)='login()'>
         <mat-form-field appearance='outline' class="full-width">
-            <mat-label>E-mail:</mat-label>
+            <mat-label>{{"AUTH.EMAIL" | translate}}</mat-label>
             <input autocomplete='off' matInput formControlName='email'>
-            <mat-error>Pole jest wymagane</mat-error>
+            <mat-error>{{'FORMS.REQUIRED' | translate}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance='outline' class="full-width">
-            <mat-label>hasło:</mat-label>
+            <mat-label>{{"AUTH.PASSWORD" | translate}}</mat-label>
             <input autocomplete='off' type='password' matInput formControlName='password'>
-            <mat-error>Pole jest wymagane</mat-error>
+            <mat-error>{{'FORMS.REQUIRED' | translate}}</mat-error>
         </mat-form-field>
 
         <div class="flex between">
             <div>
-                <button appDisableOnAction mat-raised-button color='primary' type="submit">Zaloguj</button>
-                <button mat-raised-button color='primary' type="button" routerLink='/register'>Zarejestruj się</button>
+                <button appDisableOnAction mat-raised-button color='primary' type="submit">{{"AUTH.LOGIN" | translate}}</button>
+                <button mat-raised-button color='primary' type="button" routerLink='/register'>{{"AUTH.REGISTER" | translate}}</button>
             </div>
             <div>
-                <button mat-button type="button" routerLink='/remind-password'>Przypomnij hasło</button>
+                <button mat-button type="button" routerLink='/remind-password'>{{"AUTH.REMIND_PASSWORD" | translate}}</button>
             </div>
         </div>
         
