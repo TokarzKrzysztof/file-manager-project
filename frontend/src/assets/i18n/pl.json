@@ -96,5 +96,5 @@
     "PASSWORD_REQUIREMENTS_ERROR": "Wymagania dotyczące hasła nie zostały spełnione!",
     "CORECT_DATES_ERROR": "Wpisz poprawne daty!",
     "MAX_FILES_SIZE_ERROR": "Maksymalna wielkość wysyłanych plików wynosi ${this.maxFilesSize}MB!",
-    "WRONG_ROOT_FOLDER_ERROR": "Wybierz poprawny folder nadrzędny!",
+    "WRONG_ROOT_FOLDER_ERROR": "Wybierz poprawny folder nadrzędny!"
 }
