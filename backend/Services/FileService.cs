@@ -31,9 +31,11 @@ namespace backend.Services
                 {
                     File.Delete(file.FilePath);
 
+
                     HistoryModel historyRow = new HistoryModel()
                     {
-                        Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
+                        Description = "USER_DELETED_FILE:{param:"  + file.FileName + "}",
+                        //Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
                         UserData = userData
                     };
 
@@ -109,8 +111,10 @@ namespace backend.Services
                 if (i == amountUserCanUpload)
                 {
                     await _context.SaveChangesAsync();
-                    var ex = new ApplicationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
-                    ex.Data.Add("reason", "LIMITUPLOAD");
+                    //var ex = new ApplicationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
+                    var ex = new ApplicationException();
+                    ex.Data.Add("message", "LIMIT_UPLOAD");
+                    ex.Data.Add("maxFilesPerHour", maxFilesPerHour);
                     throw ex;
                 }
 
@@ -136,7 +140,8 @@ namespace backend.Services
 
                 HistoryModel historyRow = new HistoryModel()
                 {
-                    Description = "Użytkownik dodał plik o nazwie: " + fileName,
+                    Description = "USER_ADDED_FILE:{param:  " + fileName + "}",
+                    //Description = "Użytkownik dodał plik o nazwie: " + fileName,
                     UserData = userData
                 };
 

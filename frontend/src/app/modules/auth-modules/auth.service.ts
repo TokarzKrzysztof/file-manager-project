@@ -48,8 +48,13 @@ export class AuthService {
     return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/GetAllUsers`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -68,22 +73,35 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
 
   register(registerData: UserModel, emailActivationUrl: string): Promise<any> {
-    const params = new HttpParams().append('emailActivationUrl', emailActivationUrl);
+    let params = new HttpParams()
+    params = params.append('emailActivationUrl', emailActivationUrl);
+    params = params.append('subject', translations.REGISTER_MAIL_SUBJECT);
+    params = params.append('mailContent', translations.REGISTER_MAIL_CONTENT);
 
     this.actionsService.startAction();
     return this.http.post(`${environment.apiUrl}/api/Auth/Register`, registerData, { params }).pipe(
       tap(() => this.toast.success(translations.REGISTER_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
@@ -95,8 +113,13 @@ export class AuthService {
       tap(() => this.toast.success(translations.ACTIVATION_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -113,8 +136,13 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -128,8 +156,13 @@ export class AuthService {
       tap(() => this.toast.info(translations.ACCOUNT_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -142,8 +175,13 @@ export class AuthService {
       tap(() => this.toast.success(translations.PASSWORD_CHANGE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -151,14 +189,21 @@ export class AuthService {
   remindPassword(email: string): Promise<any> {
     let params = new HttpParams();
     params = params.append('email', email);
+    params = params.append('subject', translations.REMIND_PASSWORD_MAIL_SUBJECT);
+    params = params.append('mailContent', translations.REMIND_PASSWORD_MAIL_CONTENT);
 
     this.actionsService.startAction();
     return this.http.put(`${environment.apiUrl}/api/Auth/RemindPassword`, {}, { params }).pipe(
       tap(() => this.toast.success(translations.PASSWORD_REMIND_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
@@ -173,8 +218,13 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -189,8 +239,13 @@ export class AuthService {
       tap(() => this.toast.success(translations.USERS_BLOCK_EDIT_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -205,8 +260,13 @@ export class AuthService {
       tap(() => this.toast.success(translations.USERS_BLOCK_ACCESS_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -218,8 +278,13 @@ export class AuthService {
       tap(() => this.toast.success(translations.USER_UNLOCK_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -230,8 +295,13 @@ export class AuthService {
     return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/SearchForUsers`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -240,8 +310,13 @@ export class AuthService {
     return this.http.get<UserModel[]>(`${environment.apiUrl}/api/Auth/GetBlockedUsers`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }

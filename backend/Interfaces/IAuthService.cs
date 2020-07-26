@@ -8,7 +8,7 @@ namespace backend.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> Register(UserViewModel userData, string emailActivationUrl);
+        Task<bool> Register(UserViewModel userData, string emailActivationUrl, string subject, string mailContent);
 
         Task<UserViewModel> Login(string email, string password);
         Task<bool> Logout(Guid token);
@@ -16,7 +16,7 @@ namespace backend.Interfaces
         Task ActivateAccount(Guid token);
         Task SetAccountUnactive(Guid token, string password);
         Task ChangePassword(Guid token, PasswordChangeData passwordChangeData);
-        Task RemindPassword(string email);
+        Task RemindPassword(string email, string subject, string mailContent);
         Task<List<UserViewModel>> GetAllUsers();
         Task DisableUsersSystemAccess(int[] ids);
         Task DisableUsersSystemEditing(int[] ids);

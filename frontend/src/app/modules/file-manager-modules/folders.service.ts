@@ -21,8 +21,13 @@ export class FoldersService {
     return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders/GetFoldersTree`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -33,8 +38,13 @@ export class FoldersService {
     return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders/SearchForFolders`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -45,8 +55,13 @@ export class FoldersService {
       tap(() => this.toast.success(translations.FOLDER_ADD_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
@@ -57,8 +72,13 @@ export class FoldersService {
       tap(() => this.toast.success(translations.FOLDER_UPDATE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
@@ -71,8 +91,13 @@ export class FoldersService {
       tap(() => this.toast.success(translations.FOLDER_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }

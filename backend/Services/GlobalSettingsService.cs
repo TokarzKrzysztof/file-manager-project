@@ -26,7 +26,10 @@ namespace backend.Services
             }
             else
             {
-                throw new NullReferenceException("Brak globalnych ustawień!");
+                NullReferenceException ex = new NullReferenceException();
+                ex.Data.Add("message", "NO_GLOBAL_SETTINGS");
+                throw ex;
+                //throw new NullReferenceException("Brak globalnych ustawień!");
             }
         }
 

@@ -105,11 +105,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] UserViewModel userData, [FromQuery] string emailActivationUrl)
+        public async Task<IActionResult> Register([FromBody] UserViewModel userData, [FromQuery] string emailActivationUrl, [FromQuery] string subject, [FromQuery] string mailContent)
         {
             try
             {
-                await _authService.Register(userData, emailActivationUrl);
+                await _authService.Register(userData, emailActivationUrl, subject, mailContent);
                 return Ok();
             }
 
@@ -165,11 +165,11 @@ namespace backend.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> RemindPassword([FromQuery] string email)
+        public async Task<IActionResult> RemindPassword([FromQuery] string email, [FromQuery] string subject, [FromQuery] string mailContent)
         {
             try
             {
-                await _authService.RemindPassword(email);
+                await _authService.RemindPassword(email, subject, mailContent);
                 return Ok();
             }
 

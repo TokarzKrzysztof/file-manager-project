@@ -23,8 +23,13 @@ export class GlobalSettingsService {
     return this.http.get<GlobalSettingsModel>(`${environment.apiUrl}/api/GlobalSettings/GetGlobalSettings`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -35,8 +40,13 @@ export class GlobalSettingsService {
       tap(() => this.toast.success(translations.SETTINGS_UPDATE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }

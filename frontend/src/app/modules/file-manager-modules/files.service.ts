@@ -25,8 +25,13 @@ export class FilesService {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetAllFiles`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+          if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -37,8 +42,13 @@ export class FilesService {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetFilesInsideFolder`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+          if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -70,8 +80,13 @@ export class FilesService {
       tap(() => this.toast.success(translations.FILES_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+          if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise().finally(() => this.actionsService.stopAction());
   }
@@ -82,8 +97,13 @@ export class FilesService {
     return this.http.get<Blob>(`${environment.apiUrl}/api/File/DownloadFile`, { params, responseType: 'blob' as 'json' }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+          if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).toPromise();
   }
@@ -92,7 +112,7 @@ export class FilesService {
     return this.http.put<void>(`${environment.apiUrl}/api/File/UpdateFile`, element).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        throw new Error(error.error.Message);
+        throw new Error();
       })
     ).toPromise();
   }

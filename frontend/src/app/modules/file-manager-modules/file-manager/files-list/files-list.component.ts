@@ -147,7 +147,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   async onFilesSend() {
     if (this.checkIfFilesSizeIsCorrect(this.preparedFiles) === false) {
-      const message: string = await this.translateService.get('MAX_FILES_SIZE_ERROR', {param: this.maxFilesSize}).toPromise();
+      const message: string = await this.translateService.get('MAX_FILES_SIZE_ERROR', { param: this.maxFilesSize }).toPromise();
       this.toast.error(message);
       return;
     }
@@ -159,14 +159,20 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.showCancelButton = true;
     this.filesService.uploadFiles(this.preparedFiles, userData, creatorId, this.activeFolder.id).pipe(
       takeUntil(this.onCancel),
-      catchError((error: HttpErrorResponse) => {
-        if (error.error.Data?.reason === 'LIMITUPLOAD') {
-          this.toast.warning(error.error.Message);
+      catchError(async (error: HttpErrorResponse) => {
+        if (error.error.Data?.message === 'LIMIT_UPLOAD') {
+          const message = await this.translateService.get('LIMIT_UPLOAD', { param: error.error.Data.maxFilesPerHour }).toPromise();
+          this.toast.warning(message);
           return of(null);
         }
         console.error(error);
-        this.toast.error(error.error.Message);
-        throw new Error(error.error.Message);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
       })
     ).subscribe((event: HttpUploadProgressEvent) => {
       if (event === null) {
