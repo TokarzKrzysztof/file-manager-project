@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { translations } from 'src/app/app.component';
 
 interface PageData {
   length: number;
@@ -45,7 +46,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
 
   async onFilter() {
     if (this.dateRange.invalid) {
-      this.toast.error('Wpisz poprawne daty!');
+      this.toast.error(translations.CORECT_DATES_ERROR);
       return;
     }
 

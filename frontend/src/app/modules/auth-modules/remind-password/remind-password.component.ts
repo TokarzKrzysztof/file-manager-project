@@ -3,6 +3,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { translations } from 'src/app/app.component';
 
 @Component({
   selector: 'app-remind-password',
@@ -25,7 +26,7 @@ export class RemindPasswordComponent implements OnInit {
 
   async onRemindPassword() {
     if (this.formGroup.invalid) {
-      this.toast.error('Wpisz poprawny adres email!');
+      this.toast.error(translations.INCORRECT_EMAIL_ERROR);
       return;
     }
 

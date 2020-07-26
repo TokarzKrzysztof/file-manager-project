@@ -99,7 +99,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     if (this.passwordForm.get('password').value !== this.passwordForm.get('passwordRepeat').value) {
-      this.toast.error('Hasła nie są zgodne!');
+      this.toast.error(translations.PASSWORS_EQUAL_ERROR);
       this.passwordForm.setErrors({ passwordNotEquals: true });
       return;
     }
@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       .some(property => this.passwordRequirements[property] === false);
 
     if (passwordRequirementNotPassed) {
-      this.toast.error('Wymagania dotyczące hasła nie zostały spełnione!');
+      this.toast.error(translations.PASSWORD_REQUIREMENTS_ERROR);
       return;
     }
 

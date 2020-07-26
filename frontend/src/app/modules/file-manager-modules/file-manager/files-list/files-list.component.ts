@@ -16,6 +16,7 @@ import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FolderModel } from '../../model-FolderModel';
 import { translations } from 'src/app/app.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private globalSettingsService: GlobalSettingsService,
-    private actionsService: ActionsService
+    private actionsService: ActionsService,
+    private translateService: TranslateService
   ) { }
 
   async ngOnInit() {
@@ -145,7 +147,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   async onFilesSend() {
     if (this.checkIfFilesSizeIsCorrect(this.preparedFiles) === false) {
-      this.toast.error(`Maksymalna wielkość wysyłanych plików wynosi ${this.maxFilesSize}MB!`);
+      const message: string = await this.translateService.get('MAX_FILES_SIZE_ERROR', {param: this.maxFilesSize}).toPromise();
+      this.toast.error(message);
       return;
     }
 

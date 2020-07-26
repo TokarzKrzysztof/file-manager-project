@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
 
-export let translations;
+export let translations: {[key: string]: string};
 
 @Component({
   selector: 'app-root',

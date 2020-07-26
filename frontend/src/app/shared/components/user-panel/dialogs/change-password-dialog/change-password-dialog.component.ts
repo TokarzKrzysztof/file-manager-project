@@ -37,7 +37,7 @@ export class ChangePasswordDialogComponent implements OnInit {
     }
 
     if (this.formGroup.get('newPassword').value !== this.formGroup.get('newPasswordRepeat').value) {
-      this.toast.error('Hasła nie są zgodne!');
+      this.toast.error(translations.PASSWORS_EQUAL_ERROR);
       return;
     }
 

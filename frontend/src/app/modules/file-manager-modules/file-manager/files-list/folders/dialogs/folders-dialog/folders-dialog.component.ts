@@ -75,7 +75,7 @@ export class FoldersDialogComponent implements OnInit {
 
     const parentIdValue = this.formGroup.get('parentId').value;
     if (typeof parentIdValue === 'string' && parentIdValue !== '') {
-      this.toast.error('Wybierz poprawny folder nadrzędny!');
+      this.toast.error(translations.WRONG_ROOT_FOLDER_ERROR);
       return;
     }
 
