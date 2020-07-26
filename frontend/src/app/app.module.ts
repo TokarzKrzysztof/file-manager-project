@@ -7,7 +7,7 @@ import { SharedModule } from './shared/shared.module';
 
 // import '@angular/common/locales/global/PL';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { getPolishPaginatorIntl } from './polish-paginator-intl';
+import { getPaginatorIntl } from './polish-paginator-intl';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -40,7 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'pl-PL' },
-    { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() },
+    { provide: MatPaginatorIntl, useValue: getPaginatorIntl() },
   ],
   bootstrap: [AppComponent]
 })

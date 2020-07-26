@@ -127,5 +127,11 @@
     "OLD_PASSWORD": "Stare hasło",
     "NEW_PASSWORD": "Nowe hasło",
     "NEW_PASSWORD_REPEAT": "Powtórz nowe hasło",
-    "OPERATION_NEED_AUTORIZATION": "Operacja wymaga autoryzacji"
+    "OPERATION_NEED_AUTORIZATION": "Operacja wymaga autoryzacji",
+    "FROM_AMOUNT": "z",
+    "AMOUNT_FOR_PAGE": "Ilość na stronę",
+    "FIRST_PAGE": "Pierwsza strona",
+    "LAST_PAGE": "Ostatnia strona",
+    "NEXT_PAGE": "Następna strona",
+    "PREVIOUS_PAGE": "Poprzednia strona"
 }
