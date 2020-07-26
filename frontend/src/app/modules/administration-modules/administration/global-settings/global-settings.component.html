@@ -13,12 +13,12 @@
                     <mat-select formControlName='maxSize'>
                         <mat-option *ngFor="let size of maxFileSizes" [value]="size"> {{size}} MB</mat-option>
                     </mat-select>
-                    <mat-error *ngIf='filesSettings.get("maxSize")'>Pole jest wymagane</mat-error>
+                    <mat-error *ngIf='filesSettings.get("maxSize")'>{{"REQUIRED" | translate}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-label> {{"FILES_MAX_PER_HOUR" | translate}} </mat-label>
                     <input autocomplete='off' appNumberInput type="number" matInput formControlName='limitPerHour' />
-                    <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("required")'>Pole jest wymagane
+                    <mat-error *ngIf='filesSettings.get("limitPerHour").hasError("required")'>{{"REQUIRED" | translate}}
                     </mat-error>
                     <mat-error
                         *ngIf='filesSettings.get("limitPerHour").hasError("min") || filesSettings.get("limitPerHour").hasError("max")'
@@ -39,7 +39,7 @@
                 <mat-form-field class="full-width">
                     <mat-label> {{"PASSWORD_MIN_LENGTH" | translate}} </mat-label>
                     <input autocomplete='off' appNumberInput type="number" matInput formControlName='minLength' />
-                    <mat-error *ngIf='passwordSettings.get("minLength").hasError("required")'>Pole jest wymagane
+                    <mat-error *ngIf='passwordSettings.get("minLength").hasError("required")'>{{"REQUIRED" | translate}}
                     </mat-error>
                     <mat-error
                         *ngIf='passwordSettings.get("minLength").hasError("min") || passwordSettings.get("minLength").hasError("max")'
@@ -50,7 +50,7 @@
                 <mat-form-field class="full-width">
                     <mat-label> {{"PASSWORD_MIN_DIGITS" | translate}} </mat-label>
                     <input autocomplete='off' appNumberInput type="number" matInput formControlName='minDigits' />
-                    <mat-error *ngIf='passwordSettings.get("minDigits").hasError("required")'>Pole jest wymagane
+                    <mat-error *ngIf='passwordSettings.get("minDigits").hasError("required")'>{{"REQUIRED" | translate}}
                     </mat-error>
                     <mat-error
                         *ngIf='passwordSettings.get("minDigits").hasError("min") || passwordSettings.get("minDigits").hasError("max")'
@@ -61,7 +61,7 @@
                 <mat-form-field class="full-width">
                     <mat-label> {{"PASSWORD_MIN_UPPERCASE" | translate}} </mat-label>
                     <input autocomplete='off' appNumberInput type="number" matInput formControlName='bigLetters' />
-                    <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("required")'>Pole jest wymagane
+                    <mat-error *ngIf='passwordSettings.get("bigLetters").hasError("required")'>{{"REQUIRED" | translate}}
                     </mat-error>
                     <mat-error
                         *ngIf='passwordSettings.get("bigLetters").hasError("min") || passwordSettings.get("bigLetters").hasError("max")'
@@ -73,7 +73,7 @@
                     <mat-label> {{"PASSWORD_MIN_SPECIALS" | translate}} </mat-label>
                     <input autocomplete='off' appNumberInput type="number" matInput
                         formControlName='specialCharacters' />
-                    <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("required")'>Pole jest wymagane
+                    <mat-error *ngIf='passwordSettings.get("specialCharacters").hasError("required")'>{{"REQUIRED" | translate}}
                     </mat-error>
                     <mat-error
                         *ngIf='passwordSettings.get("specialCharacters").hasError("min") || passwordSettings.get("specialCharacters").hasError("max")'

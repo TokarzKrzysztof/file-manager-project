@@ -33,7 +33,7 @@ export class UserPanelComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser = await this.authService.getCurrentUserValue();
-    
+
     this.languageSelect.setValue(this.translateService.currentLang);
     this.languageSelect.valueChanges.subscribe((lang: string) => {
       this.translateService.use(lang);

@@ -6,8 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 
 // import '@angular/common/locales/global/PL';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { getPaginatorIntl } from './polish-paginator-intl';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -40,7 +38,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'pl-PL' },
-    { provide: MatPaginatorIntl, useValue: getPaginatorIntl() },
   ],
   bootstrap: [AppComponent]
 })

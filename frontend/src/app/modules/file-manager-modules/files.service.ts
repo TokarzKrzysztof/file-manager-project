@@ -25,7 +25,7 @@ export class FilesService {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetAllFiles`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-          if (error.error.Data?.message) {
+        if (error.error.Data?.message) {
           const messageTranslateCode = error.error.Data.message;
           this.toast.error(translations[messageTranslateCode]);
         } else {
@@ -42,7 +42,7 @@ export class FilesService {
     return this.http.get<FileModel[]>(`${environment.apiUrl}/api/File/GetFilesInsideFolder`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-          if (error.error.Data?.message) {
+        if (error.error.Data?.message) {
           const messageTranslateCode = error.error.Data.message;
           this.toast.error(translations[messageTranslateCode]);
         } else {
@@ -80,7 +80,7 @@ export class FilesService {
       tap(() => this.toast.success(translations.FILES_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-          if (error.error.Data?.message) {
+        if (error.error.Data?.message) {
           const messageTranslateCode = error.error.Data.message;
           this.toast.error(translations[messageTranslateCode]);
         } else {
@@ -97,7 +97,7 @@ export class FilesService {
     return this.http.get<Blob>(`${environment.apiUrl}/api/File/DownloadFile`, { params, responseType: 'blob' as 'json' }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-          if (error.error.Data?.message) {
+        if (error.error.Data?.message) {
           const messageTranslateCode = error.error.Data.message;
           this.toast.error(translations[messageTranslateCode]);
         } else {
