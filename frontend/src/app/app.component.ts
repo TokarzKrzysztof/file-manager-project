@@ -23,6 +23,6 @@ export class AppComponent implements OnInit {
 
     this.translateService.onTranslationChange.subscribe((event: TranslationChangeEvent) => {
       translations = this.translateService.translations[event.lang];
-    })
+    });
   }
 }
