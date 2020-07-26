@@ -7,6 +7,7 @@ import { FolderModel } from '../../../model-FolderModel';
 import { FoldersService } from '../../../folders.service';
 import { FoldersDialogComponent, DialogFolderData } from './dialogs/folders-dialog/folders-dialog.component';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { translations } from 'src/app/app.component';
 
 interface FlatNode {
   id: number;
@@ -91,7 +92,7 @@ export class FoldersComponent implements OnInit {
 
   addRootFolder() {
     const dialogData: DialogFolderData = {
-      title: 'Dodaj folder nadrzędny',
+      title: translations.ADD_ROOT_FOLDER,
       flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
 
@@ -108,7 +109,7 @@ export class FoldersComponent implements OnInit {
 
   addSubfolder(parentId: number) {
     const dialogData: DialogFolderData = {
-      title: 'Dodaj podfolder',
+      title: translations.ADD_SUBFOLDER,
       parentId,
       flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
     };
@@ -128,7 +129,7 @@ export class FoldersComponent implements OnInit {
     const editedFolderNode: FlatNode = this.treeControl.dataNodes.find(x => x.id === folderId);
 
     const dialogData: DialogFolderData = {
-      title: 'Edytuj folder',
+      title: translations.EDIT_FOLDER,
       editedFolder: { id: editedFolderNode.id, name: editedFolderNode.name },
       parentId: editedFolderNode.parentId,
       flatenedFolders: this.treeControl.dataNodes.map(x => ({ id: x.id, name: x.name }))
@@ -147,7 +148,7 @@ export class FoldersComponent implements OnInit {
 
   deleteFolder(folderId: number) {
     const confirmationDialogData: ConfirmationDialogData = {
-      title: 'Czy na pewno chcesz usunąć ten folder, wszystkie podfoldery i pliki w nich zawarte?',
+      title: translations.DELETE_FOLDER_CONFIRMATION,
     };
 
     this.dialog.open(ConfirmationDialogComponent, {

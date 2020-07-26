@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { UserModel } from 'src/app/modules/auth-modules/model-UserModel';
+import { translations } from 'src/app/app.component';
 
 @Component({
   selector: 'app-user-panel',
@@ -70,7 +71,7 @@ export class UserPanelComponent implements OnInit {
 
   private showAccountDeleteConfirmationDialog(): Observable<boolean> {
     const dialogData: ConfirmationDialogData = {
-      title: 'Czy na pewno chcesz usunąć konto?'
+      title: translations.DELETE_ACCOUNT_CONFIRMATION
     };
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

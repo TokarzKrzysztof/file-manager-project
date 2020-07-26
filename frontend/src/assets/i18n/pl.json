@@ -118,5 +118,9 @@
     "REGISTER_MAIL_CONTENT": "<h1>Witaj!</h1><p>Założyłeś konto w serwisie file manager, aby móc z niego korzystać należy wcześniej aktywować konto</p><p>Aby to zrobić kliknij w link:</p>",
     "REGISTER_MAIL_SUBJECT": "Rejestracja",
     "REMIND_PASSWORD_MAIL_CONTENT": "<h1>Witaj!</h1><p>Twoje nowe tymczasowe hasło:</p>",
-    "REMIND_PASSWORD_MAIL_SUBJECT": "Przypomnienie hasła"
+    "REMIND_PASSWORD_MAIL_SUBJECT": "Przypomnienie hasła",
+    "DELETE_FILES_CONFIRMATION": "Czy na pewno chcesz usunąć wskazane pliki? Operacja jest nieodwracalna!",
+    "DELETE_ACCOUNT_CONFIRMATION": "Czy na pewno chcesz usunąć konto?",
+    "DEACTIVATE_CONFIRMATION": "Czy na pewno chcesz wyjść? Twoje dane mogą nie zostać zapisane!",
+    "DELETE_FOLDER_CONFIRMATION": "Czy na pewno chcesz usunąć ten folder, wszystkie podfoldery i pliki w nich zawarte?"
 }

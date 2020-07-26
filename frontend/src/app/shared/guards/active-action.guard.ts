@@ -5,6 +5,7 @@ import { ActionsService } from '../services/actions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { translations } from 'src/app/app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ActiveActionGuard implements CanDeactivate<any> {
       }
 
       const dialogData: ConfirmationDialogData = {
-        title: 'Czy na pewno chcesz wyjść? Twoje dane mogą nie zostać zapisane!'
+        title: translations.DEACTIVATE_CONFIRMATION
       };
 
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

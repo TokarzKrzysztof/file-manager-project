@@ -205,7 +205,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
 
     const dialogData: ConfirmationDialogData = {
-      title: 'Czy na pewno chcesz usunąć wskazane pliki? Operacja jest nieodwracalna!'
+      title: translations.DELETE_FILES_CONFIRMATION
     };
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: dialogData
