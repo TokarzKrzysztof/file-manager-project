@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth-modules/auth.service';
 import { Router } from '@angular/router';
 import { PasswordChangeData, ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
@@ -9,25 +9,35 @@ import { of, Observable } from 'rxjs';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { UserModel } from 'src/app/modules/auth-modules/model-UserModel';
 import { translations } from 'src/app/app.component';
+import { TranslateService } from '@ngx-translate/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-panel',
   templateUrl: './user-panel.component.html',
-  styleUrls: ['./user-panel.component.scss']
+  styleUrls: ['./user-panel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserPanelComponent implements OnInit {
   @Input() showAdministrationPanelLink: boolean;
   @Input() showFileManagerLink: boolean;
+  languageSelect = new FormControl('');
   currentUser: UserModel;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
+    private translateService: TranslateService
   ) { }
 
   async ngOnInit() {
     this.currentUser = await this.authService.getCurrentUserValue();
+    
+    this.languageSelect.setValue(this.translateService.currentLang);
+    this.languageSelect.valueChanges.subscribe((lang: string) => {
+      this.translateService.use(lang);
+    });
   }
 
   async logout() {

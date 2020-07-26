@@ -14,11 +14,20 @@
         <a mat-menu-item (click)='deleteAccount()'>
             {{"DELETE_ACCOUNT" | translate}}
         </a>
-        <a mat-menu-item *ngIf='showAdministrationPanelLink && currentUser?.role === "ADMIN"' (click)='showAdminPanel()'>
+        <a mat-menu-item *ngIf='showAdministrationPanelLink && currentUser?.role === "ADMIN"'
+            (click)='showAdminPanel()'>
             {{"ADMIN_PANEL" | translate}}
         </a>
         <a mat-menu-item *ngIf='showFileManagerLink' (click)='showFileManager()'>
             {{"FILE_MANAGER" | translate}}
+        </a>
+        <a mat-menu-item>
+            <mat-form-field class="full-width language-select" (click)='$event.stopPropagation()'>
+                <mat-select [formControl]='languageSelect'>
+                    <mat-option value='pl'>Polish</mat-option>
+                    <mat-option value='en'>English</mat-option>
+                </mat-select>
+            </mat-form-field>
         </a>
     </mat-menu>
 </div>

@@ -15,15 +15,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const defaultLang = 'en';
+    this.translateService.setDefaultLang(defaultLang);
 
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en').subscribe(() => {
-      translations = this.translateService.translations[defaultLang];
-    });
-
-
-    this.translateService.onTranslationChange.subscribe((event: TranslationChangeEvent) => {
+    this.translateService.onLangChange.subscribe((event: TranslationChangeEvent) => {
       translations = this.translateService.translations[event.lang];
+      window.localStorage.setItem('currentUserLang', event.lang);
     });
+
+    const currentUserLang = window.localStorage.getItem('currentUserLang');
+    const usedLang = currentUserLang || defaultLang;
+    this.translateService.use(usedLang);
   }
 }
