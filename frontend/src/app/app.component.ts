@@ -17,9 +17,10 @@ export class AppComponent implements OnInit {
     const defaultLang = 'en';
 
     this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
+    this.translateService.use('en').subscribe(() => {
+      translations = this.translateService.translations[defaultLang];
+    });
 
-    translations = this.translateService.translations[defaultLang];
 
     this.translateService.onTranslationChange.subscribe((event: TranslationChangeEvent) => {
       translations = this.translateService.translations[event.lang];

@@ -13,6 +13,8 @@ namespace backend.Models
         public DateTime ActionDate { get; set; }
         public string Description { get; set; }
         public string UserData { get; set; }
+#nullable enable
+        public string? Param { get; set; }
 
         public HistoryModel()
         {

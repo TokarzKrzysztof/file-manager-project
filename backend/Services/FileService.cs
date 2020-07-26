@@ -34,7 +34,8 @@ namespace backend.Services
 
                     HistoryModel historyRow = new HistoryModel()
                     {
-                        Description = "USER_DELETED_FILE:{param:"  + file.FileName + "}",
+                        Description = "USER_DELETED_FILE",
+                        Param = file.FileName,
                         //Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
                         UserData = userData
                     };
@@ -140,7 +141,8 @@ namespace backend.Services
 
                 HistoryModel historyRow = new HistoryModel()
                 {
-                    Description = "USER_ADDED_FILE:{param:  " + fileName + "}",
+                    Description = "USER_ADDED_FILE",
+                    Param = fileName,
                     //Description = "Użytkownik dodał plik o nazwie: " + fileName,
                     UserData = userData
                 };
