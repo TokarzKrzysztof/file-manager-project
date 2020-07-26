@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Operacja wymaga autoryzacji</h1>
+<h1 mat-dialog-title>{{"OPERATION_NEED_AUTORIZATION" | translate}}</h1>
 <div mat-dialog-content>
     <mat-form-field class="full-width">
-        <mat-label>Wpisz hasło</mat-label>
+        <mat-label>{{"PASSWORD" | translate}}</mat-label>
         <input autocomplete='new-password' matInput type="password" [formControl]='password'>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-raised-button (click)='onAccept()' color='primary'>Usuń konto</button>
-    <button mat-raised-button (click)='onCancel()' color='primary'>Anuluj</button>
+    <button mat-raised-button (click)='onAccept()' color='primary'>{{"DELETE_ACCOUNT" | translate}}</button>
+    <button mat-raised-button (click)='onCancel()' color='primary'>{{"CANCEL" | translate}}</button>
 </div>

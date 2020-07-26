@@ -122,5 +122,10 @@
     "DELETE_FILES_CONFIRMATION": "Czy na pewno chcesz usunąć wskazane pliki? Operacja jest nieodwracalna!",
     "DELETE_ACCOUNT_CONFIRMATION": "Czy na pewno chcesz usunąć konto?",
     "DEACTIVATE_CONFIRMATION": "Czy na pewno chcesz wyjść? Twoje dane mogą nie zostać zapisane!",
-    "DELETE_FOLDER_CONFIRMATION": "Czy na pewno chcesz usunąć ten folder, wszystkie podfoldery i pliki w nich zawarte?"
+    "DELETE_FOLDER_CONFIRMATION": "Czy na pewno chcesz usunąć ten folder, wszystkie podfoldery i pliki w nich zawarte?",
+    "PASSWORD_CHANGING": "Zmiana hasła",
+    "OLD_PASSWORD": "Stare hasło",
+    "NEW_PASSWORD": "Nowe hasło",
+    "NEW_PASSWORD_REPEAT": "Powtórz nowe hasło",
+    "OPERATION_NEED_AUTORIZATION": "Operacja wymaga autoryzacji"
 }
