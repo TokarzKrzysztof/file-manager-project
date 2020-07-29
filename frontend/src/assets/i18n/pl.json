@@ -133,5 +133,7 @@
     "FIRST_PAGE": "Pierwsza strona",
     "LAST_PAGE": "Ostatnia strona",
     "NEXT_PAGE": "Następna strona",
-    "PREVIOUS_PAGE": "Poprzednia strona"
+    "PREVIOUS_PAGE": "Poprzednia strona",
+    "PRIMARY_DATA": "Podstawowe dane",
+    "SUMMARY": "Podsumowanie"
 }

@@ -44,13 +44,13 @@
     "ORDER": "Order",
     "MAX_SIZE": "Maximal size of sending files is {{param}}MB",
     "CLICK_TO_SEE_DETAILS": "Click with right mouse button on folder to see it`s details",
-    "ROOT_FOLDER": "Root folder",
+    "ROOT_FOLDER": "Parent folder",
     "ADD_ROOT_FOLDER": "Add root folder",
     "ADD_SUBFOLDER": "Add subfolder",
     "EDIT_FOLDER": "Edit folder",
     "DELETE_FOLDER": "Delete folder",
     "FOLDER_NAME": "Folder name",
-    "HAS_ROOT_FOLDER": "Has root folder",
+    "HAS_ROOT_FOLDER": "Has parent folder",
     "USERS_LIST": "Users list",
     "GLOBAL_SETTINGS": "Global settings",
     "SEARCH_FOR_USERS": "Search for users",
@@ -133,5 +133,7 @@
     "FIRST_PAGE": "First page",
     "LAST_PAGE": "Last page",
     "NEXT_PAGE": "Next page",
-    "PREVIOUS_PAGE": "Previous page"
+    "PREVIOUS_PAGE": "Previous page",
+    "PRIMARY_DATA": "Primary data",
+    "SUMMARY": "Summary"
 }

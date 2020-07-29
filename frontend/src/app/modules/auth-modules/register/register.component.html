@@ -1,6 +1,6 @@
 <mat-card class="login-panel-card">
     <mat-tab-group mat-stretch-tabs dynamicHeight>
-        <mat-tab label="Podstawowe Dane">
+        <mat-tab label='{{"PRIMARY_DATA" | translate}}'>
             <form [formGroup]='primaryDataForm' (ngSubmit)='onProceed(primaryDataForm)'>
                 <mat-form-field class="full-width">
                     <mat-label>{{"EMAIL" | translate}}</mat-label>
@@ -33,7 +33,7 @@
             </form>
         </mat-tab>
 
-        <mat-tab disabled label="Hasło">
+        <mat-tab disabled label='{{"PASSWORD" | translate}}'>
             <form [formGroup]='passwordForm' (ngSubmit)='onProceed(passwordForm)'>
                 <input type="password" hidden />
                 <input type="password" hidden />
@@ -83,7 +83,7 @@
             </form>
         </mat-tab>
 
-        <mat-tab disabled label="Podsumowanie">
+        <mat-tab disabled label='{{"SUMMARY" | translate}}'>
             <mat-list role="list">
                 <mat-list-item role="listitem">
                     {{"EMAIL" | translate}} {{primaryDataForm.get('email').value}}

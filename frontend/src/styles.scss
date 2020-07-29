@@ -72,7 +72,7 @@ body {
 
 }
 
-.mat-button-base+.mat-button-base {
+button.ml-5 {
   margin-left: 5px;
 }
 
@@ -86,6 +86,7 @@ form {
   }
 
   &.mat-list-base .mat-list-item .mat-list-item-content {
+    justify-content: space-between;
     padding: 0;
   }
 }
