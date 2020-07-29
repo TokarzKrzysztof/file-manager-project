@@ -21,7 +21,7 @@ export class ActiveActionGuard implements CanDeactivate<any> {
 
   canDeactivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise((resolve) => {
-      if (this.actionsService.getActionStateValue() === false) {
+      if (this.actionsService.getEditingActionStateValue() === false) {
         resolve(true);
         return;
       }
@@ -35,7 +35,9 @@ export class ActiveActionGuard implements CanDeactivate<any> {
       });
 
       dialogRef.afterClosed().subscribe((result: boolean) => {
-        this.actionsService.stopAction();
+        if (result === true) {
+          this.actionsService.stopEditingAction();
+        }
         resolve(result);
       });
     });

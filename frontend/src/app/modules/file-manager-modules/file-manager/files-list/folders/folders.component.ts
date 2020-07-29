@@ -99,7 +99,7 @@ export class FoldersComponent implements OnInit {
     this.dialog.open(FoldersDialogComponent, {
       data: dialogData
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
-      if (folderData !== null) {
+      if (folderData) {
         const folderId: number = await this.foldersService.createFolder(folderData);
         await this.loadFolders();
         this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
@@ -117,7 +117,7 @@ export class FoldersComponent implements OnInit {
     this.dialog.open(FoldersDialogComponent, {
       data: dialogData
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
-      if (folderData !== null) {
+      if (folderData) {
         const folderId = await this.foldersService.createFolder(folderData);
         await this.loadFolders();
         this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));
@@ -138,7 +138,7 @@ export class FoldersComponent implements OnInit {
     this.dialog.open(FoldersDialogComponent, {
       data: dialogData
     }).afterClosed().subscribe(async (folderData: FolderModel) => {
-      if (folderData !== null) {
+      if (folderData) {
         await this.foldersService.updateFolder(folderData);
         await this.loadFolders();
         this.setActiveFolder(this.treeControl.dataNodes.find(x => x.id === folderId));

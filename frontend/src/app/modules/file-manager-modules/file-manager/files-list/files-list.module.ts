@@ -5,9 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FoldersComponent } from './folders/folders.component';
 import { FoldersDialogComponent } from './folders/dialogs/folders-dialog/folders-dialog.component';
+import { ActiveActionGuard } from 'src/app/shared/guards/active-action.guard';
 
 const routes: Routes = [
-  { path: '', component: FilesListComponent},
+  { path: '', component: FilesListComponent, canDeactivate: [ActiveActionGuard]},
 ];
 
 @NgModule({

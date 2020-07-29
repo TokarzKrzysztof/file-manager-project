@@ -35,7 +35,7 @@ export class GlobalSettingsService {
   }
 
   setGlobalSettings(settings: GlobalSettingsModel): Promise<any> {
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.put(`${environment.apiUrl}/api/GlobalSettings/SetGlobalSettings`, settings).pipe(
       tap(() => this.toast.success(translations.SETTINGS_UPDATE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -48,6 +48,6 @@ export class GlobalSettingsService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 }

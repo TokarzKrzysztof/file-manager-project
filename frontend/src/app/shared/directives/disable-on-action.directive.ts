@@ -17,7 +17,7 @@ export class DisableOnActionDirective implements OnInit, OnDestroy {
   ngOnInit() {
     const button: HTMLButtonElement = this.element.nativeElement;
 
-    this.actionsService.getActionState().pipe(
+    this.actionsService.getBackendActionState().pipe(
       takeUntil(this.onDestroy)
     ).subscribe((state: boolean) => {
       button.disabled = state;

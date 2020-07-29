@@ -5,26 +5,39 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ActionsService {
-  private actionState = new Subject<boolean>();
-  private actionStateValue = false;
+  private backendActionState = new Subject<boolean>();
+  private backendActionStateValue = false;
+  private editingActionStateValue = false;
 
   constructor() { }
 
-  getActionState(): Observable<boolean> {
-    return this.actionState.asObservable();
+  getBackendActionState(): Observable<boolean> {
+    return this.backendActionState.asObservable();
   }
 
-  getActionStateValue(): boolean {
-    return this.actionStateValue;
+  getBackendActionStateValue(): boolean {
+    return this.backendActionStateValue;
   }
 
-  startAction() {
-    this.actionState.next(true);
-    this.actionStateValue = true;
+  startBackendAction() {
+    this.backendActionState.next(true);
+    this.backendActionStateValue = true;
   }
 
-  stopAction() {
-    this.actionState.next(false);
-    this.actionStateValue = false;
+  stopBackendAction() {
+    this.backendActionState.next(false);
+    this.backendActionStateValue = false;
+  }
+
+  getEditingActionStateValue(): boolean {
+    return this.editingActionStateValue;
+  }
+
+  startEditingAction() {
+    this.editingActionStateValue = true;
+  }
+
+  stopEditingAction() {
+    this.editingActionStateValue = false;
   }
 }

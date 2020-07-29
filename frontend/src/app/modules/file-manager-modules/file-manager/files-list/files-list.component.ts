@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ViewEncapsulation, OnDestroy, DoCheck, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -25,9 +25,11 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./files-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FilesListComponent implements OnInit, AfterViewInit {
+export class FilesListComponent implements OnInit, DoCheck {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
+  @ViewChildren('inputOrder') orderInputs: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChildren('inputTitle') titleInputs: QueryList<ElementRef<HTMLInputElement>>;
   activeFolder: FolderModel;
   onCancel = new Subject<void>();
   showCancelButton: boolean;
@@ -53,11 +55,17 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.maxFilesSize = (await this.globalSettingsService.getGlobalSettings()).maxSize;
     this.currentUser = await this.authService.getCurrentUserValue();
-    // this.loadFiles();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  ngDoCheck() {
+    const shouldShowConfirmation = this.preparedFiles.length || this.selection.selected.length ||
+    this.orderInputs?.some(x => x.nativeElement.disabled === false) || this.titleInputs?.some(x => x.nativeElement.disabled === false);
+
+    if (shouldShowConfirmation) {
+      this.actionsService.startEditingAction();
+    } else {
+      this.actionsService.stopEditingAction();
+    }
   }
 
   onFolderChange(folder: FolderModel) {
@@ -67,6 +75,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   async loadFiles(folderId: number) {
     this.dataSource.data = await this.filesService.getFilesInsideFolder(folderId);
+    this.dataSource.sort = this.sort;
     this.sortFilesByOrder(this.dataSource.data);
     this.selection.clear();
   }
@@ -155,7 +164,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
     const creatorId = this.currentUser.id;
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     this.showCancelButton = true;
     this.filesService.uploadFiles(this.preparedFiles, userData, creatorId, this.activeFolder.id).pipe(
       takeUntil(this.onCancel),
@@ -191,7 +200,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       () => {
         this.preparedFiles = [];
         this.fileUploadProgress = 0;
-        this.actionsService.stopAction();
+        this.actionsService.stopBackendAction();
+        this.actionsService.stopEditingAction();
         this.showCancelButton = false;
 
         this.loadFiles(this.activeFolder.id);

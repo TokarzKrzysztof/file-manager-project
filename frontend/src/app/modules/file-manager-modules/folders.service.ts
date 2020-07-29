@@ -50,7 +50,7 @@ export class FoldersService {
   }
 
   createFolder(folderData: FolderModel): Promise<number> {
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.post<number>(`${environment.apiUrl}/api/Folders/CreateFolder`, folderData).pipe(
       tap(() => this.toast.success(translations.FOLDER_ADD_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -63,11 +63,11 @@ export class FoldersService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   updateFolder(folderData: FolderModel): Promise<void> {
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.put<void>(`${environment.apiUrl}/api/Folders/UpdateFolder`, folderData).pipe(
       tap(() => this.toast.success(translations.FOLDER_UPDATE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -80,13 +80,13 @@ export class FoldersService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   deleteFolder(id: number): Promise<void> {
     const params = new HttpParams().append('id', id.toString());
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.put<void>(`${environment.apiUrl}/api/Folders/DeleteFolder`, {}, { params }).pipe(
       tap(() => this.toast.success(translations.FOLDER_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -99,6 +99,6 @@ export class FoldersService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 }

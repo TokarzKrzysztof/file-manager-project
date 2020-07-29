@@ -75,7 +75,7 @@ export class FilesService {
     });
     params = params.append('userData', userData);
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.delete<void>(`${environment.apiUrl}/api/File/DeleteFiles`, { params }).pipe(
       tap(() => this.toast.success(translations.FILES_DELETE_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -88,7 +88,7 @@ export class FilesService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   downloadFile(id: number): Promise<Blob> {

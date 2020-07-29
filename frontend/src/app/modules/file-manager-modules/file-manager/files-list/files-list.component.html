@@ -13,12 +13,12 @@
                     <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
                     <app-action-button *ngIf='preparedFiles.length' (buttonClicked)='onFilesSend()'>
                         {{"SEND" | translate}}</app-action-button>
-                    <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button
+                    <button [disabled]='currentUser?.systemEditingEnabled === false || selection.selected.length === 0' appDisableOnAction mat-icon-button
                         color='primary' matTooltip='{{"DELETE" | translate}}' (click)='onDeleteFiles()'>
                         <mat-icon>delete</mat-icon>
                     </button>
 
-                    <button mat-icon-button color='primary' matTooltip='{{"DOWNLOAD" | translate}}'
+                    <button [disabled]='selection.selected.length === 0' mat-icon-button color='primary' matTooltip='{{"DOWNLOAD" | translate}}'
                         (click)='onDownloadFiles()'>
                         <mat-icon>get_app</mat-icon>
                     </button>

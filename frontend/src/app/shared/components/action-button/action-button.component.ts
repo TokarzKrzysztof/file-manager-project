@@ -18,7 +18,7 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.actionsService.getActionState().pipe(
+    this.actionsService.getBackendActionState().pipe(
       takeUntil(this.onDestroy)
     ).subscribe((state: boolean) => {
       this.actionState = state;

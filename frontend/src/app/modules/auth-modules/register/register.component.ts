@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { GlobalSettingsService } from '../../administration-modules/global-settings.service';
 import { GlobalSettingsModel } from '../../administration-modules/model-GlobalSettingsModel';
 import { translations } from 'src/app/app.component';
+import { ActionsService } from 'src/app/shared/services/actions.service';
 
 class PasswordRequirementsValidation {
   minLength: boolean;
@@ -53,7 +54,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private globalSettingsService: GlobalSettingsService,
     private toast: ToastrService,
-    private router: Router
+    private router: Router,
+    private actionsService: ActionsService
   ) { }
 
   async ngOnInit() {
@@ -90,6 +92,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     this.tabsGroup.selectedIndex++;
+    this.actionsService.startEditingAction();
   }
 
   async register() {
@@ -116,6 +119,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     userData.id = 0;
 
     await this.authService.register(userData, window.location.origin + '/login/');
+    this.actionsService.stopEditingAction();
     this.router.navigateByUrl('/login');
   }
 

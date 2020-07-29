@@ -43,7 +43,7 @@
     "WEIGHT": "Weight",
     "ORDER": "Order",
     "MAX_SIZE": "Maximal size of sending files is {{param}}MB",
-    "CLICK_TO_SEE_DETAILS": "Click with right mouse button on folder to see it`s details",
+    "CLICK_TO_SEE_DETAILS": "Click with right mouse button on folder to see additional options",
     "ROOT_FOLDER": "Parent folder",
     "ADD_ROOT_FOLDER": "Add root folder",
     "ADD_SUBFOLDER": "Add subfolder",

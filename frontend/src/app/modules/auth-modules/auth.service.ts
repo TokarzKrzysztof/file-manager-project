@@ -64,7 +64,7 @@ export class AuthService {
     params = params.append('email', email);
     params = params.append('password', password);
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/Login`, {}, { params }).pipe(
       tap((res: UserModel) => {
         this.currentUserValue = res;
@@ -81,7 +81,7 @@ export class AuthService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   register(registerData: UserModel, emailActivationUrl: string): Promise<any> {
@@ -90,7 +90,7 @@ export class AuthService {
     params = params.append('subject', translations.REGISTER_MAIL_SUBJECT);
     params = params.append('mailContent', translations.REGISTER_MAIL_CONTENT);
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.post(`${environment.apiUrl}/api/Auth/Register`, registerData, { params }).pipe(
       tap(() => this.toast.success(translations.REGISTER_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -103,7 +103,7 @@ export class AuthService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   activateAccount(token: string): Promise<any> {
@@ -192,7 +192,7 @@ export class AuthService {
     params = params.append('subject', translations.REMIND_PASSWORD_MAIL_SUBJECT);
     params = params.append('mailContent', translations.REMIND_PASSWORD_MAIL_CONTENT);
 
-    this.actionsService.startAction();
+    this.actionsService.startBackendAction();
     return this.http.put(`${environment.apiUrl}/api/Auth/RemindPassword`, {}, { params }).pipe(
       tap(() => this.toast.success(translations.PASSWORD_REMIND_SUCCESS)),
       catchError((error: HttpErrorResponse) => {
@@ -205,7 +205,7 @@ export class AuthService {
         }
         throw new Error();
       })
-    ).toPromise().finally(() => this.actionsService.stopAction());
+    ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
   getCurrentUser(token: string): Promise<UserModel> {

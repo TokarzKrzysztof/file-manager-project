@@ -7,11 +7,21 @@ import { SharedModule } from './shared/shared.module';
 
 // import '@angular/common/locales/global/PL';
 import { ToastrModule } from 'ngx-toastr';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-export function HttpLoaderFactory(http: HttpClient) {
+class DynamicLocaleId extends String {
+  constructor(protected service: TranslateService) {
+    super('');
+  }
+
+  toString() {
+    return this.service.currentLang;
+  }
+}
+
+function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
@@ -37,10 +47,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
-    // { provide: LOCALE_ID, useValue: 'pl-PL' },
+    {
+      provide: LOCALE_ID,
+      useClass: DynamicLocaleId,
+      deps: [TranslateService]
+    },
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
 
