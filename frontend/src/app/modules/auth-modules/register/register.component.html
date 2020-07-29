@@ -106,8 +106,7 @@
             </mat-list>
 
             <div class="flex between">
-                <button appDisableOnAction mat-raised-button color='primary' type="submit"
-                    (click)='register()'>{{"REGISTER" | translate}}</button>
+                <app-action-button (buttonClicked)='register()'>{{"REGISTER" | translate}}</app-action-button>
                 <button mat-raised-button class="go-to-login-button" color='primary' type="button"
                     routerLink='/login'>{{"GO_TO_LOGIN" | translate}}</button>
             </div>

@@ -86,6 +86,6 @@
     </mat-accordion>
 
     <div class="flex end global-settings-button-container">
-        <button appDisableOnAction mat-raised-button (click)='onSave()' color='primary'>{{"SAVE" | translate}}</button>
+        <app-action-button (buttonClicked)='onSave()'>{{"SAVE" | translate}}</app-action-button>
     </div>
 </mat-card>

@@ -11,14 +11,15 @@
                         {{"ADD_FILES" | translate}}
                     </button>
                     <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
-                    <button appDisableOnAction (click)='onFilesSend()' mat-raised-button color='primary'
-                        *ngIf='preparedFiles.length'>{{"SEND" | translate}}</button>
+                    <app-action-button *ngIf='preparedFiles.length' (buttonClicked)='onFilesSend()'>
+                        {{"SEND" | translate}}</app-action-button>
                     <button [disabled]='currentUser?.systemEditingEnabled === false' appDisableOnAction mat-icon-button
                         color='primary' matTooltip='{{"DELETE" | translate}}' (click)='onDeleteFiles()'>
                         <mat-icon>delete</mat-icon>
                     </button>
 
-                    <button mat-icon-button color='primary' matTooltip='{{"DOWNLOAD" | translate}}' (click)='onDownloadFiles()'>
+                    <button mat-icon-button color='primary' matTooltip='{{"DOWNLOAD" | translate}}'
+                        (click)='onDownloadFiles()'>
                         <mat-icon>get_app</mat-icon>
                     </button>
 
@@ -84,7 +85,8 @@
                         <button [disabled]='currentUser?.systemEditingEnabled === false'
                             (click)='onEditClick(inputTitle, element.title)' mat-icon-button class="edit-icon-button">
                             <mat-icon *ngIf='inputTitle.disabled' matTooltip='{{"EDIT" | translate}}'>create</mat-icon>
-                            <mat-icon *ngIf='!inputTitle.disabled' matTooltip='{{"CANCEL" | translate}}'>clear</mat-icon>
+                            <mat-icon *ngIf='!inputTitle.disabled' matTooltip='{{"CANCEL" | translate}}'>clear
+                            </mat-icon>
                         </button>
                     </td>
                 </ng-container>
@@ -120,7 +122,8 @@
                         <button [disabled]='currentUser?.systemEditingEnabled === false'
                             (click)='onEditClick(inputOrder, element.order)' mat-icon-button class="edit-icon-button">
                             <mat-icon *ngIf='inputOrder.disabled' matTooltip='{{"EDIT" | translate}}'>create</mat-icon>
-                            <mat-icon *ngIf='!inputOrder.disabled' matTooltip='{{"CANCEL" | translate}}'>clear</mat-icon>
+                            <mat-icon *ngIf='!inputOrder.disabled' matTooltip='{{"CANCEL" | translate}}'>clear
+                            </mat-icon>
                         </button>
                     </td>
                 </ng-container>
