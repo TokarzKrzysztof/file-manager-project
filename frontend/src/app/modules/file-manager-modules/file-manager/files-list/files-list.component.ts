@@ -58,8 +58,8 @@ export class FilesListComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    const shouldShowConfirmation = this.preparedFiles.length || this.selection.selected.length ||
-    this.orderInputs?.some(x => x.nativeElement.disabled === false) || this.titleInputs?.some(x => x.nativeElement.disabled === false);
+    const shouldShowConfirmation = this.preparedFiles.length ||
+      this.orderInputs?.some(x => x.nativeElement.disabled === false) || this.titleInputs?.some(x => x.nativeElement.disabled === false);
 
     if (shouldShowConfirmation) {
       this.actionsService.startEditingAction();
