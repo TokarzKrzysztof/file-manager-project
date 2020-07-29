@@ -1,0 +1,6 @@
+<button class="action-button" mat-raised-button type="submit" color='primary' [disabled]='actionState' (click)='onClick($event)'>
+    <ng-content></ng-content>
+    <div class="spinner-wrapper" *ngIf='actionState'>
+        <mat-spinner diameter='25'></mat-spinner>
+    </div>
+</button>

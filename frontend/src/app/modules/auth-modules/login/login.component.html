@@ -13,7 +13,8 @@
 
         <div class="flex between">
             <div>
-                <button appDisableOnAction mat-raised-button color='primary' type="submit">{{"LOGIN" | translate}}</button>
+                <app-action-button>{{"LOGIN" | translate}}</app-action-button>
+                <!-- <button appDisableOnAction mat-raised-button color='primary' type="submit"></button> -->
                 <button mat-raised-button color='primary' type="button" routerLink='/register'>{{"REGISTER" | translate}}</button>
             </div>
             <div>

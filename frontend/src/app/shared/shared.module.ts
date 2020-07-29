@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { ChangePasswordDialogComponent } from './components/user-panel/dialogs/change-password-dialog/change-password-dialog.component';
 import { ConvertSizePipe } from './pipes/convert-size.pipe';
-import { DeleteAccountDialogComponent } from './components/user-panel/dialogs/delete-account-dialog/delete-account-dialog.component'
+import { DeleteAccountDialogComponent } from './components/user-panel/dialogs/delete-account-dialog/delete-account-dialog.component';
 import { NumberInputDirective } from './directives/number-input-validation.directive';
 import { DisableOnActionDirective } from './directives/disable-on-action.directive';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -17,6 +17,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DisableContextMenuDirective } from './directives/disable-context-menu.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginatorIntlDirective } from './directives/paginator-intl.directive';
+import { ActionButtonComponent } from './components/action-button/action-button.component';
 
 const sharedModules = [
   MaterialModule,
@@ -39,7 +40,8 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    PaginatorIntlDirective
+    PaginatorIntlDirective,
+    ActionButtonComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,8 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    PaginatorIntlDirective
+    PaginatorIntlDirective,
+    ActionButtonComponent
   ]
 })
 export class SharedModule { }

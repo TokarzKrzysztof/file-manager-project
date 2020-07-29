@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MatTreeModule } from '@angular/material/tree';
     MatProgressBarModule,
     MatDatepickerModule,
     MatSidenavModule,
-    MatTreeModule
+    MatTreeModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

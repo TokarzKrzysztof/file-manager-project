@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, delay } from 'rxjs/operators';
 import { UserModel } from './model-UserModel';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { Router } from '@angular/router';
@@ -66,6 +66,7 @@ export class AuthService {
 
     this.actionsService.startAction();
     return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/Login`, {}, { params }).pipe(
+      delay(2000),
       tap((res: UserModel) => {
         this.currentUserValue = res;
         this.toast.success(translations.LOGIN_SUCCESS);
@@ -85,7 +86,7 @@ export class AuthService {
   }
 
   register(registerData: UserModel, emailActivationUrl: string): Promise<any> {
-    let params = new HttpParams()
+    let params = new HttpParams();
     params = params.append('emailActivationUrl', emailActivationUrl);
     params = params.append('subject', translations.REGISTER_MAIL_SUBJECT);
     params = params.append('mailContent', translations.REGISTER_MAIL_CONTENT);

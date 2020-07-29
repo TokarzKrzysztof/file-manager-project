@@ -1,6 +1,6 @@
 import { Directive, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { ActionsService } from '../services/actions.service';
-import { Subject, AsyncSubject } from 'rxjs';
+import { AsyncSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
