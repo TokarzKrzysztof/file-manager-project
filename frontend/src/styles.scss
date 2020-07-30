@@ -114,7 +114,17 @@ mat-card.login-panel-card {
   }
 
   &.no-bottom-padding {
-    margin-bottom: -1.25em;
+    .mat-form-field-wrapper {
+      padding: 0;
+    }
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+
+    .mat-form-field-infix{
+      border-top: none;
+    }
   }
 
   &.no-underline {
