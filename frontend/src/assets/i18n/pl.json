@@ -94,7 +94,7 @@
     "ACCOUNT_BLOCKED_ERROR": "Twoje konto zostało zablokowane",
     "PASSWORS_EQUAL_ERROR": "Hasła nie są zgodne!",
     "PASSWORD_REQUIREMENTS_ERROR": "Wymagania dotyczące hasła nie zostały spełnione!",
-    "CORECT_DATES_ERROR": "Wpisz poprawne daty!",
+    "CORRECT_DATES_ERROR": "Wpisz poprawne daty!",
     "MAX_FILES_SIZE_ERROR": "Maksymalna wielkość wysyłanych plików wynosi {{param}}MB!",
     "WRONG_ROOT_FOLDER_ERROR": "Wybierz poprawny folder nadrzędny!",
     "INCORRECT_EMAIL_ERROR": "Wpisz poprawny adres email!",

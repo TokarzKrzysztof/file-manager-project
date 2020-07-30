@@ -46,7 +46,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
 
   async onFilter() {
     if (this.dateRange.invalid) {
-      this.toast.error(translations.CORECT_DATES_ERROR);
+      this.toast.error(translations.CORRECT_DATES_ERROR);
       return;
     }
 

@@ -94,7 +94,7 @@
     "ACCOUNT_BLOCKED_ERROR": "Your account has been blocked",
     "PASSWORS_EQUAL_ERROR": "Passwords do not match!",
     "PASSWORD_REQUIREMENTS_ERROR": "Password requirements not met!",
-    "CORECT_DATES_ERROR": "Please enter valid dates!",
+    "CORRECT_DATES_ERROR": "Please enter valid dates!",
     "MAX_FILES_SIZE_ERROR": "The maximum size of the uploaded files is {{param}}MB!",
     "WRONG_ROOT_FOLDER_ERROR": "Select the correct parent folder!",
     "INCORRECT_EMAIL_ERROR": "Please enter correct e-mail address",
