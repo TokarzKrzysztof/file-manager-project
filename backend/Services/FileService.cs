@@ -69,10 +69,10 @@ namespace backend.Services
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
         }
 
-        public async Task<string> GetFilePath(int fileId)
+        public async Task<string> GetFilePath(Guid linkId)
         {
-            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
-            return file.FilePath;
+            ShareableLinkModel link = await _context.ShareableLinks.FirstOrDefaultAsync(x => x.Id == linkId);
+            return link.FilePath;
         }
 
         public async Task<List<FileViewModel>> GetFiles()
@@ -171,6 +171,24 @@ namespace backend.Services
             }
 
             return 0;
+        }
+
+        public async Task<Guid> CreateShareableLink(int fileId, string filePassword)
+        {
+            FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
+
+            var shareableLink = new ShareableLinkModel()
+            {
+                Id = Guid.NewGuid(),
+                FileId = file.Id,
+                FilePassword = filePassword,
+                FilePath = file.FilePath
+            };
+
+            _context.ShareableLinks.Add(shareableLink);
+            await _context.SaveChangesAsync();
+
+            return shareableLink.Id;
         }
 
     }

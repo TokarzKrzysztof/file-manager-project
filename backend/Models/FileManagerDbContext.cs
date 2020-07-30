@@ -14,6 +14,8 @@ namespace backend.Models
         public DbSet<HistoryModel> History { get; set; }
         public DbSet<GlobalSettingsModel> GlobalSettings { get; set; }
         public DbSet<FolderModel> Folders { get; set; }
+        public DbSet<ShareableLinkModel> ShareableLinks { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -139,5 +139,7 @@
     "SHOW": "Pokaż",
     "HIDE": "Ukryj",
     "YES": "Tak",
-    "NO": "Nie"
+    "NO": "Nie",
+    "PASSWORD_NOT_PROTECTED": "Bez ograniczeń",
+    "PASSWORD_PROTECTED": "Plik chroniony hasłem"
 }

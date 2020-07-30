@@ -9,6 +9,6 @@ export class FileManagerComponent implements OnInit {
 
   constructor() { }
 
-  async ngOnInit() {
+  ngOnInit() {
   }
 }

@@ -1,0 +1,13 @@
+.generated-link-wrapper {
+  display: flex;
+  margin: 20px 0;
+
+  .link-border {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid grey;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

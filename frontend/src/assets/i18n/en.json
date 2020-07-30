@@ -60,7 +60,7 @@
     "EDIT_BLOCKED": "Edit blocked",
     "ACCESS_BLOCKED": "Access blocked",
     "ACTIONS": "Actions",
-    "UNLOCK_USER": "Unlock user",
+    "UNLOCK_USER": "Unblock user",
     "FILES_SETTINGS": "Files settings",
     "FILES_MAX_WEIGHT": "Max files weight",
     "FILES_MAX_PER_HOUR": "Max files per hour",
@@ -139,5 +139,7 @@
     "SHOW": "Show",
     "HIDE": "Hide",
     "YES": "Yes",
-    "NO": "No"
+    "NO": "No",
+    "PASSWORD_NOT_PROTECTED": "No restrictions",
+    "PASSWORD_PROTECTED": "File protected with password"
 }

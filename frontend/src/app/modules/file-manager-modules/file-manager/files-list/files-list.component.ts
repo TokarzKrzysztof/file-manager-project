@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, AfterViewInit, ViewEncapsulation, OnDestroy, DoCheck, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ViewEncapsulation, DoCheck, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -11,12 +11,13 @@ import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
 import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { takeUntil, catchError, elementAt } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FolderModel } from '../../model-FolderModel';
 import { translations } from 'src/app/app.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ShareFileDialogComponent } from './dialogs/share-file-dialog/share-file-dialog.component';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class FilesListComponent implements OnInit, DoCheck {
   fileUploadProgress: number;
   maxFilesSize: number;
   currentUser: UserModel;
-  displayedColumns: string[] = ['select', 'title', 'fileName', 'uploadTime', 'createdBy', 'size', 'order'];
+  displayedColumns: string[] = ['select', 'title', 'fileName', 'uploadTime', 'createdBy', 'size', 'order', 'actions'];
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
   preparedFiles: File[] = [];
@@ -103,7 +104,7 @@ export class FilesListComponent implements OnInit, DoCheck {
     if (e.key === 'Enter') {
       input.disabled = true;
       element[propertyName] = input.value;
-      this.filesService.UpdateFile(element);
+      this.filesService.updateFile(element);
 
       if (propertyName === 'order') {
         this.sortFilesByOrder(this.dataSource.data);
@@ -250,6 +251,12 @@ export class FilesListComponent implements OnInit, DoCheck {
     }
 
     anchorTag.remove();
+  }
+
+  onShareFile(file: FileModel) {
+    this.dialog.open(ShareFileDialogComponent, {
+      data: file
+    });
   }
 
 }

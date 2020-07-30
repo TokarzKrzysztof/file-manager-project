@@ -112,12 +112,27 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFilePath([FromQuery] int fileId)
+        public async Task<IActionResult> GetFilePath([FromQuery] Guid linkId)
         {
             try
             {
-                string filePath = await _fileService.GetFilePath(fileId);
+                string filePath = await _fileService.GetFilePath(linkId);
                 return Ok(filePath);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateShareableLink([FromQuery] int fileId, [FromQuery] string filePassword)
+        {
+            try
+            {
+                Guid linkId = await _fileService.CreateShareableLink(fileId, filePassword);
+                return Ok(linkId);
             }
 
             catch (Exception ex)

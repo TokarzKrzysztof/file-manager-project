@@ -122,7 +122,7 @@ mat-card.login-panel-card {
       bottom: 0;
     }
 
-    .mat-form-field-infix{
+    .mat-form-field-infix {
       border-top: none;
     }
   }
@@ -189,4 +189,16 @@ mat-card.login-panel-card {
 
 .mat-sidenav-container {
   min-height: calc(100% - 49px);
+}
+
+.mat-radio-group {
+  display: block;
+
+  .mat-radio-button {
+    margin: 20px 0;
+
+    &+.mat-radio-button {
+      margin-left: 10px;
+    }
+  }
 }

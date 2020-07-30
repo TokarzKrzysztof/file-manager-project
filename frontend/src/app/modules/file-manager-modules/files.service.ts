@@ -15,6 +15,7 @@ import { translations } from 'src/app/app.component';
 export class FilesService {
 
 
+
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
@@ -108,10 +109,31 @@ export class FilesService {
     ).toPromise();
   }
 
-  UpdateFile(element: FileModel): Promise<void> {
+  updateFile(element: FileModel): Promise<void> {
     return this.http.put<void>(`${environment.apiUrl}/api/File/UpdateFile`, element).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
+        throw new Error();
+      })
+    ).toPromise();
+  }
+
+  createShareableLink(fileId: number, filePassword?: string): Promise<string> {
+    let params = new HttpParams();
+    params = params.append('fileId', fileId.toString());
+    if (filePassword) {
+      params = params.append('filePassword', filePassword);
+    }
+
+    return this.http.post<string>(`${environment.apiUrl}/api/File/createShareableLink`, {}, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
         throw new Error();
       })
     ).toPromise();

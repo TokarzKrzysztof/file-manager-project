@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{"SHARE_FILE_HEADER" | translate}}</h1>
+<div mat-dialog-content>
+    <ng-container *ngIf='!generatedLink'>
+        <form [formGroup]='formGroup' (ngSubmit)='onAccept()'>
+            <h3>{{"FILE_ACCESS" | translate}}</h3>
+            <mat-radio-group formControlName='isRestricted'>
+                <mat-radio-button color='primary' [value]="false">{{"PASSWORD_NOT_PROTECTED" | translate}}
+                </mat-radio-button>
+                <mat-radio-button color='primary' [value]="true">{{"PASSWORD_PROTECTED" | translate}}</mat-radio-button>
+            </mat-radio-group>
+    
+            <mat-form-field class='full-width' *ngIf="formGroup.get('filePassword').enabled">
+                <mat-label>{{"FILE_PASSWORD" | translate}}</mat-label>
+                <input autocomplete='off' matInput formControlName='filePassword'>
+                <mat-error>{{"REQUIRED" | translate}}</mat-error>
+            </mat-form-field>
+    
+            <ng-container *ngIf='!generatedLink'>
+                <button mat-raised-button type="submit" color='primary'>{{"GENERATE" | translate}}</button>
+                <button mat-raised-button type="button" (click)='onCancel()' color='primary'
+                    class="ml-5">{{"CANCEL" | translate}}</button>
+            </ng-container>
+        </form>
+    </ng-container>
+
+    <ng-container *ngIf='generatedLink'>
+        <div class="generated-link-wrapper">
+            <p class="link-border"> 
+                <span class="link">{{generatedLink}}</span> 
+            </p>
+            <button mat-button (click)='onLinkCopy()'>{{"COPY_LINK" | translate}}</button>
+        </div>
+        <div>
+            <button mat-raised-button color='primary' mat-dialog-close>{{"CLOSE" | translate}}</button>
+            <button mat-raised-button color='primary' class="ml-5" (click)='onGenerateNewLink()'>{{"GENERATE_NEW_LINK" | translate}}</button>
+        </div>
+    </ng-container>
+</div>
