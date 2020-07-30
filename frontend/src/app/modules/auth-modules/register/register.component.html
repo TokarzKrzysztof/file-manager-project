@@ -86,22 +86,30 @@
         <mat-tab disabled label='{{"SUMMARY" | translate}}'>
             <mat-list role="list">
                 <mat-list-item role="listitem">
-                    {{"EMAIL" | translate}} {{primaryDataForm.get('email').value}}
+                    <span>{{"EMAIL" | translate}} </span>
+                    <span>{{primaryDataForm.get('email').value}}</span>
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"NAME" | translate}} {{primaryDataForm.get('name').value}}
+                    <span>{{"NAME" | translate}} </span>
+                    <span>{{primaryDataForm.get('name').value}}</span>
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"SURNAME" | translate}} {{primaryDataForm.get('surname').value}}
+                    <span>{{"SURNAME" | translate}}</span>
+                    <span>{{primaryDataForm.get('surname').value}}</span>
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"PASSWORD" | translate}} {{showPasswordOnSummary ? passwordForm.get('password').value : ''}}
-                    <button mat-button (click)='showPasswordOnSummary = !showPasswordOnSummary'>
-                        {{showPasswordOnSummary ? 'Ukryj' : 'Pokaż'}}
-                    </button>
+                    <span>{{"PASSWORD" | translate}} </span>
+                    <p>
+                        <button class="summary-show-password-button" mat-stroked-button (click)='showPasswordOnSummary = !showPasswordOnSummary'>
+                            <span *ngIf='showPasswordOnSummary'>{{"HIDE" | translate}}</span>
+                            <span *ngIf='!showPasswordOnSummary'>{{"SHOW" | translate}}</span>
+                        </button>
+                        <span [ngStyle]="{'-webkit-text-security': (showPasswordOnSummary ? 'initial' : 'disc')}">{{passwordForm.get('password').value}}</span>
+                    </p>
                 </mat-list-item>
                 <mat-list-item role="listitem">
-                    {{"REGISTER_AS" | translate}} {{primaryDataForm.get('role').value | convertUserRole}}
+                    <span>{{"REGISTER_AS" | translate}} </span>
+                    <span>{{primaryDataForm.get('role').value | convertUserRole}}</span>
                 </mat-list-item>
             </mat-list>
 

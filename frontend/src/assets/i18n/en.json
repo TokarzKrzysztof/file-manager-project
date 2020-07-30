@@ -135,5 +135,7 @@
     "NEXT_PAGE": "Next page",
     "PREVIOUS_PAGE": "Previous page",
     "PRIMARY_DATA": "Primary data",
-    "SUMMARY": "Summary"
+    "SUMMARY": "Summary",
+    "SHOW": "Show",
+    "HIDE": "Hide"
 }

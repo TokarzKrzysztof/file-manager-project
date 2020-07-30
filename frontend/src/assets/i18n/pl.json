@@ -135,5 +135,7 @@
     "NEXT_PAGE": "Następna strona",
     "PREVIOUS_PAGE": "Poprzednia strona",
     "PRIMARY_DATA": "Podstawowe dane",
-    "SUMMARY": "Podsumowanie"
+    "SUMMARY": "Podsumowanie",
+    "SHOW": "Pokaż",
+    "HIDE": "Ukryj"
 }
