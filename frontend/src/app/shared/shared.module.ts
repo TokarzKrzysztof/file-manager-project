@@ -16,7 +16,6 @@ import { BooleanPipe } from './pipes/boolean.pipe';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DisableContextMenuDirective } from './directives/disable-context-menu.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginatorIntlDirective } from './directives/paginator-intl.directive';
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 
 const sharedModules = [
@@ -40,7 +39,6 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    PaginatorIntlDirective,
     ActionButtonComponent
   ],
   imports: [
@@ -59,7 +57,6 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    PaginatorIntlDirective,
     ActionButtonComponent
   ]
 })

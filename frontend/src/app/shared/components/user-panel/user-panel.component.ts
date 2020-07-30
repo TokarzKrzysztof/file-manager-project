@@ -36,7 +36,8 @@ export class UserPanelComponent implements OnInit {
 
     this.languageSelect.setValue(this.translateService.currentLang);
     this.languageSelect.valueChanges.subscribe((lang: string) => {
-      this.translateService.use(lang);
+      window.localStorage.setItem('currentUserLang', lang);
+      window.location.reload();
     });
   }
 

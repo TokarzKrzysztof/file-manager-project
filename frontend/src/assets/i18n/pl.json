@@ -137,5 +137,7 @@
     "PRIMARY_DATA": "Podstawowe dane",
     "SUMMARY": "Podsumowanie",
     "SHOW": "Pokaż",
-    "HIDE": "Ukryj"
+    "HIDE": "Ukryj",
+    "YES": "Tak",
+    "NO": "Nie"
 }
