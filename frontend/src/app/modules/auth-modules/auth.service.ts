@@ -68,7 +68,6 @@ export class AuthService {
     return this.http.post<UserModel>(`${environment.apiUrl}/api/Auth/Login`, {}, { params }).pipe(
       tap((res: UserModel) => {
         this.currentUserValue = res;
-        this.toast.success(translations.LOGIN_SUCCESS);
         this.checkCurrentUserBlockades();
       }),
       catchError((error: HttpErrorResponse) => {
@@ -128,12 +127,6 @@ export class AuthService {
     const params = new HttpParams().append('token', token);
 
     return this.http.put(`${environment.apiUrl}/api/Auth/Logout`, {}, { params }).pipe(
-      tap(() => {
-        if (dontShowToast) {
-          return;
-        }
-        this.toast.success(translations.LOGOUT_SUCCESS);
-      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         if (error.error.Data?.message) {
