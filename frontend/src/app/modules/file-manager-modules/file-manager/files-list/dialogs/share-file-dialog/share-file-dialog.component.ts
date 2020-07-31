@@ -48,7 +48,10 @@ export class ShareFileDialogComponent implements OnInit {
 
   onGenerateNewLink() {
     this.generatedLink = null;
-    this.formGroup.reset();
+    this.formGroup.patchValue({
+      isRestricted: false,
+      filePassword: '',
+    });
   }
 
   async onAccept() {

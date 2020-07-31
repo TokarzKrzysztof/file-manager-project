@@ -24,10 +24,15 @@ export class FileShareComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const params: Params = await this.route.params.pipe(take(1)).toPromise();
+    try {
+      const params: Params = await this.route.params.pipe(take(1)).toPromise();
 
-    const linkGuidId: string = params.linkGuidId;
-    this.shareableLink = await this.fileService.getShareableLink(linkGuidId);
+      const linkGuidId: string = params.linkGuidId;
+      this.shareableLink = await this.fileService.getShareableLink(linkGuidId);
+    }
+    catch (error) {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   goToFile() {

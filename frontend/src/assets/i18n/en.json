@@ -141,5 +141,18 @@
     "YES": "Yes",
     "NO": "No",
     "PASSWORD_NOT_PROTECTED": "No restrictions",
-    "PASSWORD_PROTECTED": "File protected with password"
+    "PASSWORD_PROTECTED": "File protected with password",
+    "SHARE": "Share",
+    "SHARE_FILE_HEADER": "File sharing",
+    "FILE_ACCESS": "File access",
+    "GENERATE_LINK": "Generate link",
+    "COPY_LINK": "Copy link",
+    "GENERATE_NEW_LINK": "Generate new link",
+    "LINK_COPIED": "Link copied",
+    "CLOSE": "Close",
+    "FILE_PASSWORD": "File password",
+    "FILE_NOT_FOUND_OR_DELETED": "File not found or has been deleted",
+    "GO_TO_FILE": "Go to file",
+    "LOGIN_TO_FILE_MANAGER": "Login to file manager",
+    "FILE_PASSWORD_INCORRECT": "File password incorrect!"
 }

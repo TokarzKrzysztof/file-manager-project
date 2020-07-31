@@ -31,6 +31,8 @@ namespace backend.Services
                 {
                     File.Delete(file.FilePath);
 
+                    List<ShareableLinkModel> fileLinks = await _context.ShareableLinks.Where(x => x.FileId == file.Id).ToListAsync();
+                    _context.ShareableLinks.RemoveRange(fileLinks);
 
                     HistoryModel historyRow = new HistoryModel()
                     {
@@ -55,7 +57,6 @@ namespace backend.Services
                 if (file != null)
                 {
                     File.Delete(file.FilePath);
-
                 }
             }
 
@@ -195,7 +196,7 @@ namespace backend.Services
             else
             {
                 NullReferenceException ex = new NullReferenceException();
-                ex.Data.Add("message", "NO_SHAREABLE_LINK");
+                ex.Data.Add("message", "FILE_NOT_FOUND_OR_DELETED");
                 throw ex;
             }
         }
