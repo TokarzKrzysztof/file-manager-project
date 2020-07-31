@@ -59,20 +59,14 @@ namespace backend.Services
                 }
             }
 
-           _context.Files.RemoveRange(files);
+            _context.Files.RemoveRange(files);
             await _context.SaveChangesAsync();
         }
 
         public async Task<FileStream> DownloadFile(int id)
         {
-            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
+            FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
-        }
-
-        public async Task<string> GetFilePath(Guid linkId)
-        {
-            ShareableLinkModel link = await _context.ShareableLinks.FirstOrDefaultAsync(x => x.Id == linkId);
-            return link.FilePath;
         }
 
         public async Task<List<FileViewModel>> GetFiles()
@@ -97,7 +91,7 @@ namespace backend.Services
 
         public async Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId, int folderId)
         {
-            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
+            string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
 
             if (!Directory.Exists(pathToSave))
             {
@@ -177,7 +171,7 @@ namespace backend.Services
         {
             FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
 
-            var shareableLink = new ShareableLinkModel()
+            ShareableLinkModel shareableLink = new ShareableLinkModel()
             {
                 Id = Guid.NewGuid(),
                 FileId = file.Id,
@@ -191,5 +185,19 @@ namespace backend.Services
             return shareableLink.Id;
         }
 
+        public async Task<ShareableLinkModel> GetShareableLink(Guid linkId)
+        {
+            ShareableLinkModel link = await _context.ShareableLinks.FirstOrDefaultAsync(x => x.Id == linkId);
+            if (link != null)
+            {
+                return link;
+            }
+            else
+            {
+                NullReferenceException ex = new NullReferenceException();
+                ex.Data.Add("message", "NO_SHAREABLE_LINK");
+                throw ex;
+            }
+        }
     }
 }

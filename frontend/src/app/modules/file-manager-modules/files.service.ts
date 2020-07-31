@@ -7,15 +7,13 @@ import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FileModel } from './model-FileModel';
 import { of, Subject, Observable } from 'rxjs';
 import { translations } from 'src/app/app.component';
+import { ShareableLinkModel } from '../file-share-modules/model-ShareableLinkModel';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
-
-
-
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
@@ -125,7 +123,24 @@ export class FilesService {
       params = params.append('filePassword', filePassword);
     }
 
-    return this.http.post<string>(`${environment.apiUrl}/api/File/createShareableLink`, {}, { params }).pipe(
+    return this.http.post<string>(`${environment.apiUrl}/api/File/CreateShareableLink`, {}, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
+      })
+    ).toPromise();
+  }
+
+  getShareableLink(linkGuidId: string): Promise<ShareableLinkModel> {
+    const params = new HttpParams().append('linkGuidId', linkGuidId);
+
+    return this.http.get<ShareableLinkModel>(`${environment.apiUrl}/api/File/GetShareableLink`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         if (error.error.Data?.message) {

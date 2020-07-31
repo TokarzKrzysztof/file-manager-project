@@ -27,6 +27,5 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  bootstrap: [FileManagerComponent]
 })
 export class FileManagerModule { }

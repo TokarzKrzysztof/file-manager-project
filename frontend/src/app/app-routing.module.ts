@@ -32,6 +32,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/administration-modules/administration/administration.module').then(m => m.AdministrationModule),
   },
+  {
+    path: 'file-share/:linkGuidId',
+    loadChildren: () => import ('./modules/file-share-modules/file-share/file-share.module').then(m => m.FileShareModule)
+  },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 

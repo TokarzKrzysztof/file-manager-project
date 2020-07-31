@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using backend.Interfaces;
+using backend.Models;
 using backend.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,12 +113,12 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFilePath([FromQuery] Guid linkId)
+        public async Task<IActionResult> GetShareableLink([FromQuery] Guid linkGuidId)
         {
             try
             {
-                string filePath = await _fileService.GetFilePath(linkId);
-                return Ok(filePath);
+                ShareableLinkModel link = await _fileService.GetShareableLink(linkGuidId);
+                return Ok(link);
             }
 
             catch (Exception ex)

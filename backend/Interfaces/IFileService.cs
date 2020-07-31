@@ -15,11 +15,11 @@ namespace backend.Interfaces
         Task<List<FileViewModel>> GetFiles();
         Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId, int folderId);
         Task<FileStream> DownloadFile(int id);
-        Task<string> GetFilePath(Guid linkId);
         Task UpdateFile(FileViewModel file);
         Task<List<FileViewModel>> GetFilesInsideFolder(int folderId);
         Task DeleteFiles(int[] ids, string userData);
         Task DeleteFiles(List<FileModel> files);
         Task<Guid> CreateShareableLink(int fileId, string filePassword);
+        Task<ShareableLinkModel> GetShareableLink(Guid linkId);
     }
 }

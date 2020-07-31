@@ -1,0 +1,10 @@
+<mat-card class="file-share-card">
+    <mat-form-field class='full-width' *ngIf="shareableLink?.filePassword">
+        <mat-label>{{"FILE_PASSWORD" | translate}}</mat-label>
+        <input autocomplete='off' matInput [formControl]='filePassword'>
+    </mat-form-field>
+    <div class="flex between">
+        <button color='primary' mat-raised-button (click)='goToFile()'>{{"GO_TO_FILE" | translate}}</button>
+        <button color='primary' mat-raised-button routerLink='/login'>{{"LOGIN_TO_FILE_MANAGER" | translate}}</button>
+    </div>
+</mat-card>
