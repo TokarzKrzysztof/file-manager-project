@@ -141,5 +141,18 @@
     "YES": "Tak",
     "NO": "Nie",
     "PASSWORD_NOT_PROTECTED": "Bez ograniczeń",
-    "PASSWORD_PROTECTED": "Plik chroniony hasłem"
+    "PASSWORD_PROTECTED": "Plik chroniony hasłem",
+    "SHARE": "Udostępnij",
+    "SHARE_FILE_HEADER": "Udostępnianie pliku",
+    "FILE_ACCESS": "Dostęp do pliku",
+    "GENERATE_LINK": "Wygeneruj link",
+    "COPY_LINK": "Skopiuj link",
+    "GENERATE_NEW_LINK": "Wygeneruj nowy link",
+    "LINK_COPIED": "Link skopiowany",
+    "CLOSE": "Zamknij",
+    "FILE_PASSWORD": "Hasło do pliku",
+    "FILE_NOT_FOUND_OR_DELETED": "Nie można znaleźć pliku lub został usunięty",
+    "GO_TO_FILE": "Przejdź do pliku",
+    "LOGIN_TO_FILE_MANAGER": "Zaloguj do menadżera plików",
+    "FILE_PASSWORD_INCORRECT": "Hasło do pliku niepoprawne!"
 }
