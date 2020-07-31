@@ -38,7 +38,6 @@ namespace backend.Services
                     {
                         Description = "USER_DELETED_FILE",
                         Param = file.FileName,
-                        //Description = "Użytkownik usunął plik o nazwie: " + file.FileName,
                         UserData = userData
                     };
 
@@ -107,7 +106,6 @@ namespace backend.Services
                 if (i == amountUserCanUpload)
                 {
                     await _context.SaveChangesAsync();
-                    //var ex = new ApplicationException($"Przekroczono dopuszczalny limit wysłanych plików w ciągu godziny który wynosi: {maxFilesPerHour}, spróbuj ponownie później");
                     var ex = new ApplicationException();
                     ex.Data.Add("message", "LIMIT_UPLOAD");
                     ex.Data.Add("maxFilesPerHour", maxFilesPerHour);
@@ -138,7 +136,6 @@ namespace backend.Services
                 {
                     Description = "USER_ADDED_FILE",
                     Param = fileName,
-                    //Description = "Użytkownik dodał plik o nazwie: " + fileName,
                     UserData = userData
                 };
 

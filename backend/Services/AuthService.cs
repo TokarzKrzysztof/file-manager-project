@@ -47,7 +47,6 @@ namespace backend.Services
                     InvalidOperationException ex = new InvalidOperationException();
                     ex.Data.Add("message", "ACCOUNT_NOT_ACTIVATED");
                     throw ex;
-                    //throw new InvalidOperationException("Prosimy najpierw aktywować konto!").Data.;
                 }
 
                 if (user.SystemAccess == false)
@@ -55,7 +54,6 @@ namespace backend.Services
                     InvalidOperationException ex = new InvalidOperationException();
                     ex.Data.Add("message", "ACCOUNT_BLOCKED");
                     throw ex;
-                    //throw new InvalidOperationException("Twoje konto zostało zablokowane");
                 }
 
                 user.IsLoggedIn = true;
@@ -63,7 +61,6 @@ namespace backend.Services
                 HistoryModel historyRow = new HistoryModel()
                 {
                     Description = "USER_LOGGED_INTO_SYSTEM",
-                    //Description = "Użytkownik zalogował się do systemu",
                     UserData = user.Name + " " + user.Surname
                 };
 
@@ -78,7 +75,6 @@ namespace backend.Services
                 InvalidOperationException ex = new InvalidOperationException();
                 ex.Data.Add("message", "LOGIN_DATA_INCORRECT");
                 throw ex;
-                //throw new InvalidOperationException("Dane logowania są nieprawidłowe");
             }
         }
 
@@ -90,7 +86,6 @@ namespace backend.Services
                 InvalidOperationException ex = new InvalidOperationException();
                 ex.Data.Add("message", "ALREADY_IN_SYSTEM");
                 throw ex;
-                //throw new InvalidOperationException("Użytkownik o podanym adresie e-mail istnieje już w systemie");
             }
 
             if (userData.password != userData.passwordRepeat)
@@ -98,7 +93,6 @@ namespace backend.Services
                 InvalidOperationException ex = new InvalidOperationException();
                 ex.Data.Add("message", "PASSWORS_EQUAL_ERROR");
                 throw ex;
-                //throw new InvalidOperationException("Hasła nie są zgodne");
             }
 
             UserModel user = new UserModel()
@@ -113,7 +107,6 @@ namespace backend.Services
             HistoryModel historyRow = new HistoryModel()
             {
                 Description = "USER_REGISTERED_INTO_SYSTEM",
-                //Description = "Użytkownik zarejestrował się w systemie",
                 UserData = user.Name + " " + user.Surname
             };
 
@@ -121,9 +114,6 @@ namespace backend.Services
             _context.History.Add(historyRow);
             await _context.SaveChangesAsync();
 
-            //string mailBody = "<h1>Witaj!</h1> " +
-            //    "<p>Założyłeś konto w serwisie file manager, aby móc z niego korzystać należy wcześniej aktywować konto</p> " +
-            //    $"<p>Aby to zrobić kliknij w link: {emailActivationUrl + user.Token} </p>";
             string mailBody = mailContent +  (emailActivationUrl + user.Token) ;
             SendEmail(user, mailSubject, mailBody);
             return true;
@@ -161,7 +151,6 @@ namespace backend.Services
                 HistoryModel historyRow = new HistoryModel()
                 {
                     Description = "USER_LOGGED_OUT",
-                    //Description = "Użytkownik wylogował się z systemu",
                     UserData = user.Name + " " + user.Surname
                 };
 
@@ -175,7 +164,6 @@ namespace backend.Services
                 NullReferenceException ex = new NullReferenceException();
                 ex.Data.Add("message", "USER_NOT_FOUND");
                 throw ex;
-                //throw new NullReferenceException("Nie znaleziono użytkownika");
             }
 
         }
@@ -194,7 +182,6 @@ namespace backend.Services
                 NullReferenceException ex = new NullReferenceException();
                 ex.Data.Add("message", "USER_NOT_FOUND");
                 throw ex;
-                //throw new NullReferenceException("Nie znaleziono użytkownika");
             }
 
         }
@@ -210,14 +197,12 @@ namespace backend.Services
                     InvalidOperationException ex = new InvalidOperationException();
                     ex.Data.Add("message", "PASSWORD_INCORRECT");
                     throw ex;
-                    //throw new InvalidOperationException("Podane hasło jest nieprawidłowe");
                 }
                 user.IsActive = false;
 
                 HistoryModel historyRow = new HistoryModel()
                 {
                     Description = "USER_DELETED_ACCOUNT",
-                    //Description = "Użytkownik usunął konto",
                     UserData = user.Name + " " + user.Surname
                 };
 
@@ -230,7 +215,6 @@ namespace backend.Services
                 NullReferenceException ex = new NullReferenceException();
                 ex.Data.Add("message", "USER_NOT_FOUND");
                 throw ex;
-                //throw new NullReferenceException("Nie znaleziono użytkownika");
             }
         }
 
@@ -245,7 +229,6 @@ namespace backend.Services
                     InvalidOperationException ex = new InvalidOperationException();
                     ex.Data.Add("message", "PASSWORS_EQUAL_ERROR");
                     throw ex;
-                    //throw new InvalidOperationException("Hasła nie są zgodne!");
                 }
 
                 if (user.Password != passwordChangeData.oldPassword)
@@ -253,7 +236,6 @@ namespace backend.Services
                     InvalidOperationException ex = new InvalidOperationException();
                     ex.Data.Add("message", "PASSWORD_INCORRECT");
                     throw ex;
-                    //throw new InvalidOperationException("Niepoprawne hasło!");
                 }
 
                 user.Password = passwordChangeData.newPassword;
@@ -265,7 +247,6 @@ namespace backend.Services
                 NullReferenceException ex = new NullReferenceException();
                 ex.Data.Add("message", "USER_NOT_FOUND");
                 throw ex;
-                //throw new NullReferenceException("Nie znaleziono użytkownika");
             }
         }
 
@@ -281,7 +262,6 @@ namespace backend.Services
                 _context.Update(user);
                 await _context.SaveChangesAsync();
 
-                //string mailBody = $"<h1>Witaj!</h1><p>Twoje nowe tymczasowe hasło: {newPassword}</p>";
                 string mailBody = mailContent + newPassword;
                 SendEmail(user, subject, mailBody);
             }
@@ -290,7 +270,6 @@ namespace backend.Services
                 NullReferenceException ex = new NullReferenceException();
                 ex.Data.Add("message", "USER_NOT_FOUND_BY_EMAIL");
                 throw ex;
-                //throw new NullReferenceException("Nie znaleziono użytkownika o podanym adresie email!");
             }
         }
 
@@ -316,7 +295,6 @@ namespace backend.Services
                     ex.Data.Add("message", "USER_NOT_FOUND_BY_ID");
                     ex.Data.Add("id", id);
                     throw ex;
-                    //throw new NullReferenceException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
                 }
             }
 
@@ -339,7 +317,6 @@ namespace backend.Services
                     ex.Data.Add("message", "USER_NOT_FOUND_BY_ID");
                     ex.Data.Add("id", id);
                     throw ex;
-                    //throw new NullReferenceException($"Użytkownik o podanym adresie ID: {id} nie istnieje");
                 }
             }
 
@@ -363,7 +340,6 @@ namespace backend.Services
                 ex.Data.Add("message", "USER_NOT_FOUND_BY_ID");
                 ex.Data.Add("id", id);
                 throw ex;
-                //throw new NullReferenceException($"Nie znaleziono użytkownika o podanym ID: {id}");
             }
         }
 
