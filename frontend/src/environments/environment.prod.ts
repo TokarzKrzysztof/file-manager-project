@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://file-manager.pl'
+  apiUrl: 'http://api.file-manager.pl'
 };
