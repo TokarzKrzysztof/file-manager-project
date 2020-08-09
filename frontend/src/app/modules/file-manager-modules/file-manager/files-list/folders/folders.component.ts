@@ -39,7 +39,9 @@ export class FoldersComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadFolders();
-    this.setActiveFolder(this.treeControl.dataNodes[0]);
+    if (this.treeControl.dataNodes.length) {
+      this.setActiveFolder(this.treeControl.dataNodes[0]);
+    }
   }
 
   async loadFolders() {
