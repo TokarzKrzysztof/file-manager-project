@@ -10,7 +10,7 @@ namespace backend.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public string FilePath { get; set; }
+        public string FileName { get; set; }
         public int FileId { get; set; }
 #nullable enable
         public string? FilePassword { get; set; }

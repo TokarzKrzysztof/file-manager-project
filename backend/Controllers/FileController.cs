@@ -97,6 +97,22 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{fileDisplayName}")]
+        public async Task<IActionResult> ShowFilePreview([FromQuery] int fileId)
+        {
+            try
+            {
+                FileStream file = await _fileService.ShowFilePreview(fileId, this);
+                return Ok(file);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateFile([FromBody] FileViewModel file)
         {

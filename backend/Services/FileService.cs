@@ -10,6 +10,7 @@ using backend.ViewModels;
 using backend.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using backend.Controllers;
 
 namespace backend.Services
 {
@@ -174,7 +175,7 @@ namespace backend.Services
                 Id = Guid.NewGuid(),
                 FileId = file.Id,
                 FilePassword = filePassword,
-                FilePath = file.FilePath
+                FileName = file.FileName
             };
 
             _context.ShareableLinks.Add(shareableLink);
@@ -196,6 +197,14 @@ namespace backend.Services
                 ex.Data.Add("message", "FILE_NOT_FOUND_OR_DELETED");
                 throw ex;
             }
+        }
+
+        public async Task<FileStream> ShowFilePreview(int fileId, FileController fileController)
+        {
+            FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == fileId);
+            fileController.Response.ContentType = file.ContentType;
+
+            return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using backend.Models;
+﻿using backend.Controllers;
+using backend.Models;
 using backend.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,5 +22,6 @@ namespace backend.Interfaces
         Task DeleteFiles(List<FileModel> files);
         Task<Guid> CreateShareableLink(int fileId, string filePassword);
         Task<ShareableLinkModel> GetShareableLink(Guid linkId);
+        Task<FileStream> ShowFilePreview(int fileId, FileController fileController);
     }
 }
