@@ -155,5 +155,8 @@
     "GO_TO_FILE": "Przejdź do pliku",
     "LOGIN_TO_FILE_MANAGER": "Zaloguj do menadżera plików",
     "FILE_PASSWORD_INCORRECT": "Hasło do pliku niepoprawne!",
-    "CANCEL_UPLOAD_CONFIRMATION": "Czy na pewno chcesz anulować wysyłanie plików?"
+    "CANCEL_UPLOAD_CONFIRMATION": "Czy na pewno chcesz anulować wysyłanie plików?",
+    "AVAILABLE_DISC_SPACE": "Dostępna przestrzeń na dysku",
+    "NO_AVAILABLE_DISC_SPACE": "Brak dostępnej przestrzeni na dysku!",
+    "TOTAL_DISC_SPACE": "Całkowita przestrzeń na dysku"
 }

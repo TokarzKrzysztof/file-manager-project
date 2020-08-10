@@ -26,6 +26,10 @@
                         [translateParams]='{min: minLimitPerHourValidator, max: maxLimitPerHourValidator}'>
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label> {{"TOTAL_DISC_SPACE" | translate}} </mat-label>
+                    <input matInput formControlName='totalDiscSpace' value="{{filesSettings.get('totalDiscSpace').value | convertSize:'MB'}} MB"/>
+                </mat-form-field>
             </form>
         </mat-expansion-panel>
 

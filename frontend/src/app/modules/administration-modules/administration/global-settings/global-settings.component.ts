@@ -22,6 +22,7 @@ export class GlobalSettingsComponent implements OnInit {
     maxSize: new FormControl(null, [Validators.required]),
     limitPerHour: new FormControl(null,
       [Validators.required, Validators.min(this.minLimitPerHourValidator), Validators.max(this.maxLimitPerHourValidator)]),
+    totalDiscSpace: new FormControl({value: null, disabled: true})
   });
 
   passwordSettings = new FormGroup({
@@ -58,7 +59,6 @@ export class GlobalSettingsComponent implements OnInit {
 
     const settings: GlobalSettingsModel = { ...this.filesSettings.getRawValue(), ...this.passwordSettings.getRawValue() };
     settings.id = this.settings.id;
-
     await this.globalSettingsService.setGlobalSettings(settings);
   }
 

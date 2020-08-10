@@ -1,6 +1,11 @@
 <mat-sidenav-container autosize>
-    <mat-sidenav mode='side' opened>
+    <mat-sidenav mode='side' opened class="folders-sidenav">
         <app-folders (folderChanged)='onFolderChange($event)'></app-folders>
+        <div class="available-disc-space" *ngIf='availableDiscSpaceMB'>
+            <p class="available-disc-space-text">{{"AVAILABLE_DISC_SPACE" | translate}}</p>
+            <p class="available-disc-space-mb">{{availableDiscSpaceMB}}MB</p>
+            <mat-progress-bar mode="determinate" [value]="spaceOccupiedPercent" color='primary'></mat-progress-bar>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content *ngIf='activeFolder'>
         <mat-toolbar>
@@ -110,7 +115,7 @@
 
                 <ng-container matColumnDef="size">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"WEIGHT" | translate}} [KB] </th>
-                    <td mat-cell *matCellDef="let element"> {{element.size | convertSize}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.size | convertSize:'KB'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="order">

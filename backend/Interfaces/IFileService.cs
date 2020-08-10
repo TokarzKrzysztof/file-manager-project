@@ -23,5 +23,6 @@ namespace backend.Interfaces
         Task<Guid> CreateShareableLink(int fileId, string filePassword);
         Task<ShareableLinkModel> GetShareableLink(Guid linkId);
         Task<FileStream> ShowFilePreview(int fileId, FileController fileController);
+        Task<long> GetSpaceOccupiedByFiles();
     }
 }

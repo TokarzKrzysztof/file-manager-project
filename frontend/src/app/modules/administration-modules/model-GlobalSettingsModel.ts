@@ -6,4 +6,5 @@ export interface GlobalSettingsModel {
     minDigits: number;
     bigLetters: number;
     specialCharacters: number;
+    totalDiscSpace: number;
 }

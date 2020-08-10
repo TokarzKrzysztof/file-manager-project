@@ -99,6 +99,14 @@ namespace backend.Services
                 Directory.CreateDirectory(pathToSave);
             }
 
+            bool isAvailableSpaceForFiles = await CheckAvailableDiscSpace(files);
+            if (!isAvailableSpaceForFiles)
+            {
+                InvalidOperationException ex = new InvalidOperationException();
+                ex.Data.Add("message", "NO_AVAILABLE_DISC_SPACE");
+                throw ex;
+            }
+
             int maxFilesPerHour = await _context.GlobalSettings.Select(x => x.LimitPerHour).FirstOrDefaultAsync();
             int amountUserCanUpload = await CheckAmountThatUserCanUpload(maxFilesPerHour, creatorId);
 
@@ -148,6 +156,17 @@ namespace backend.Services
 
 
             return true;
+        }
+
+        private async Task<bool> CheckAvailableDiscSpace(IFormFileCollection files)
+        {
+            long filesSize = files.Select(x => x.Length).Sum();
+            long occupiedSpace = await GetSpaceOccupiedByFiles();
+            long totalDiscSpace = (await _context.GlobalSettings.FirstOrDefaultAsync()).TotalDiscSpace;
+            long availableSpace = totalDiscSpace - occupiedSpace;
+
+            bool isAvailableSpaceForFiles = availableSpace > filesSize;
+            return isAvailableSpaceForFiles;
         }
 
         private async Task<int> CheckAmountThatUserCanUpload(int limitPerHour, int creatorId)
@@ -205,6 +224,12 @@ namespace backend.Services
             fileController.Response.ContentType = file.ContentType;
 
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
+        }
+
+        public async Task<long> GetSpaceOccupiedByFiles()
+        {
+            long occupiedSpace = (await _context.Files.Select(x => x.Size).ToListAsync()).Sum();
+            return occupiedSpace;
         }
     }
 }

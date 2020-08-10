@@ -144,4 +144,19 @@ export class FilesService {
     ).toPromise();
   }
 
+  getSpaceOccupiedByFiles(): Promise<number> {
+    return this.http.get<number>(`${environment.apiUrl}/api/File/GetSpaceOccupiedByFiles`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
+      })
+    ).toPromise();
+  }
+
 }

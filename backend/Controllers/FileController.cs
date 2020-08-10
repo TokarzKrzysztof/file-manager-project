@@ -143,6 +143,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetSpaceOccupiedByFiles()
+        {
+            try
+            {
+                long occupiedSpace = await _fileService.GetSpaceOccupiedByFiles();
+                return Ok(occupiedSpace);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateShareableLink([FromQuery] int fileId, [FromQuery] string filePassword)
         {

@@ -28,6 +28,7 @@ namespace backend.Models
                 SpecialCharacters = 0,
                 MaxSize = 1000,
                 LimitPerHour = 20,
+                TotalDiscSpace = 2147483648
             });
         }
     }

@@ -18,6 +18,7 @@ import { FolderModel } from '../../model-FolderModel';
 import { translations } from 'src/app/app.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ShareFileDialogComponent } from './dialogs/share-file-dialog/share-file-dialog.component';
+import { GlobalSettingsModel } from 'src/app/modules/administration-modules/model-GlobalSettingsModel';
 
 interface DownloadedFile {
   id: number;
@@ -39,6 +40,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChildren('inputTitle') titleInputs: QueryList<ElementRef<HTMLInputElement>>;
   onUploadCancel = new Subject<void>();
   onDownloadCancel = new Subject<void>();
+  globalSettings: GlobalSettingsModel;
   activeFolder: FolderModel;
   uploadingFiles: boolean;
   fileUploadProgress: number;
@@ -49,6 +51,8 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   selection = new SelectionModel<FileModel>(true, []);
   preparedFiles: File[] = [];
   downloadingFiles: DownloadedFile[] = [];
+  availableDiscSpaceMB: number;
+  spaceOccupiedPercent: number;
 
   constructor(
     private filesService: FilesService,
@@ -62,8 +66,11 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   ) { }
 
   async ngOnInit() {
-    this.maxFilesSize = (await this.globalSettingsService.getGlobalSettings()).maxSize;
     this.currentUser = await this.authService.getCurrentUserValue();
+
+    this.globalSettings = await this.globalSettingsService.getGlobalSettings();
+    this.maxFilesSize = this.globalSettings.maxSize;
+    this.checkDiscSpace();
   }
 
   ngDoCheck() {
@@ -75,6 +82,13 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
     } else {
       this.actionsService.stopEditingAction();
     }
+  }
+
+  async checkDiscSpace() {
+    const spaceOccupied: number = await this.filesService.getSpaceOccupiedByFiles();
+    const totalDiscSpace = this.globalSettings.totalDiscSpace;
+    this.availableDiscSpaceMB = Number(((totalDiscSpace - spaceOccupied) / 1048576).toFixed(2));
+    this.spaceOccupiedPercent = Number(((spaceOccupied / totalDiscSpace) * 100).toFixed(0));
   }
 
   onFolderChange(folder: FolderModel) {
@@ -229,6 +243,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
         this.uploadingFiles = false;
 
         this.loadFiles(this.activeFolder.id);
+        this.checkDiscSpace();
       });
   }
 
@@ -253,6 +268,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
       const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
       await this.filesService.deleteFiles(filesToDeleteIds, userData);
       this.loadFiles(this.activeFolder.id);
+      this.checkDiscSpace();
     });
   }
 

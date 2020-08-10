@@ -155,5 +155,8 @@
     "GO_TO_FILE": "Go to file",
     "LOGIN_TO_FILE_MANAGER": "Login to file manager",
     "FILE_PASSWORD_INCORRECT": "File password incorrect!",
-    "CANCEL_UPLOAD_CONFIRMATION": "Are you sure you want to cancel files upload?"
+    "CANCEL_UPLOAD_CONFIRMATION": "Are you sure you want to cancel files upload?",
+    "AVAILABLE_DISC_SPACE": "Available disc space",
+    "NO_AVAILABLE_DISC_SPACE": "No available disc space!",
+    "TOTAL_DISC_SPACE": "Total disc space"
 }

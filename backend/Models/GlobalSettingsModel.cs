@@ -15,5 +15,6 @@ namespace backend.Models
         public int MinDigits { get; set; }
         public int BigLetters { get; set; }
         public int SpecialCharacters { get; set; }
+        public long TotalDiscSpace { get; set; }
     }
 }
