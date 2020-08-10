@@ -65,7 +65,7 @@
     "FILES_MAX_WEIGHT": "Maksymalna waga wysyłanych plików",
     "FILES_MAX_PER_HOUR": "Maksymalna ilość plików na godzinę",
     "PASSWORD_SETTINGS": "Ustawienia haseł",
-    "VALUE_MIN_MAX": "Wartość musi być większa lub równa {{min}} i mniejsza niż {{max}}",
+    "VALUE_MIN_MAX": "Wartość musi wynosić pomiędzy {{min}} i {{max}}",
     "LOGGED_AS": "Zalogowany jako",
     "MENU": "Menu",
     "LOGOUT": "Wyloguj",

@@ -14,9 +14,9 @@ export class GlobalSettingsComponent implements OnInit {
   settings: GlobalSettingsModel;
   maxFileSizes = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
   minPasswordValidator = 0;
-  maxPasswordValidator = 5;
-  minLimitPerHourValidator = 1;
-  maxLimitPerHourValidator = 20;
+  maxPasswordValidator = 3;
+  minLimitPerHourValidator = 10;
+  maxLimitPerHourValidator = 30;
 
   filesSettings = new FormGroup({
     maxSize: new FormControl(null, [Validators.required]),

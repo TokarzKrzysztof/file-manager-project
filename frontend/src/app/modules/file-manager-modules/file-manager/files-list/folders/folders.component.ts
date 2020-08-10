@@ -39,9 +39,7 @@ export class FoldersComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadFolders();
-    if (this.treeControl.dataNodes.length) {
-      this.setActiveFolder(this.treeControl.dataNodes[0]);
-    }
+    this.setActiveFolder(this.treeControl.dataNodes[0] || null);
   }
 
   async loadFolders() {
@@ -84,6 +82,12 @@ export class FoldersComponent implements OnInit {
   }
 
   setActiveFolder(node: FlatNode) {
+    if (!node) {
+      this.activeFolder = null;
+      this.folderChanged.emit(null);
+      return;
+    }
+
     const folder: FolderModel = this.revertTransform(node);
     this.activeFolder = folder;
     if (node.parentId) {
@@ -159,7 +163,7 @@ export class FoldersComponent implements OnInit {
       if (result) {
         await this.foldersService.deleteFolder(folderId);
         await this.loadFolders();
-        this.setActiveFolder(this.treeControl.dataNodes[0]);
+        this.setActiveFolder(this.treeControl.dataNodes[0] || null);
       }
     });
   }

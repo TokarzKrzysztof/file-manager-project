@@ -78,8 +78,12 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   onFolderChange(folder: FolderModel) {
-    this.activeFolder = folder;
-    this.loadFiles(this.activeFolder.id);
+    if (folder) {
+      this.activeFolder = folder;
+      this.loadFiles(folder.id);
+    } else {
+      this.activeFolder = null;
+    }
   }
 
   async loadFiles(folderId: number) {

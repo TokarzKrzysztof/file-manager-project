@@ -65,7 +65,7 @@
     "FILES_MAX_WEIGHT": "Max files weight",
     "FILES_MAX_PER_HOUR": "Max files per hour",
     "PASSWORD_SETTINGS": "Password settings",
-    "VALUE_MIN_MAX": "Value have te be bigger or equal to {{min}} and lower than {{max}}",
+    "VALUE_MIN_MAX": "Value have to be in range from {{min}} to {{max}}",
     "LOGGED_AS": "Logged in as",
     "MENU": "Menu",
     "LOGOUT": "Logout",
