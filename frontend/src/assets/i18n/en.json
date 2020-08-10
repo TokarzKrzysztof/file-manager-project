@@ -154,5 +154,6 @@
     "FILE_NOT_FOUND_OR_DELETED": "File not found or has been deleted",
     "GO_TO_FILE": "Go to file",
     "LOGIN_TO_FILE_MANAGER": "Login to file manager",
-    "FILE_PASSWORD_INCORRECT": "File password incorrect!"
+    "FILE_PASSWORD_INCORRECT": "File password incorrect!",
+    "CANCEL_UPLOAD_CONFIRMATION": "Are you sure you want to cancel files upload?"
 }

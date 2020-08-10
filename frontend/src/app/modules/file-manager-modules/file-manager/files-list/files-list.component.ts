@@ -11,7 +11,7 @@ import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
 import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpErrorResponse, HttpDownloadProgressEvent } from '@angular/common/http';
-import { takeUntil, catchError, elementAt } from 'rxjs/operators';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
 import { FolderModel } from '../../model-FolderModel';
@@ -37,9 +37,10 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild(MatTable) table: MatTable<FileModel>;
   @ViewChildren('inputOrder') orderInputs: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChildren('inputTitle') titleInputs: QueryList<ElementRef<HTMLInputElement>>;
+  onUploadCancel = new Subject<void>();
+  onDownloadCancel = new Subject<void>();
   activeFolder: FolderModel;
-  onCancel = new Subject<void>();
-  showCancelButton: boolean;
+  uploadingFiles: boolean;
   fileUploadProgress: number;
   maxFilesSize: number;
   currentUser: UserModel;
@@ -159,7 +160,18 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   onFilesSendCancel() {
-    this.onCancel.next();
+    const dialogData: ConfirmationDialogData = {
+      title: translations.CANCEL_UPLOAD_CONFIRMATION
+    };
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.onUploadCancel.next();
+      }
+    });
   }
 
   async onFilesSend() {
@@ -173,9 +185,9 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
     const creatorId = this.currentUser.id;
 
     this.actionsService.startBackendAction();
-    this.showCancelButton = true;
+    this.uploadingFiles = true;
     this.filesService.uploadFiles(this.preparedFiles, userData, creatorId, this.activeFolder.id).pipe(
-      takeUntil(this.onCancel),
+      takeUntil(this.onUploadCancel),
       catchError(async (error: HttpErrorResponse) => {
         if (error.error.Data?.message === 'LIMIT_UPLOAD') {
           const message = await this.translateService.get('LIMIT_UPLOAD', { param: error.error.Data.maxFilesPerHour }).toPromise();
@@ -210,7 +222,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
         this.fileUploadProgress = 0;
         this.actionsService.stopBackendAction();
         this.actionsService.stopEditingAction();
-        this.showCancelButton = false;
+        this.uploadingFiles = false;
 
         this.loadFiles(this.activeFolder.id);
       });
@@ -262,7 +274,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
     this.actionsService.startBackendAction();
     for (const file of this.downloadingFiles) {
       this.filesService.downloadFile(file.id).pipe(
-        takeUntil(this.onCancel),
+        takeUntil(this.onDownloadCancel),
         catchError((error: HttpErrorResponse) => {
           console.error(error);
           if (error.error.Data?.message) {
@@ -313,8 +325,10 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.onCancel.next();
-    this.onCancel.complete();
+    this.onUploadCancel.next();
+    this.onUploadCancel.complete();
+    this.onDownloadCancel.next();
+    this.onDownloadCancel.complete();
   }
 
 }

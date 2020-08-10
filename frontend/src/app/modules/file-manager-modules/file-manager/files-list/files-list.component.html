@@ -6,7 +6,7 @@
         <mat-toolbar>
             <mat-toolbar-row class="file-manager-toolbar">
                 <div>
-                    <button mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false'
+                    <button [disabled]='uploadingFiles' mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false'
                         (click)='fileInput.click()' [matTooltip]='"MAX_SIZE" | translate:{param: maxFilesSize}'>
                         {{"ADD_FILES" | translate}}
                     </button>
@@ -24,7 +24,7 @@
                         <mat-icon>get_app</mat-icon>
                     </button>
 
-                    <button mat-raised-button color='warn' *ngIf='showCancelButton' (click)='onFilesSendCancel()'
+                    <button mat-raised-button color='warn' *ngIf='uploadingFiles' (click)='onFilesSendCancel()'
                         class="ml-5">
                         {{"CANCEL" | translate}}
                     </button>
@@ -47,7 +47,7 @@
             <mat-toolbar-row *ngIf='preparedFiles.length'>
                 <mat-chip-list>
                     <mat-chip disableRipple *ngFor='let file of preparedFiles' (removed)='removePreparedFile(file)'
-                        removable='true'>
+                        removable='true' [disabled]='uploadingFiles'>
                         {{file.name}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>

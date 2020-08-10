@@ -154,5 +154,6 @@
     "FILE_NOT_FOUND_OR_DELETED": "Nie można znaleźć pliku lub został usunięty",
     "GO_TO_FILE": "Przejdź do pliku",
     "LOGIN_TO_FILE_MANAGER": "Zaloguj do menadżera plików",
-    "FILE_PASSWORD_INCORRECT": "Hasło do pliku niepoprawne!"
+    "FILE_PASSWORD_INCORRECT": "Hasło do pliku niepoprawne!",
+    "CANCEL_UPLOAD_CONFIRMATION": "Czy na pewno chcesz anulować wysyłanie plików?"
 }
