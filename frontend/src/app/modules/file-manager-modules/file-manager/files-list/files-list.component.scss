@@ -6,3 +6,23 @@
     margin-left: 5px;
   }
 }
+
+.download-progress-list {
+  padding: 0 20px;
+
+  .download-progress-item {
+    margin: 10px 0;
+
+    .download-progress-item-header {
+      margin-bottom: 5px;
+    }
+
+    .download-progress-item-percentage-progress {
+      margin-right: 10px;
+    }
+
+    .download-progress-item-bar {
+      width: 200px;
+    }
+  }
+}

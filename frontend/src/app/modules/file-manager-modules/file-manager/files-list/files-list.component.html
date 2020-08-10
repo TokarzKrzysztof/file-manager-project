@@ -13,17 +13,19 @@
                     <input autocomplete='off' type='file' hidden (input)='onFileUpload($event)' #fileInput multiple>
                     <app-action-button *ngIf='preparedFiles.length' (buttonClicked)='onFilesSend()'>
                         {{"SEND" | translate}}</app-action-button>
-                    <button [disabled]='currentUser?.systemEditingEnabled === false || selection.selected.length === 0' appDisableOnAction mat-icon-button
-                        color='primary' matTooltip='{{"DELETE" | translate}}' (click)='onDeleteFiles()'>
+                    <button [disabled]='currentUser?.systemEditingEnabled === false || selection.selected.length === 0'
+                        appDisableOnAction mat-icon-button color='primary' matTooltip='{{"DELETE" | translate}}'
+                        (click)='onDeleteFiles()'>
                         <mat-icon>delete</mat-icon>
                     </button>
 
-                    <button [disabled]='selection.selected.length === 0' mat-icon-button color='primary' matTooltip='{{"DOWNLOAD" | translate}}'
-                        (click)='onDownloadFiles()'>
+                    <button appDisableOnAction [disabled]='selection.selected.length === 0' mat-icon-button color='primary'
+                        matTooltip='{{"DOWNLOAD" | translate}}' (click)='onDownloadFiles()'>
                         <mat-icon>get_app</mat-icon>
                     </button>
 
-                    <button mat-raised-button color='warn' *ngIf='showCancelButton' (click)='onFilesSendCancel()' class="ml-5">
+                    <button mat-raised-button color='warn' *ngIf='showCancelButton' (click)='onFilesSendCancel()'
+                        class="ml-5">
                         {{"CANCEL" | translate}}
                     </button>
                 </div>
@@ -143,5 +145,16 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
+
+        <div class="download-progress-list" *ngIf='downloadingFiles.length'>
+            <div class="download-progress-item" *ngFor='let file of downloadingFiles'>
+                <p class="download-progress-item-header">{{file.fileName}}</p>
+                <div class="flex">
+                    <span class="download-progress-item-percentage-progress">{{file.percentageProgress}}%</span>
+                    <mat-progress-bar class="download-progress-item-bar" mode='determinate' [value]='file.percentageProgress' color='primary'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+
     </mat-sidenav-content>
 </mat-sidenav-container>

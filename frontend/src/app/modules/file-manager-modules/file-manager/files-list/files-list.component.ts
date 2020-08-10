@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ViewEncapsulation, DoCheck, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ViewEncapsulation, DoCheck, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,7 @@ import { FileModel } from '../../model-FileModel';
 import { FilesService } from '../../files.service';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GlobalSettingsService } from 'src/app/modules/administration-modules/global-settings.service';
-import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse, HttpUploadProgressEvent, HttpEventType, HttpErrorResponse, HttpDownloadProgressEvent } from '@angular/common/http';
 import { takeUntil, catchError, elementAt } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { ActionsService } from 'src/app/shared/services/actions.service';
@@ -19,6 +19,12 @@ import { translations } from 'src/app/app.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ShareFileDialogComponent } from './dialogs/share-file-dialog/share-file-dialog.component';
 
+interface DownloadedFile {
+  id: number;
+  fileName: string;
+  percentageProgress: number;
+  totalSize: number;
+}
 
 @Component({
   selector: 'app-files-list',
@@ -26,7 +32,7 @@ import { ShareFileDialogComponent } from './dialogs/share-file-dialog/share-file
   styleUrls: ['./files-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FilesListComponent implements OnInit, DoCheck {
+export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
   @ViewChildren('inputOrder') orderInputs: QueryList<ElementRef<HTMLInputElement>>;
@@ -41,6 +47,7 @@ export class FilesListComponent implements OnInit, DoCheck {
   dataSource = new MatTableDataSource<FileModel>();
   selection = new SelectionModel<FileModel>(true, []);
   preparedFiles: File[] = [];
+  downloadingFiles: DownloadedFile[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -59,7 +66,7 @@ export class FilesListComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    const shouldShowConfirmation = this.preparedFiles.length ||
+    const shouldShowConfirmation = this.preparedFiles.length || this.downloadingFiles.length ||
       this.orderInputs?.some(x => x.nativeElement.disabled === false) || this.titleInputs?.some(x => x.nativeElement.disabled === false);
 
     if (shouldShowConfirmation) {
@@ -239,24 +246,75 @@ export class FilesListComponent implements OnInit, DoCheck {
       return;
     }
 
-    const filesToDownloadIds = selectedFiles.map(x => x.id);
     const anchorTag: HTMLAnchorElement = this.renderer.createElement('a');
 
-    for (const id of filesToDownloadIds) {
-      const file: Blob = await this.filesService.downloadFile(id);
-      const fileUrl = URL.createObjectURL(file);
-      anchorTag.href = fileUrl;
-      anchorTag.download = selectedFiles.find(x => x.id === id).fileName;
-      anchorTag.click();
+
+    selectedFiles.forEach((file: FileModel) => {
+      const downloadedFile: DownloadedFile = {
+        id: file.id,
+        fileName: file.fileName,
+        percentageProgress: 0,
+        totalSize: file.size
+      };
+      this.downloadingFiles.push(downloadedFile);
+    });
+
+    this.actionsService.startBackendAction();
+    for (const file of this.downloadingFiles) {
+      this.filesService.downloadFile(file.id).pipe(
+        takeUntil(this.onCancel),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          if (error.error.Data?.message) {
+            const messageTranslateCode = error.error.Data.message;
+            this.toast.error(translations[messageTranslateCode]);
+          } else {
+            this.toast.error(translations.GENERAL_HTTP_ERROR);
+          }
+
+          return of(null);
+        })
+      ).subscribe((event: HttpDownloadProgressEvent) => {
+        if (event === null) {
+          return;
+        }
+
+        if (event.type === HttpEventType.DownloadProgress) {
+          file.percentageProgress = Number(((event.loaded / file.totalSize) * 100).toFixed(0));
+        }
+
+        else if (event instanceof HttpResponse) {
+          const blob: Blob = (event as HttpResponse<Blob>).body;
+          const fileUrl = URL.createObjectURL(blob);
+          anchorTag.href = fileUrl;
+          anchorTag.download = file.fileName;
+          anchorTag.click();
+        }
+      },
+        () => { },
+        () => {
+          this.downloadingFiles = this.downloadingFiles.filter(x => x !== file);
+
+          if (this.downloadingFiles.length === 0) {
+            // on files download complete
+            this.actionsService.stopBackendAction();
+            anchorTag.remove();
+            this.selection.clear();
+          }
+        });
     }
 
-    anchorTag.remove();
   }
 
   onShareFile(file: FileModel) {
     this.dialog.open(ShareFileDialogComponent, {
       data: file
     });
+  }
+
+  ngOnDestroy() {
+    this.onCancel.next();
+    this.onCancel.complete();
   }
 
 }

@@ -90,21 +90,11 @@ export class FilesService {
     ).toPromise().finally(() => this.actionsService.stopBackendAction());
   }
 
-  downloadFile(id: number): Promise<Blob> {
+  downloadFile(id: number): Observable<HttpEvent<HttpDownloadProgressEvent>> {
     const params = new HttpParams().append('fileId', id.toString());
 
-    return this.http.get<Blob>(`${environment.apiUrl}/api/File/DownloadFile`, { params, responseType: 'blob' as 'json' }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error(error);
-        if (error.error.Data?.message) {
-          const messageTranslateCode = error.error.Data.message;
-          this.toast.error(translations[messageTranslateCode]);
-        } else {
-          this.toast.error(translations.GENERAL_HTTP_ERROR);
-        }
-        throw new Error();
-      })
-    ).toPromise();
+    return this.http.get<HttpDownloadProgressEvent>(`${environment.apiUrl}/api/File/DownloadFile`,
+      { params, responseType: 'blob' as 'json', observe: 'events', reportProgress: true });
   }
 
   updateFile(element: FileModel): Promise<void> {
