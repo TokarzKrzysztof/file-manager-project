@@ -1,6 +1,6 @@
 export interface ShareableLinkModel {
     id: string;
-    filePath: string;
+    fileName: string;
     fileId: number;
     filePassword?: string;
 }

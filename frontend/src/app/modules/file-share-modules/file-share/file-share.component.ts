@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { translations } from 'src/app/app.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-file-share',
@@ -41,7 +42,7 @@ export class FileShareComponent implements OnInit {
       return;
     }
 
-    window.open(this.shareableLink.filePath);
+    window.open(`${environment.apiUrl}/api/File/ShowFilePreview/${this.shareableLink.fileName}?fileId=${this.shareableLink.fileId}`);
   }
 
 }
