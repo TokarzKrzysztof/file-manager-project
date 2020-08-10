@@ -6,7 +6,7 @@
         <mat-toolbar>
             <mat-toolbar-row class="file-manager-toolbar">
                 <div>
-                    <button [disabled]='uploadingFiles' mat-stroked-button [disabled]='currentUser?.systemEditingEnabled === false'
+                    <button mat-stroked-button [disabled]='uploadingFiles || currentUser?.systemEditingEnabled === false'
                         (click)='fileInput.click()' [matTooltip]='"MAX_SIZE" | translate:{param: maxFilesSize}'>
                         {{"ADD_FILES" | translate}}
                     </button>
