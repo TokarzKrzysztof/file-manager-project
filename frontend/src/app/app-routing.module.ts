@@ -7,6 +7,10 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'file-manager', pathMatch: 'full' },
   {
+    path: 'mobile-warning',
+    loadChildren: () => import('./modules/mobile-modules/mobile-warning/mobile-warning.module').then(m => m.MobileWarningModule)
+  },
+  {
     path: 'login/:token',
     loadChildren: () => import('./modules/auth-modules/login/login.module').then(m => m.LoginModule)
   },

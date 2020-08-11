@@ -1,0 +1,19 @@
+.mobile-warning-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+}
+
+.warning-img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.warning-msg {
+  margin: 50px 0;
+  padding: 0 15px;
+  text-align: center;
+}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ActionsService } from './shared/services/actions.service';
+import { DataService } from './shared/services/data.service';
+import { Router } from '@angular/router';
 
 export let translations: { [key: string]: string };
 
@@ -12,12 +14,15 @@ export let translations: { [key: string]: string };
 export class AppComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
-    private actionsService: ActionsService
+    private actionsService: ActionsService,
+    private dataService: DataService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.showUnloadConfirmation();
     this.setTranslations();
+    this.checkIfIsMobilePhone();
   }
 
   private setTranslations() {
@@ -42,5 +47,14 @@ export class AppComponent implements OnInit {
         return '';
       }
     });
+  }
+
+  private checkIfIsMobilePhone() {
+    const isMobile: boolean = window.innerWidth <= 1024;
+    this.dataService.setIsMobile(isMobile);
+
+    if (isMobile) {
+      this.router.navigateByUrl('/mobile-warning');
+    }
   }
 }
