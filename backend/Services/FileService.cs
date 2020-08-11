@@ -64,9 +64,11 @@ namespace backend.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<FileStream> DownloadFile(int id)
+        public async Task<FileStream> DownloadFile(int id, FileController fileController)
         {
             FileModel file = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
+            fileController.Response.ContentType = file.ContentType;
+
             return new FileStream(file.FilePath, FileMode.Open, FileAccess.Read);
         }
 

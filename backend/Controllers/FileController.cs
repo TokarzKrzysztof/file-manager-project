@@ -87,7 +87,7 @@ namespace backend.Controllers
         {
             try
             {
-                FileStream file = await _fileService.DownloadFile(fileId);
+                FileStream file = await _fileService.DownloadFile(fileId, this);
                 return Ok(file);
             }
 

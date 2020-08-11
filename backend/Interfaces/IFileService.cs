@@ -15,7 +15,7 @@ namespace backend.Interfaces
     {
         Task<List<FileViewModel>> GetFiles();
         Task<bool> UploadFiles(IFormFileCollection files, string userData, int creatorId, int folderId);
-        Task<FileStream> DownloadFile(int id);
+        Task<FileStream> DownloadFile(int id, FileController fileController);
         Task UpdateFile(FileViewModel file);
         Task<List<FileViewModel>> GetFilesInsideFolder(int folderId);
         Task DeleteFiles(int[] ids, string userData);
