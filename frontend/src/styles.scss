@@ -181,8 +181,10 @@ mat-card.login-panel-card {
   margin-bottom: 15px;
 }
 
-.mat-dialog-container {
+mat-dialog-container.mat-dialog-container {
   max-width: 500px;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 .mat-selection-list {
@@ -202,6 +204,10 @@ mat-card.login-panel-card {
     margin: 20px;
     margin-left: 0;
   }
+}
+
+.mat-checkbox-label {
+  white-space: initial;
 }
 
 // styles for mobile
