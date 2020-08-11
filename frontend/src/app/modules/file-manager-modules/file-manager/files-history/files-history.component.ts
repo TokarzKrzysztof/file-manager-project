@@ -24,7 +24,7 @@ export class FilesHistoryComponent implements OnInit, AfterViewInit {
   filterApplied: boolean;
   historyCount = 0;
   dataSource = new MatTableDataSource<HistoryModel>();
-  displayedColumns = ['actionDate', 'description', 'userData'];
+  displayedColumns = ['number', 'actionDate', 'description', 'userData'];
 
   dateRange = new FormGroup({
     start: new FormControl(null, [Validators.required]),

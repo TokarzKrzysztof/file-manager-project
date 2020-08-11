@@ -158,5 +158,6 @@
     "CANCEL_UPLOAD_CONFIRMATION": "Are you sure you want to cancel files upload?",
     "AVAILABLE_DISC_SPACE": "Available disc space",
     "NO_AVAILABLE_DISC_SPACE": "No available disc space!",
-    "TOTAL_DISC_SPACE": "Total disc space"
+    "TOTAL_DISC_SPACE": "Total disc space",
+    "ORDER_NUMBER": "No."
 }

@@ -158,5 +158,6 @@
     "CANCEL_UPLOAD_CONFIRMATION": "Czy na pewno chcesz anulować wysyłanie plików?",
     "AVAILABLE_DISC_SPACE": "Dostępna przestrzeń na dysku",
     "NO_AVAILABLE_DISC_SPACE": "Brak dostępnej przestrzeni na dysku!",
-    "TOTAL_DISC_SPACE": "Całkowita przestrzeń na dysku"
+    "TOTAL_DISC_SPACE": "Całkowita przestrzeń na dysku",
+    "ORDER_NUMBER": "Lp."
 }
