@@ -162,5 +162,6 @@
     "ORDER_NUMBER": "Lp.",
     "MOBILE_WARNING_MESSAGE": "Aplikacja nie jest przeznaczona do korzystania na urządzeniach mobilnych, niektóre funkcje takie jak podgląd historii aktywności, podział plików na foldery są wyłaczone, aby uzyskać dostęp do wszystkich funkcjonalności aplikacji proszę skorzystać z urządzeń desktopowych",
     "UNDERSTOOD": "Zrozumiałem",
-    "FOLDER_NOT_EDITABLE": "Nie można edytować tego folderu"
+    "FOLDER_NOT_EDITABLE": "Nie można edytować tego folderu",
+    "DO_NOT_SHOW_THIS_STATEMENT": "Nie pokazuj więcej tego komunikatu"
 }

@@ -60,7 +60,11 @@ export class AppComponent implements OnInit {
 
     if (this.isMobile) {
       this.document.body.setAttribute('id', 'mobile');
-      this.dialog.open(MobileWarningDialogComponent);
+
+      const disableMobileWarning = window.localStorage.getItem('disableMobileWarning');
+      if (!disableMobileWarning) {
+        this.dialog.open(MobileWarningDialogComponent);
+      }
     }
   }
 }

@@ -162,5 +162,6 @@
     "ORDER_NUMBER": "No.",
     "MOBILE_WARNING_MESSAGE": "The application is not intended for use on mobile devices, some functions such as activity history preview, file division into folders are disabled, to access all application functionalities please use desktop devices",
     "UNDERSTOOD": "Understood",
-    "FOLDER_NOT_EDITABLE": "Folder is not editable"
+    "FOLDER_NOT_EDITABLE": "Folder is not editable",
+    "DO_NOT_SHOW_THIS_STATEMENT": "Do not show this statement again"
 }

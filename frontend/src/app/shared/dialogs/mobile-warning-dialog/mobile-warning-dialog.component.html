@@ -1,5 +1,6 @@
 <img class="warning-img" src="../../../../assets/img/warning.png">
 <p class="warning-msg">{{"MOBILE_WARNING_MESSAGE" | translate}}</p>
+<mat-checkbox class="disable-warning-checkbox" [formControl]='disableWarning' color='primary'>{{"DO_NOT_SHOW_THIS_STATEMENT" | translate}}</mat-checkbox>
 <div class="flex center">
     <button mat-raised-button color='primary' (click)='onAccept()'>{{"UNDERSTOOD" | translate}}</button>
 </div>
