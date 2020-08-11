@@ -8,6 +8,7 @@ import { FoldersService } from '../../../folders.service';
 import { FoldersDialogComponent, DialogFolderData } from './dialogs/folders-dialog/folders-dialog.component';
 import { ConfirmationDialogData, ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { translations } from 'src/app/app.component';
+import { ToastrService } from 'ngx-toastr';
 
 interface FlatNode {
   id: number;
@@ -33,7 +34,8 @@ export class FoldersComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private foldersService: FoldersService
+    private foldersService: FoldersService,
+    private toast: ToastrService
   ) {
   }
 
@@ -168,8 +170,13 @@ export class FoldersComponent implements OnInit {
     });
   }
 
-  openFolderMenu(trigger: MatMenuTrigger) {
-    // timeout needed for context menu disable
+  openFolderMenu(trigger: MatMenuTrigger, folderId: number) {
+    if (folderId === 1) {
+      this.toast.error(translations.FOLDER_NOT_EDITABLE);
+      return;
+    }
+    
+    // timeout needed for browser context menu disable
     setTimeout(() => {
       trigger.openMenu();
     })

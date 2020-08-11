@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserModel } from '../model-UserModel';
 import { translations } from 'src/app/app.component';
+import { DataService } from 'src/app/shared/services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ import { translations } from 'src/app/app.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  isMobile: boolean;
+
   formGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
@@ -21,10 +24,12 @@ export class LoginComponent implements OnInit {
     private toast: ToastrService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.dataService.getIsMobile();
     this.route.params.subscribe(async (params: Params) => {
       if (params?.token) {
         await this.authService.activateAccount(params.token);

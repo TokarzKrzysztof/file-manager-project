@@ -11,15 +11,18 @@
             <mat-error>{{'REQUIRED' | translate}}</mat-error>
         </mat-form-field>
 
-        <div class="flex between">
-            <div>
+        <div class="flex between login-panel-buttons">
+            <div class="buttons-container">
                 <app-action-button>{{"LOGIN" | translate}}</app-action-button>
-                <button mat-raised-button color='primary' type="button" routerLink='/register' class="ml-5">{{"REGISTER" | translate}}</button>
+                <button mat-raised-button color='primary' type="button" routerLink='/register'
+                    class="ml-5">{{"REGISTER" | translate}}</button>
             </div>
-            <div>
-                <button mat-button type="button" routerLink='/remind-password'>{{"REMIND_PASSWORD" | translate}}</button>
+            <div class="buttons-container">
+                <button *ngIf='!isMobile' mat-button type="button"
+                    routerLink='/remind-password'>{{"REMIND_PASSWORD" | translate}}</button>
+                <button *ngIf='isMobile' mat-raised-button type="button" routerLink='/remind-password'
+                    color='primary'>{{"REMIND_PASSWORD" | translate}}</button>
             </div>
         </div>
-        
     </form>
 </mat-card>

@@ -17,6 +17,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { DisableContextMenuDirective } from './directives/disable-context-menu.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActionButtonComponent } from './components/action-button/action-button.component';
+import { MobileWarningDialogComponent } from './dialogs/mobile-warning-dialog/mobile-warning-dialog.component';
 
 const sharedModules = [
   MaterialModule,
@@ -39,7 +40,8 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    ActionButtonComponent
+    ActionButtonComponent,
+    MobileWarningDialogComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,8 @@ const sharedModules = [
     UserPanelComponent,
     BooleanPipe,
     DisableContextMenuDirective,
-    ActionButtonComponent
+    ActionButtonComponent,
+    MobileWarningDialogComponent
   ]
 })
 export class SharedModule { }

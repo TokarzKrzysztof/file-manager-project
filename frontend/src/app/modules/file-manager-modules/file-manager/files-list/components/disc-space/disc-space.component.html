@@ -1,0 +1,5 @@
+<div class="available-disc-space" *ngIf='availableDiscSpaceMB'>
+    <p class="available-disc-space-text">{{"AVAILABLE_DISC_SPACE" | translate}}</p>
+    <p class="available-disc-space-mb">{{availableDiscSpaceMB}}MB</p>
+    <mat-progress-bar mode="determinate" [value]="spaceOccupiedPercent" color='primary'></mat-progress-bar>
+</div>

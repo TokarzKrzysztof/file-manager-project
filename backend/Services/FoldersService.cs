@@ -65,6 +65,11 @@ namespace backend.Services
 
         public async Task SetFolderUnactive(int id)
         {
+            if (id == 1)
+            {
+                throw new InvalidOperationException();
+            }
+
             List<FolderModel> allFolders = await _context.Folders.Where(x => x.IsActive).ToListAsync();
             List<FileModel> allFiles = await _context.Files.ToListAsync();
 
@@ -83,7 +88,7 @@ namespace backend.Services
         private void FindAllCorrespondingFolders(FolderModel rootFolder, List<FolderModel> allFolders, List<FolderModel> foldersToDelete, List<FileModel> allFiles, List<FileModel> filesToDelete)
         {
             List<FolderModel> children = allFolders.Where(x => x.ParentId == rootFolder.Id).ToList();
-            List<FileModel> filesInsideFolder = allFiles.Where(x => x.FolderId == rootFolder.Id).ToList(); 
+            List<FileModel> filesInsideFolder = allFiles.Where(x => x.FolderId == rootFolder.Id).ToList();
 
             foreach (FolderModel child in children)
             {
@@ -97,12 +102,29 @@ namespace backend.Services
 
         public async Task UpdateFolder(FolderViewModel folderData)
         {
+            if (folderData.id == 1)
+            {
+                throw new InvalidOperationException();
+            }
+
             FolderModel folder = await _context.Folders.FirstOrDefaultAsync(x => x.Id == folderData.id && x.IsActive);
             folder = FoldersConverter.UpdateDbFolderWithViewFolderData(folder, folderData);
             _context.Update(folder);
             await _context.SaveChangesAsync();
         }
 
+        public async Task<FolderViewModel> GetFolderById(int id)
+        {
+            FolderModel folder = await _context.Folders.FirstOrDefaultAsync(x => x.Id == id);
 
+            if (folder != null)
+            {
+                return FoldersConverter.ConvertDbModelToViewModel(folder);
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+        }
     }
 }

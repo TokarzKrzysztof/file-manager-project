@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActionsService } from './shared/services/actions.service';
 import { DataService } from './shared/services/data.service';
-import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MobileWarningDialogComponent } from './shared/dialogs/mobile-warning-dialog/mobile-warning-dialog.component';
 
 export let translations: { [key: string]: string };
 
@@ -12,11 +14,14 @@ export let translations: { [key: string]: string };
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  isMobile: boolean;
+
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private translateService: TranslateService,
     private actionsService: ActionsService,
     private dataService: DataService,
-    private router: Router
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -50,11 +55,12 @@ export class AppComponent implements OnInit {
   }
 
   private checkIfIsMobilePhone() {
-    const isMobile: boolean = window.innerWidth <= 1024;
-    this.dataService.setIsMobile(isMobile);
+    this.isMobile = window.innerWidth <= 1024;
+    this.dataService.setIsMobile(this.isMobile);
 
-    if (isMobile) {
-      this.router.navigateByUrl('/mobile-warning');
+    if (this.isMobile) {
+      this.document.body.setAttribute('id', 'mobile');
+      this.dialog.open(MobileWarningDialogComponent);
     }
   }
 }

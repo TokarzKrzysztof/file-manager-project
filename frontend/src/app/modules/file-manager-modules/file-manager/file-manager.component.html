@@ -1,7 +1,7 @@
 <nav mat-tab-nav-bar>
     <div>
         <a mat-tab-link active routerLink='files'> {{"FILE_LIST" | translate}} </a>
-        <a mat-tab-link routerLink='history'> {{"HISTORY" | translate}} </a>
+        <a *ngIf='!isMobile' mat-tab-link routerLink='history'> {{"HISTORY" | translate}} </a>
     </div>
 
     <app-user-panel [showAdministrationPanelLink]='true'></app-user-panel>

@@ -11,12 +11,17 @@ namespace backend.Helpers
     {
         public static List<FolderViewModel> ConvertDbListToViewList(List<FolderModel> folders)
         {
-            return folders.Select(x => new FolderViewModel()
+            return folders.Select(folder => ConvertDbModelToViewModel(folder)).ToList();
+        }
+
+        public static FolderViewModel ConvertDbModelToViewModel(FolderModel folder)
+        {
+            return new FolderViewModel()
             {
-                id = x.Id,
-                name = x.Name,
-                parentId = x.ParentId
-            }).ToList();
+                id = folder.Id,
+                name = folder.Name,
+                parentId = folder.ParentId
+            };
         }
 
         public static FolderModel UpdateDbFolderWithViewFolderData(FolderModel dbFolder, FolderViewModel viewFolder)

@@ -30,6 +30,14 @@ namespace backend.Models
                 LimitPerHour = 20,
                 TotalDiscSpace = 2147483648
             });
+
+            modelBuilder.Entity<FolderModel>().HasData(new FolderModel()
+            {
+                Id = 1,
+                IsActive = true,
+                Name = "Mobile",
+                ParentId = null
+            });
         }
     }
 }

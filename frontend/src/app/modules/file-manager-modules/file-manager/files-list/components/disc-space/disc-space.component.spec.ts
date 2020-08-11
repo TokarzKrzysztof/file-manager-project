@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MobileWarningComponent } from './mobile-warning.component';
+import { DiscSpaceComponent } from './disc-space.component';
 
-describe('MobileWarningComponent', () => {
-  let component: MobileWarningComponent;
-  let fixture: ComponentFixture<MobileWarningComponent>;
+describe('DiscSpaceComponent', () => {
+  let component: DiscSpaceComponent;
+  let fixture: ComponentFixture<DiscSpaceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileWarningComponent ]
+      declarations: [ DiscSpaceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MobileWarningComponent);
+    fixture = TestBed.createComponent(DiscSpaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

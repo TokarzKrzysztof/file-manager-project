@@ -11,6 +11,7 @@ import { UserModel } from 'src/app/modules/auth-modules/model-UserModel';
 import { translations } from 'src/app/app.component';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-user-panel',
@@ -21,17 +22,20 @@ import { FormControl } from '@angular/forms';
 export class UserPanelComponent implements OnInit {
   @Input() showAdministrationPanelLink: boolean;
   @Input() showFileManagerLink: boolean;
+  isMobile: boolean;
   languageSelect = new FormControl('');
   currentUser: UserModel;
 
   constructor(
     private authService: AuthService,
+    private dataService: DataService,
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService
   ) { }
 
   async ngOnInit() {
+    this.isMobile = this.dataService.getIsMobile();
     this.currentUser = await this.authService.getCurrentUserValue();
 
     this.languageSelect.setValue(this.translateService.currentLang);

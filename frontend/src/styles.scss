@@ -72,8 +72,14 @@ body {
 
 }
 
-button.ml-5 {
-  margin-left: 5px;
+button {
+  &.ml-5 {
+    margin-left: 5px;
+  }
+
+  &.mr-5 {
+    margin-right: 5px;
+  }
 }
 
 form {
@@ -188,17 +194,56 @@ mat-card.login-panel-card {
 }
 
 .mat-sidenav-container {
-  min-height: calc(100% - 49px);
+  min-height: calc(100vh - 49px);
 }
 
 .mat-radio-group {
-  display: block;
-
   .mat-radio-button {
-    margin: 20px 0;
+    margin: 20px;
+    margin-left: 0;
+  }
+}
 
-    &+.mat-radio-button {
-      margin-left: 10px;
+// styles for mobile
+#mobile {
+  .hamburger-icon {
+    font-size: 30px;
+  }
+
+  .login-panel-buttons {
+    .buttons-container {
+      margin: 10px 0;
+    }
+  }
+
+  .available-disc-space {
+    margin-bottom: 20px;
+  }
+
+  .table-container .mat-table {
+    min-width: unset;
+
+    .mat-cell,
+    .mat-header-cell {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .global-settings-card {
+    height: 50vh;
+  }
+
+  .users-list-button {
+    margin-bottom: 5px;
+  }
+
+  .file-share-card {
+    min-width: unset;
+    min-height: unset;
+
+    .file-share-button {
+      margin: 20px 0;
     }
   }
 }

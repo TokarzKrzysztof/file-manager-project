@@ -1,10 +1,20 @@
 <div class="user-control-panel">
-    <p class="user-credentials">
+    <p class="user-credentials" *ngIf='!isMobile'>
         <span class="login-as-label">{{"LOGGED_AS" | translate}}</span>
         <span class="user-data">{{currentUser?.name}} {{currentUser?.surname}}</span>
     </p>
-    <a mat-tab-link [matMenuTriggerFor]="menu">{{"MENU" | translate}}</a>
+    <a mat-tab-link [matMenuTriggerFor]="menu">
+        <span *ngIf='!isMobile'>{{"MENU" | translate}}</span>
+        <span *ngIf='isMobile'>
+            <button mat-icon-button disableRipple>
+                <mat-icon class="hamburger-icon">menu</mat-icon>
+            </button>
+        </span>
+    </a>
     <mat-menu #menu="matMenu">
+        <a *ngIf='isMobile' mat-menu-item disabled>
+            {{currentUser?.name}} {{currentUser?.surname}}
+        </a>
         <a mat-menu-item (click)='logout()'>
             {{"LOGOUT" | translate}}
         </a>

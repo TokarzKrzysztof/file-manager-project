@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ViewEncapsulation, DoCheck, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ViewEncapsulation, DoCheck, ViewChildren, QueryList, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +19,9 @@ import { translations } from 'src/app/app.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ShareFileDialogComponent } from './dialogs/share-file-dialog/share-file-dialog.component';
 import { GlobalSettingsModel } from 'src/app/modules/administration-modules/model-GlobalSettingsModel';
+import { DiscSpaceComponent } from './components/disc-space/disc-space.component';
+import { DataService } from 'src/app/shared/services/data.service';
+import { FoldersService } from '../../folders.service';
 
 interface DownloadedFile {
   id: number;
@@ -34,10 +37,12 @@ interface DownloadedFile {
   encapsulation: ViewEncapsulation.None
 })
 export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
+  @ViewChild('discSpaceComponent') discSpaceComponent: DiscSpaceComponent;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FileModel>;
   @ViewChildren('inputOrder') orderInputs: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChildren('inputTitle') titleInputs: QueryList<ElementRef<HTMLInputElement>>;
+  isMobile: boolean;
   onUploadCancel = new Subject<void>();
   onDownloadCancel = new Subject<void>();
   globalSettings: GlobalSettingsModel;
@@ -62,15 +67,22 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
     private dialog: MatDialog,
     private globalSettingsService: GlobalSettingsService,
     private actionsService: ActionsService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private foldersService: FoldersService,
+    private dataService: DataService
   ) { }
 
   async ngOnInit() {
+    this.isMobile = this.dataService.getIsMobile();
+    if (this.isMobile) {
+      await this.prepareMobilePhoneView();
+    }
+
     this.currentUser = await this.authService.getCurrentUserValue();
 
     this.globalSettings = await this.globalSettingsService.getGlobalSettings();
     this.maxFilesSize = this.globalSettings.maxSize;
-    this.checkDiscSpace();
+    this.discSpaceComponent.countDiscSpace();
   }
 
   ngDoCheck() {
@@ -84,11 +96,12 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
     }
   }
 
-  async checkDiscSpace() {
-    const spaceOccupied: number = await this.filesService.getSpaceOccupiedByFiles();
-    const totalDiscSpace = this.globalSettings.totalDiscSpace;
-    this.availableDiscSpaceMB = Number(((totalDiscSpace - spaceOccupied) / 1048576).toFixed(2));
-    this.spaceOccupiedPercent = Number(((spaceOccupied / totalDiscSpace) * 100).toFixed(0));
+  private async prepareMobilePhoneView() {
+    this.displayedColumns = ['select', 'fileName', 'createdBy', 'actions'];
+
+    const mobileFolderId = 1;
+    this.activeFolder = await this.foldersService.getFolderById(mobileFolderId);
+    this.loadFiles(this.activeFolder.id);
   }
 
   onFolderChange(folder: FolderModel) {
@@ -243,7 +256,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
         this.uploadingFiles = false;
 
         this.loadFiles(this.activeFolder.id);
-        this.checkDiscSpace();
+        this.discSpaceComponent.countDiscSpace();
       });
   }
 
@@ -268,7 +281,7 @@ export class FilesListComponent implements OnInit, DoCheck, OnDestroy {
       const userData = `${this.currentUser.name} ${this.currentUser.surname}`;
       await this.filesService.deleteFiles(filesToDeleteIds, userData);
       this.loadFiles(this.activeFolder.id);
-      this.checkDiscSpace();
+      this.discSpaceComponent.countDiscSpace();
     });
   }
 

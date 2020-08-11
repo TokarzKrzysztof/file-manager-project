@@ -11,6 +11,7 @@ import { translations } from 'src/app/app.component';
   providedIn: 'root'
 })
 export class FoldersService {
+
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
@@ -19,6 +20,23 @@ export class FoldersService {
 
   getFoldersTree(): Promise<FolderModel[]> {
     return this.http.get<FolderModel[]>(`${environment.apiUrl}/api/Folders/GetFoldersTree`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        if (error.error.Data?.message) {
+          const messageTranslateCode = error.error.Data.message;
+          this.toast.error(translations[messageTranslateCode]);
+        } else {
+          this.toast.error(translations.GENERAL_HTTP_ERROR);
+        }
+        throw new Error();
+      })
+    ).toPromise();
+  }
+
+  getFolderById(id: number): Promise<FolderModel> {
+    const params = new HttpParams().append('id', id.toString());
+
+    return this.http.get<FolderModel>(`${environment.apiUrl}/api/Folders/GetFolderById`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         if (error.error.Data?.message) {

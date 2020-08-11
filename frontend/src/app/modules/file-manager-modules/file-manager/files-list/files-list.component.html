@@ -1,13 +1,10 @@
 <mat-sidenav-container autosize>
-    <mat-sidenav mode='side' opened class="folders-sidenav">
+    <mat-sidenav mode='side' opened class="folders-sidenav" *ngIf='!isMobile'>
         <app-folders (folderChanged)='onFolderChange($event)'></app-folders>
-        <div class="available-disc-space" *ngIf='availableDiscSpaceMB'>
-            <p class="available-disc-space-text">{{"AVAILABLE_DISC_SPACE" | translate}}</p>
-            <p class="available-disc-space-mb">{{availableDiscSpaceMB}}MB</p>
-            <mat-progress-bar mode="determinate" [value]="spaceOccupiedPercent" color='primary'></mat-progress-bar>
-        </div>
+        <app-disc-space #discSpaceComponent [globalSettings]='globalSettings'></app-disc-space>
     </mat-sidenav>
     <mat-sidenav-content *ngIf='activeFolder'>
+        <app-disc-space *ngIf='isMobile' #discSpaceComponent [globalSettings]='globalSettings'></app-disc-space>
         <mat-toolbar>
             <mat-toolbar-row class="file-manager-toolbar">
                 <div>
@@ -40,7 +37,7 @@
                     <span class="folder-name"> {{activeFolder.name}} </span>
                 </div>
 
-                <div>
+                <div *ngIf='!isMobile'>
                     <mat-form-field floatLabel='never' class="no-bottom-padding">
                         <mat-label>{{"SEARCH" | translate}}</mat-label>
                         <mat-icon matPrefix>search</mat-icon>

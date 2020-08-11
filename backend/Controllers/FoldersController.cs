@@ -50,6 +50,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetFolderById([FromQuery] int id)
+        {
+            try
+            {
+                FolderViewModel folder = await _foldersService.GetFolderById(id);
+                return Ok(folder);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateFolder([FromBody] FolderViewModel folderData)
         {

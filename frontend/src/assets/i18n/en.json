@@ -161,5 +161,6 @@
     "TOTAL_DISC_SPACE": "Total disc space",
     "ORDER_NUMBER": "No.",
     "MOBILE_WARNING_MESSAGE": "The application is not intended for use on mobile devices, some functions such as activity history preview, file division into folders are disabled, to access all application functionalities please use desktop devices",
-    "UNDERSTOOD": "Understood"
+    "UNDERSTOOD": "Understood",
+    "FOLDER_NOT_EDITABLE": "Folder is not editable"
 }
