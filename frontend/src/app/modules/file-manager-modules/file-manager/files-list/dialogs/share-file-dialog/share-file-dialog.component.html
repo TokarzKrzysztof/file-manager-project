@@ -17,8 +17,7 @@
     
             <ng-container *ngIf='!generatedLink'>
                 <button mat-raised-button type="submit" color='primary'>{{"GENERATE_LINK" | translate}}</button>
-                <button mat-raised-button type="button" (click)='onCancel()' color='primary'
-                    class="ml-5">{{"CANCEL" | translate}}</button>
+                <button mat-raised-button type="button" (click)='onCancel()' color='primary'>{{"CANCEL" | translate}}</button>
             </ng-container>
         </form>
     </ng-container>
@@ -32,7 +31,7 @@
         </div>
         <div>
             <button mat-raised-button color='primary' mat-dialog-close>{{"CLOSE" | translate}}</button>
-            <button mat-raised-button color='primary' class="ml-5" (click)='onGenerateNewLink()'>{{"GENERATE_NEW_LINK" | translate}}</button>
+            <button mat-raised-button color='primary' (click)='onGenerateNewLink()'>{{"GENERATE_NEW_LINK" | translate}}</button>
         </div>
     </ng-container>
 </div>

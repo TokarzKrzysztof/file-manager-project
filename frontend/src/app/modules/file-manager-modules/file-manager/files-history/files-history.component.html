@@ -11,8 +11,7 @@
 
     <button mat-raised-button color='primary' class="filter-button"
         (click)='onFilter()'>{{"FILTER" | translate}}</button>
-    <button mat-button (click)='clearFilter()' *ngIf='filterApplied'
-        class="ml-5">{{"CLEAR_FILTER" | translate}}</button>
+    <button mat-button (click)='clearFilter()' *ngIf='filterApplied'>{{"CLEAR_FILTER" | translate}}</button>
 </mat-toolbar>
 
 <div class="mat-elevation-z8 table-container">

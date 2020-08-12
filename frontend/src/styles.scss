@@ -72,14 +72,10 @@ body {
 
 }
 
-button {
-  &.ml-5 {
-    margin-left: 5px;
-  }
-
-  &.mr-5 {
-    margin-right: 5px;
-  }
+button.mat-raised-button,
+button.mat-button,
+button.mat-stroked-button {
+  margin: 5px;
 }
 
 form {
@@ -238,10 +234,6 @@ mat-dialog-container.mat-dialog-container {
 
   .global-settings-card {
     height: 50vh;
-  }
-
-  .users-list-button {
-    margin-bottom: 5px;
   }
 
   .file-share-card {
