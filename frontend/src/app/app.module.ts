@@ -19,7 +19,8 @@ class DynamicLocaleId extends String {
   }
 
   toString() {
-    return this.translateService.currentLang;
+    // format en-EN for example
+    return `${this.translateService.currentLang}-${this.translateService.currentLang.toUpperCase()}`;
   }
 }
 
