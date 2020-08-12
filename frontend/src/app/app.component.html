@@ -1,1 +1,2 @@
-<router-outlet></router-outlet>
+<mat-progress-bar color='primary' mode='indeterminate' *ngIf='!siteLoaded'></mat-progress-bar>
+<router-outlet (activate)='onRouterActivate()'></router-outlet>

@@ -14,6 +14,7 @@ export let translations: { [key: string]: string };
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  siteLoaded: boolean;
   isMobile: boolean;
 
   constructor(
@@ -28,6 +29,10 @@ export class AppComponent implements OnInit {
     this.showUnloadConfirmation();
     this.setTranslations();
     this.checkIfIsMobilePhone();
+  }
+
+  onRouterActivate() {
+    this.siteLoaded = true;
   }
 
   private setTranslations() {
